@@ -1,0 +1,1 @@
+Espacos= [espaco(23, [P24, P25, P26]), espaco(13, [P42, P43])], permutacoes_soma_espacos(Espacos, Perms_soma), Perms_soma == [[espaco(23, [P24, P25, P26]), [[6, 8, 9], [6, 9, 8], [8, 6, 9], [8, 9, 6], [9, 6, 8], [9, 8, 6]]], [espaco(13, [P42, P43]), [[4, 9], [5, 8], [6, 7], [7, 6], [8, 5], [9, 4]]]], writeln(true) ; writeln(false).

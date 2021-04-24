@@ -1,0 +1,1 @@
+Puzzle = [[[0,0],[9,0],[7,0]],[[0,9],P22,P23],[[0,7],P32,P33]], resolve(Puzzle), escreve_Puzzle(Puzzle) ; writeln(false).

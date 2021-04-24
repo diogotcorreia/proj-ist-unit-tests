@@ -1,0 +1,1 @@
+permutacoes_soma(3, [2,3,5,6,7], 13, Perms), writeln(Perms) ; writeln('false').

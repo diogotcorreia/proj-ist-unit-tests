@@ -1,0 +1,3 @@
+Fila = [[1,2], A, B, C, D, E, [3,4], F, G, [5,6], H, I, J],  bagof(Espaco, espaco_fila(Fila, Espaco, h), Res), Res == [espaco(2, [A, B, C, D, E]), espaco(4, [F, G]), espaco(6, [H, I, J])], writeln('true'); writeln('false').
+Fila = [[1,2], A, B, C, D, E, [3,4], F, G, [5,6], H, I, J],  bagof(Espaco, espaco_fila(Fila, Espaco, v), Res), Res == [espaco(1, [A, B, C, D, E]), espaco(3, [F, G]), espaco(5, [H, I, J])], writeln('true'); writeln('false').
+Fila = [[1,2], A, B, C, D, E, [3,4], F, G, [5,6], H, I, J],  espaco_fila(Fila, espaco(2, [A, B, C, D]), h), writeln('true'); writeln('false').
