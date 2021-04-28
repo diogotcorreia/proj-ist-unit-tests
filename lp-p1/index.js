@@ -17,8 +17,8 @@ mooshakDaFeira({
   profiles: {
     prolog: {
       file: 'program.pl', // file name
-      preRunCommands: [],
-      command: `swipl -q ${commonCode} program.pl`, // the command which will be given stdin
+      preRunCommands: [`cp ${commonCode} codigo_comum.pl`],
+      command: `swipl -q program.pl`, // the command which will be given stdin
       timeout: 1000,
       ignoreNewlinesOnCompare: true,
     },
