@@ -169,5 +169,5 @@ mooshakDaFeira({
       ...getTest('23'),
     },
   ],
-  port: 5000,
+  port: process.env.PORT || 5000,
 });
