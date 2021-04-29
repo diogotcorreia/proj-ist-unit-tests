@@ -17,7 +17,7 @@ mooshakDaFeira({
       file: 'program.pl', // file name
       preRunCommands: [`cp ${commonCode} codigo_comum.pl`],
       command: `swipl -q -t halt -s program.pl input.pl`, // the command which will be given stdin
-      timeout: 500,
+      timeout: 1000,
       ignoreNewlinesOnCompare: false,
       preRunHook: ({ test, workingDirectory }) => {
         const input = test.input?.startsWith(':-') ? test.input : `:- ${test.input}`;
