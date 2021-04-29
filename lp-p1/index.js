@@ -5,9 +5,7 @@ const mooshakDaFeira = require('mooshak-da-feira');
 
 const getTest = (id) => ({
   input: fs.readFileSync(path.resolve(__dirname, 'tests', `test${id}.in`), 'utf-8'),
-  output: fs
-    .readFileSync(path.resolve(__dirname, 'tests', `test${id}.out`), 'utf-8')
-    .replace(/\n/g, ''),
+  output: fs.readFileSync(path.resolve(__dirname, 'tests', `test${id}.out`), 'utf-8'),
 });
 
 const commonCode = path.resolve(__dirname, 'codigo_comum.pl');
@@ -20,7 +18,7 @@ mooshakDaFeira({
       preRunCommands: [`cp ${commonCode} codigo_comum.pl`],
       command: `swipl -q -t halt -s program.pl input.pl`, // the command which will be given stdin
       timeout: 500,
-      ignoreNewlinesOnCompare: true,
+      ignoreNewlinesOnCompare: false,
       preRunHook: ({ test, workingDirectory }) => {
         const input = test.input?.startsWith(':-') ? test.input : `:- ${test.input}`;
         return fs.promises.writeFile(
