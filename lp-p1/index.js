@@ -9,13 +9,17 @@ const getTest = (id) => ({
 });
 
 const commonCode = path.resolve(__dirname, 'codigo_comum.pl');
+const publicPuzzles = path.resolve(__dirname, 'puzzles_publicos.pl');
 
 mooshakDaFeira({
   workingDirectory: os.tmpdir(),
   profiles: {
     prolog: {
       file: 'program.pl', // file name
-      preRunCommands: [`cp ${commonCode} codigo_comum.pl`],
+      preRunCommands: [
+        `cp ${commonCode} codigo_comum.pl`,
+        `cp ${publicPuzzles} puzzles_publicos.pl`,
+      ],
       command: `swipl -q -t halt -s program.pl input.pl`, // the command which will be given stdin
       timeout: 1000,
       ignoreNewlinesOnCompare: false,
