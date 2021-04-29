@@ -18,9 +18,17 @@ mooshakDaFeira({
     prolog: {
       file: 'program.pl', // file name
       preRunCommands: [`cp ${commonCode} codigo_comum.pl`],
-      command: `swipl -q program.pl`, // the command which will be given stdin
-      timeout: 1000,
+      command: `swipl -q -t halt -s program.pl input.pl`, // the command which will be given stdin
+      timeout: 500,
       ignoreNewlinesOnCompare: true,
+      preRunHook: ({ test, workingDirectory }) => {
+        const input = test.input?.startsWith(':-') ? test.input : `:- ${test.input}`;
+        return fs.promises.writeFile(
+          path.resolve(workingDirectory, 'input.pl'),
+          input || '',
+          'utf-8'
+        );
+      },
     },
   },
   tests: [

@@ -8,6 +8,6 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "mooshak-da-feira": "^0.1.0"
+    "mooshak-da-feira": "^0.2.0"
   }
 }
