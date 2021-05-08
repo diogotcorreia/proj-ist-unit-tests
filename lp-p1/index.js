@@ -11,27 +11,23 @@ const getTest = (id) => ({
 const commonCode = path.resolve(__dirname, 'codigo_comum.pl');
 const publicPuzzles = path.resolve(__dirname, 'puzzles_publicos.pl');
 
+const genProfile = (timeout) => ({
+  file: 'program.pl', // file name
+  preRunCommands: [`cp ${commonCode} codigo_comum.pl`, `cp ${publicPuzzles} puzzles_publicos.pl`],
+  command: `swipl -q -t halt -s program.pl input.pl`, // the command which will be given stdin
+  timeout: timeout,
+  ignoreNewlinesOnCompare: false,
+  preRunHook: ({ test, workingDirectory }) => {
+    const input = test.input?.startsWith(':-') ? test.input : `:- ${test.input}`;
+    return fs.promises.writeFile(path.resolve(workingDirectory, 'input.pl'), input || '', 'utf-8');
+  },
+});
+
 mooshakDaFeira({
   workingDirectory: os.tmpdir(),
   profiles: {
-    prolog: {
-      file: 'program.pl', // file name
-      preRunCommands: [
-        `cp ${commonCode} codigo_comum.pl`,
-        `cp ${publicPuzzles} puzzles_publicos.pl`,
-      ],
-      command: `swipl -q -t halt -s program.pl input.pl`, // the command which will be given stdin
-      timeout: 1000,
-      ignoreNewlinesOnCompare: false,
-      preRunHook: ({ test, workingDirectory }) => {
-        const input = test.input?.startsWith(':-') ? test.input : `:- ${test.input}`;
-        return fs.promises.writeFile(
-          path.resolve(workingDirectory, 'input.pl'),
-          input || '',
-          'utf-8'
-        );
-      },
-    },
+    prolog: genProfile(1000),
+    prologLong: genProfile(10000),
   },
   tests: [
     {
@@ -77,7 +73,7 @@ mooshakDaFeira({
       ...getTest('07'),
     },
     {
-      profile: 'prolog',
+      profile: 'prologLong',
       tags: ['public test'],
       description: 'Corresponds to test 15 given by the teacher',
       ...getTest('08'),
@@ -149,7 +145,7 @@ mooshakDaFeira({
       ...getTest('19'),
     },
     {
-      profile: 'prolog',
+      profile: 'prologLong',
       tags: ['public test'],
       description: 'Corresponds to test 39 given by the teacher',
       ...getTest('20'),
@@ -167,7 +163,7 @@ mooshakDaFeira({
       ...getTest('22'),
     },
     {
-      profile: 'prolog',
+      profile: 'prologLong',
       tags: ['public test'],
       description: 'Corresponds to test 45 given by the teacher',
       ...getTest('23'),
