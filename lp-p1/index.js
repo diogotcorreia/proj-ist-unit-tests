@@ -28,6 +28,7 @@ mooshakDaFeira({
   profiles: {
     prolog: genProfile(1000),
     prologLong: genProfile(10000),
+    prologHyperLong: genProfile(20000),
   },
   tests: [
     {
@@ -163,7 +164,7 @@ mooshakDaFeira({
       ...getTest('22'),
     },
     {
-      profile: 'prologLong',
+      profile: 'prologHyperLong',
       tags: ['public test'],
       description: 'Corresponds to test 45 given by the teacher',
       ...getTest('23'),
