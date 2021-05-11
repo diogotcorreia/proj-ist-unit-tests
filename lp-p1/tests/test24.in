@@ -1,0 +1,2 @@
+:- Fila = [[0,12],P22,P23,[25,0],[14,7],P26,P27, [15,9],P28,P29,P20], espacos_fila(h, Fila, Esps), Esps == [espaco(12, [P22, P23]), espaco(7, [P26, P27]), espaco(9, [P28, P29, P20])], writeln('true'); writeln('false').
+:- Fila = [[0,12],P22,P23,[25,0],[14,7],P26,P27,P21,P25, [15,9],P28,P29,P20], espacos_fila(v, Fila, Esps), Esps == [espaco(0, [P22, P23]), espaco(14, [P26, P27, P21, P25]), espaco(15, [P28, P29, P20])], writeln('true'); writeln('false').

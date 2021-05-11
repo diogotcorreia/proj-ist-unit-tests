@@ -169,6 +169,18 @@ mooshakDaFeira({
       description: 'Corresponds to test 45 given by the teacher',
       ...getTest('23'),
     },
+    {
+      profile: 'prolog',
+      tags: ['private test'],
+      description: 'Corresponds to test 6 on Mooshak, tests "espacos_fila"',
+      ...getTest('24'),
+    },
+    {
+      profile: 'prolog',
+      tags: ['private test'],
+      description: 'Corresponds to test 22 on Mooshak, tests "retira_impossiveis"',
+      ...getTest('25'),
+    },
   ],
   port: process.env.PORT || 5000,
 });
