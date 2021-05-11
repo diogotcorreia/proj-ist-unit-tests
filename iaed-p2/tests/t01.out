@@ -1,0 +1,8 @@
+help: Imprime os comandos disponíveis.
+quit: Termina o programa.
+set: Adiciona ou modifica o valor a armazenar.
+print: Imprime todos os caminhos e valores.
+find: Imprime o valor armazenado.
+list: Lista todos os componentes imediatos de um sub-caminho.
+search: Procura o caminho dado um valor.
+delete: Apaga um caminho e todos os subcaminhos.
