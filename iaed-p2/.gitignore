@@ -57,7 +57,7 @@ dkms.conf
 config
 
 # Built programs
-proj1
+proj2
 *.diff
 
 # Gen scripts
