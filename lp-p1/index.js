@@ -181,6 +181,12 @@ mooshakDaFeira({
       description: 'Corresponds to test 22 on Mooshak, tests "retira_impossiveis"',
       ...getTest('25'),
     },
+    {
+      profile: 'prolog',
+      tags: ['private test'],
+      description: 'Corresponds to test 18 on Mooshak, tests "numeros_comuns"',
+      ...getTest('26'),
+    },
   ],
   port: process.env.PORT || 5000,
 });
