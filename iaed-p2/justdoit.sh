@@ -67,7 +67,9 @@ echo ----------
 if [ $passed -eq $total ]; then
 	echo -e "Result: ${GREEN}ALL CLEAR! :D${NC}"
 else
+	((failed = total - passed))
 	echo -e "Result: ${RED}Some tests failed :(${NC}"
+	echo -e "\nYou've failed ${RED}${failed}${NC} tests!"
 fi
 
 echo 
