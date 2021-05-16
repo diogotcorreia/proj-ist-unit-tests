@@ -100,6 +100,8 @@ if [ $passed -eq $total ]; then
 		else
 			echo -e "Result: ${GREEN}ALL CLEAR! 0 MEMORY LEAKS/ERROR FOUND :D${NC}"
 		fi
+
+		rm -f valgrind.out
 	else
 		echo -e "Result: ${GREEN}ALL CLEAR! :D${NC}"
 	fi
