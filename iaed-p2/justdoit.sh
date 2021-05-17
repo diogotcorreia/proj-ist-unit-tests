@@ -6,8 +6,15 @@
 exename="exe_tmp"
 
 GREEN="\033[0;32m"
+YELLOW="\033[0;33m"
 RED="\033[0;31m"
 NC="\033[0m"
+
+# Valgrind flag: if valgrind is present in console, valgrind will be used when
+# running the tests and count all memory leaks that appear
+valgrind=${2:-false}
+leak_count=0
+mem_error_count=0
 
 # CD into this script's directory
 # There are several alternatives but this one seems to be the most compatible one
@@ -40,11 +47,33 @@ for tid in tests/*.in
 do
 	((total++))
 	tid=$(basename -s .in $tid)
-	./$exename < tests/$tid.in > tests/$tid.myout
+	if [ "$valgrind" == "valgrind" ]; then
+		valgrind ./$exename < tests/$tid.in > tests/$tid.myout 2>valgrind.out
+		grep -q "All heap blocks were freed -- no leaks are possible" valgrind.out
+		result_leak=$?
+		if [ "$result_leak" -gt 0 ]; then
+			((leak_count++))
+		fi
+		grep -q "ERROR SUMMARY: 0 errors" valgrind.out
+		result_mem=$?
+		if [ "$result_mem" -gt 0 ]; then
+			((mem_error_count++))
+		fi
+	else
+		./$exename < tests/$tid.in > tests/$tid.myout
+	fi
 	diff -y --suppress-common-lines tests/$tid.myout tests/$tid.out > tests/$tid.diff # original didn't use -u but ok
 	
 	if [ "$(wc -l < tests/$tid.diff)" -eq 0 ]; then
-		status="${GREEN}PASSED${NC}"
+		if [ "$valgrind" == "valgrind" ]; then
+			if [ "$result_leak" -eq 0 ] && [ "$result_mem" -eq 0 ]; then
+				status="${GREEN}PASSED. 0 MEMORY LEAKS/ERRORS${NC}"
+			else
+				status="${YELLOW}PASSED. BUT WITH MEMORY LEAKS/ERRORS! ${NC}"
+			fi
+		else
+			status="${GREEN}PASSED${NC}"
+		fi
 		((passed++))
 	else
 		status="${RED}FAILED${NC}"
@@ -65,9 +94,25 @@ rm -f $exename
 echo ----------
 
 if [ $passed -eq $total ]; then
-	echo -e "Result: ${GREEN}ALL CLEAR! :D${NC}"
+	if [ "$valgrind" == "valgrind" ]; then
+		if [ "$mem_error_count" -gt 0 ] || [ "$leak_count" -gt 0 ]; then
+			echo -e "Result: ${YELLOW}ALL CLEAR... BUT WITH MEMORY ${leak_count} LEAKS AND ${mem_error_count} MEMORY ERRORS.${NC}"
+		else
+			echo -e "Result: ${GREEN}ALL CLEAR! 0 MEMORY LEAKS/ERROR FOUND :D${NC}"
+		fi
+
+		rm -f valgrind.out
+	else
+		echo -e "Result: ${GREEN}ALL CLEAR! :D${NC}"
+	fi
 else
+	((failed = total - passed))
 	echo -e "Result: ${RED}Some tests failed :(${NC}"
+	echo -e "\nYou've failed ${RED}${failed}${NC} tests!"
+fi
+
+if [ "$valgrind" != "valgrind" ]; then
+	echo "Run with ./script path valgrind for memory check"
 fi
 
 echo 
