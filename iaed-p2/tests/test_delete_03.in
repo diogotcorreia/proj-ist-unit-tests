@@ -1,0 +1,9 @@
+set usr Utilizador
+set home/documents Docs
+set home/pictures My compromising photos :o
+set temp Temporary Files
+delete
+set temp Temporary Files
+set boot Boot Files
+list
+quit
