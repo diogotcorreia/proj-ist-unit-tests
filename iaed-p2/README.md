@@ -30,7 +30,7 @@ git clone https://github.com/diogotcorreia/proj-ist-unit-tests.git
 ### Method 1: Just Do It! by Raf (easier but less efficient)
 
 1. Go to this projet's tests folder inside where you cloned this repository into (`cd proj-ist-unit-tests/iaed-p2`)
-2. Run `./justdoit.sh PATH`, where PATH is where your `*.c` files are (for example, `../Proj2IAED/src`). Do **not** include a trailing slash.
+2. Run `./justdoit.sh PATH`, where PATH is where your `*.c` files are (for example, `../Proj2IAED/src`). Do **not** include a trailing slash. If you want to run valgrind with the tests add `valgrind` at the end (`./justdoit.sh PATH valgrind`).
 3. That's it!
 
 The script will create `.myout` and `.diff` files in the `tests/` directory so you can analyze them if you need to. To get rid of them, you can run `./justdoit.sh clean`.
