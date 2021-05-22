@@ -1,0 +1,7 @@
+set path/a 1
+set path/b 2
+set path/c 3
+delete path/b
+delete path/c
+print
+quit
