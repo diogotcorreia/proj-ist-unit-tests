@@ -112,7 +112,7 @@ else
 fi
 
 if [ "$valgrind" != "valgrind" ]; then
-	echo "Run with ./script path valgrind for memory check"
+	echo "Run with './justdoit.sh [path] valgrind' for memory check"
 fi
 
 echo 
