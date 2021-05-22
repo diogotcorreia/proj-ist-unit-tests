@@ -4,7 +4,7 @@ set users/admin2 backup do administrador
 set Home/Desktop/Pictures/Natal-2017 fotos do natal
 set Home/Desktop/Homework nothing sus here
 print
-list 
+list
 delete //users
 list
 delete
