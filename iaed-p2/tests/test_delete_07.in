@@ -1,0 +1,6 @@
+set usr 1
+set usr2 2
+set usr3 3
+delete usr
+list
+quit
