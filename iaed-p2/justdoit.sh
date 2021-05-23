@@ -69,7 +69,7 @@ do
 			if [ "$result_leak" -eq 0 ] && [ "$result_mem" -eq 0 ]; then
 				status="${GREEN}PASSED. 0 MEMORY LEAKS/ERRORS${NC}"
 			else
-				status="${YELLOW}PASSED. BUT WITH MEMORY LEAKS/ERRORS! ${NC}"
+				status="${RED}PASSED. BUT WITH MEMORY LEAKS/ERRORS! ${NC}"
 			fi
 		else
 			status="${GREEN}PASSED${NC}"
