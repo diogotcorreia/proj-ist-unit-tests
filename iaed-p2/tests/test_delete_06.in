@@ -1,0 +1,10 @@
+set abc 123
+set b/////////////adfgdf/azdgd/dhfhj/sdghst 5
+set aabc /b
+set hsbdguj/dfhfhd rdfh 
+set /////////////vbdfuys/isdobgubf/sifbiweuf/abc 7
+list
+delete abc
+print
+list
+quit
