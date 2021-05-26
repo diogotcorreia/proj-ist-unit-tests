@@ -1,0 +1,40 @@
+t 1 a
+t 3 a
+t -2 b
+t 0 c
+t 2 b
+l
+l 3
+l 2 1
+l 1 2
+l 45
+l 56 2 -3
+n 3
+n 0
+n -2
+n -23
+n 34
+u ola
+u       testes
+u
+u ola
+u
+m 1 ola TO DO
+m 5 ola DONE
+m 1 ola DONE
+m 1 ola TO DO
+m 1 nao IN PROGRESS
+m 1 ola DEBUG
+m 5 bruh DEBUG
+m 2 testes IN PROGRESS
+n 45
+m 2 testes TO DO
+m 2 testes DONE
+d DONE
+d DEBUG
+a
+a DONE
+a debug
+a 123
+a
+q

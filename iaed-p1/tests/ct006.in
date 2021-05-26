@@ -1,0 +1,6 @@
+t 50 mytask1
+t -30 mytask1
+t -30 mytask2
+t 0 mytask1
+t 0 mytask3
+q

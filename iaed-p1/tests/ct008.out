@@ -1,0 +1,47 @@
+task 1
+duplicate description
+invalid duration
+invalid duration
+task 2
+1 TO DO #1 a
+2 TO DO #2 b
+3: no such task
+2 TO DO #2 b
+1 TO DO #1 a
+1 TO DO #1 a
+2 TO DO #2 b
+45: no such task
+56: no such task
+2 TO DO #2 b
+-3: no such task
+3
+3
+invalid time
+invalid time
+37
+ola
+testes
+user already exists
+ola
+testes
+no such task
+duration=0 slack=-1
+task already started
+no such user
+no such activity
+no such task
+82
+task already started
+duration=45 slack=43
+1 37 a
+2 37 b
+no such activity
+TO DO
+IN PROGRESS
+DONE
+duplicate activity
+invalid description
+TO DO
+IN PROGRESS
+DONE
+123

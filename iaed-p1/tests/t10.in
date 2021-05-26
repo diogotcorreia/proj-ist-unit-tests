@@ -1,0 +1,23 @@
+a DEBUG
+u user
+t 1 proj
+n 3
+m 1 user IN PROGRESS
+n 2
+l
+m 1 user DEBUG
+n 3
+d DEBUG
+m 1 user DONE
+d DEBUG
+l
+m 1 user IN PROGRESS
+n 3
+m 1 user DEBUG
+l
+d DEBUG
+n 2
+m 1 user DONE
+d DONE
+l
+q
