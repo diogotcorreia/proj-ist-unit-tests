@@ -1,0 +1,13 @@
+u diogo
+t 1 lavar os olhos
+a WASHING
+m 1 diogo WASHING
+m 1 diogo IN PROGRESS
+m 1 diogo TO DO
+m 1 diogo WASHING
+m 1 diogo WASHING
+m 1 diogo DONE
+m 1 diogo IN PROGRESS
+n 1
+m 1 diogo DONE
+q
