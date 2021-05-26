@@ -1,0 +1,6 @@
+set /usr/local/abc um
+set /sbin/xpto dois
+set /usr/bin/xpto quatro
+set /usr/local/def tres
+print
+quit

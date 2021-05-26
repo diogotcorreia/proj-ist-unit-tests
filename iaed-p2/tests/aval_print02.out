@@ -1,0 +1,8 @@
+/guidelines.md orientações para a escrita do projeto
+/Makefile construção do projeto
+/tests/test02.in segundo teste
+/tests/test01.in primeiro teste
+/tests/Makefile execução dos testes
+/README.md enunciado do projeto
+/proj2.c resolução do projeto
+
