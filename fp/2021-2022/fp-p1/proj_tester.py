@@ -1,6 +1,7 @@
 import unittest
 import importlib.util
 import sys
+import requests
 
 if len(sys.argv) < 2:
     print(
@@ -63,5 +64,68 @@ class TestDocumentacao1(unittest.TestCase):
                          target.corrigir_doc(doc))
 
 
+#######################################################
+# Logic to handle updates automatically. DO NOT TOUCH #
+#######################################################
+
+
+def get_lastest_commit_hash():
+    try:
+        result = requests.get(
+            "https://api.github.com/repos/diogotcorreia/proj-ist-unit-tests/commits?path=fp%2F2021-2022%2Ffp-p1%2Fproj_tester.py&page=1&per_page=1"
+        )
+        return result.json()[0]['sha']
+    except:
+        print(
+            "Não foi possível verificar novas atualizações (o GitHub apenas permite 60 verificações por hora)"
+        )
+
+
+def get_saved_commit_hash():
+    try:
+        return open('.update_lock').read()
+    except:
+        return False
+
+
+def check_for_updates():
+    saved_hash = get_saved_commit_hash()
+    latest_hash = get_lastest_commit_hash()
+
+    if not latest_hash:
+        return
+
+    if saved_hash:
+        if saved_hash == latest_hash:
+            return
+        print("Foi encontrada uma nova atualização aos testes.")
+    else:
+        print("Esta é a primeira vez que estás a correr o programa.")
+
+    print(
+        "Esta operação irá substituir o teu ficheiro local com a nova versão, apagando quaisqueres alterações que tenham sido feitas aos testes locais."
+    )
+    print("Desejas atualizar dos testes? [y/N]")
+    response = input()
+    if response.lower() == 'y':
+        update_files(latest_hash)
+    else:
+        print("Os testes não foram atualizados a pedido do utilizador")
+
+
+def update_files(new_hash):
+    print("A atualizar os testes...")
+    open('.update_lock', 'w+').write(new_hash)
+
+    new_file = requests.get(
+        "https://raw.githubusercontent.com/diogotcorreia/proj-ist-unit-tests/master/fp/2021-2022/fp-p1/proj_tester.py"
+    )
+    open('proj_tester.py', 'w+').write(new_file.text)
+
+    print("Volta a executar o programa para carregar os novos testes")
+    exit()
+
+
 if __name__ == '__main__':
+    check_for_updates()
     unittest.main(argv=['first-arg-is-ignored'])
