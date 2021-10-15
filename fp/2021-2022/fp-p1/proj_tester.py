@@ -63,6 +63,114 @@ class TestDocumentacao1(unittest.TestCase):
         self.assertEqual('Buggy data base has wrong data',
                          target.corrigir_doc(doc))
 
+    def test_obter_posicao_1(self):
+        self.assertEqual(7,
+                         target.obter_posicao('B',7))
+    def test_obter_posicao_2(self):
+        self.assertEqual(8,
+                         target.obter_posicao('B',8))
+    def test_obter_posicao_3(self):
+        self.assertEqual(9,
+                         target.obter_posicao('B',9))
+    def test_obter_posicao_4(self):
+        self.assertEqual(1,
+                         target.obter_posicao('C',1))
+    def test_obter_posicao_5(self):
+        self.assertEqual(2,
+                         target.obter_posicao('C',2))
+    def test_obter_posicao_6(self):
+        self.assertEqual(3,
+                         target.obter_posicao('C',3))
+    def test_obter_posicao_7(self):
+        self.assertEqual(1,
+                         target.obter_posicao('E',1))
+    def test_obter_posicao_8(self):
+        self.assertEqual(4,
+                         target.obter_posicao('E',4))
+    def test_obter_posicao_9(self):
+        self.assertEqual(7,
+                         target.obter_posicao('E',7))
+    def test_obter_posicao_10(self):
+        self.assertEqual(3,
+                         target.obter_posicao('D',3))
+    def test_obter_posicao_11(self):
+        self.assertEqual(6,
+                         target.obter_posicao('D',6))
+    def test_obter_posicao_12(self):
+        self.assertEqual(9,
+                         target.obter_posicao('D',9))
+    def test_obter_posicao_13(self):
+        self.assertEqual(7,
+                         target.obter_posicao('B',4))
+    def test_obter_posicao_14(self):
+        self.assertEqual(8,
+                         target.obter_posicao('B',5))
+    def test_obter_posicao_15(self):
+        self.assertEqual(9,
+                         target.obter_posicao('B',6))
+    def test_obter_posicao_16(self):
+        self.assertEqual(1,
+                         target.obter_posicao('C',4))
+    def test_obter_posicao_17(self):
+        self.assertEqual(2,
+                         target.obter_posicao('C',5))
+    def test_obter_posicao_18(self):
+        self.assertEqual(3,
+                         target.obter_posicao('C',6))
+    def test_obter_posicao_19(self):
+        self.assertEqual(1,
+                         target.obter_posicao('E',2))
+    def test_obter_posicao_20(self):
+        self.assertEqual(4,
+                         target.obter_posicao('E',5))
+    def test_obter_posicao_21(self):
+        self.assertEqual(7,
+                         target.obter_posicao('E',8))
+    def test_obter_posicao_22(self):
+        self.assertEqual(3,
+                         target.obter_posicao('D',2))
+    def test_obter_posicao_23(self):
+        self.assertEqual(6,
+                         target.obter_posicao('D',5))
+    def test_obter_posicao_24(self):
+        self.assertEqual(9,
+                         target.obter_posicao('D',8))
+    def test_obter_posicao_25(self):
+        self.assertEqual(4,
+                         target.obter_posicao('B',1))
+    def test_obter_posicao_26(self):
+        self.assertEqual(5,
+                         target.obter_posicao('B',2))
+    def test_obter_posicao_27(self):
+        self.assertEqual(6,
+                         target.obter_posicao('B',3))
+    def test_obter_posicao_28(self):
+        self.assertEqual(4,
+                         target.obter_posicao('C',7))
+    def test_obter_posicao_29(self):
+        self.assertEqual(5,
+                         target.obter_posicao('C',8))
+    def test_obter_posicao_30(self):
+        self.assertEqual(6,
+                         target.obter_posicao('C',9))
+    def test_obter_posicao_31(self):
+        self.assertEqual(2,
+                         target.obter_posicao('E',3))
+    def test_obter_posicao_32(self):
+        self.assertEqual(5,
+                         target.obter_posicao('E',6))
+    def test_obter_posicao_33(self):
+        self.assertEqual(8,
+                         target.obter_posicao('E',9))
+    def test_obter_posicao_34(self):
+        self.assertEqual(2,
+                         target.obter_posicao('D',1))
+    def test_obter_posicao_35(self):
+        self.assertEqual(5,
+                         target.obter_posicao('D',4))
+    def test_obter_posicao_36(self):
+        self.assertEqual(8,
+                         target.obter_posicao('D',7))
 
 #######################################################
 # Logic to handle updates automatically. DO NOT TOUCH #
