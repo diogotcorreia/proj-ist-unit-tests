@@ -230,7 +230,7 @@ def update_files(new_hash):
     new_file = requests.get(
         "https://raw.githubusercontent.com/diogotcorreia/proj-ist-unit-tests/master/fp/2021-2022/fp-p1/proj_tester.py"
     )
-    open('proj_tester.py', 'w+').write(new_file.text)
+    open('proj_tester.py', 'w+', encoding='utf-8').write(new_file.text)
 
     print("Volta a executar o programa para carregar os novos testes")
     exit()
