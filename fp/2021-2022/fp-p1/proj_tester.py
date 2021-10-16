@@ -43,7 +43,7 @@ class TestDocumentacao1(unittest.TestCase):
         """
         Exemplo enunciado (caso, casos)
         """
-        self.assertTrue(target.eh_anagrama('caso', 'casos'))
+        self.assertFalse(target.eh_anagrama('caso', 'casos'))
 
     def test_corrigir_doc_1(self):
         """
