@@ -63,6 +63,13 @@ class TestDocumentacao1(unittest.TestCase):
         self.assertEqual('Buggy data base has wrong data',
                          target.corrigir_doc(doc))
 
+    def test_corrigir_doc_3(self):
+        """
+        Exemplo enunciado (Programacao e programacao)
+        """
+        doc = 'Programacao porgramacao e programacao'
+        self.assertEqual('Programacao e programacao',
+                         target.corrigir_doc(doc))
 
 class TestPIN2(unittest.TestCase):
     def test_obter_posicao_1(self):
@@ -172,6 +179,56 @@ class TestPIN2(unittest.TestCase):
 
     def test_obter_posicao_36(self):
         self.assertEqual(8, target.obter_posicao('D', 7))
+
+
+class TestDepuracao5(unittest.TestCase):
+    def test_eh_utilizador_1(self):
+        """
+        Exemplo enunciado {'name':'john.doe','pass':'aabcde','rule':{'vals':(1,3),'char':'a'}}
+        """
+        self.assertTrue(target.eh_utilizador({'name':'john.doe','pass':'aabcde','rule':{'vals':(1,3),'char':'a'}}))
+
+    def test_eh_utilizador_2(self):
+        """
+        Exemplo enunciado {'name':'john.doe','pass':'aabcde','rule':{'vals':1,'char':'a'}}
+        """
+        self.assertFalse(target.eh_utilizador({'name':'john.doe','pass':'aabcde','rule':{'vals':1,'char':'a'}}))
+
+    def test_eh_utilizador_3(self):
+        """
+        Exemplo enunciado {'name':'bruce','surname':'wayne','pass':'mynameisbatman','rule':{'vals':(2,8),'char':'m'}}
+        """
+        self.assertFalse(target.eh_utilizador({'name':'bruce','surname':'wayne','pass':'mynameisbatman','rule':{'vals':(2,8),'char':'m'}}))
+
+    def test_eh_utilizador_4(self):
+        """
+        Exemplo enunciado {'pass':'mynameisbatman','rule':{'vals':(2,8),'char':'m'}}
+        """
+        self.assertFalse(target.eh_utilizador({'pass':'mynameisbatman','rule':{'vals':(2,8),'char':'m'}}))
+
+    def test_eh_utilizador_5(self):
+        """
+        Exemplo enunciado {'name':'','pass':'mynameisbatman','rule':{'vals':(2,8),'char':'m'}}
+        """
+        self.assertFalse(target.eh_utilizador({'name':'','pass':'mynameisbatman','rule':{'vals':(2,8),'char':'m'}}))
+
+    def test_eh_utilizador_6(self):
+        """
+        Exemplo enunciado {'name':'bruce.wayne','pass':'mynameisbatman','rule':{}}
+        """
+        self.assertFalse(target.eh_utilizador({'name':'bruce.wayne','pass':'mynameisbatman','rule':{}}))
+
+    def test_eh_utilizador_7(self):
+        """
+        Exemplo enunciado {'name':'bruce.wayne','pass':'mynameisbatman','rule':{'vals':(2,8),'char':'ma'}}
+        """
+        self.assertFalse(target.eh_utilizador({'name':'bruce.wayne','pass':'mynameisbatman','rule':{'vals':(2,8),'char':'ma'}}))
+
+    def test_eh_utilizador_8(self):
+        """
+        Exemplo enunciado {'name':'bruce.wayne','pass':'mynameisbatman','rule':{'vals':(2,8),'char':'m'}}
+        """
+        self.assertTrue(target.eh_utilizador({'name':'bruce.wayne','pass':'mynameisbatman','rule':{'vals':(2,8),'char':'m'}}))
 
 
 #######################################################
