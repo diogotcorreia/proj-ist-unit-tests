@@ -217,6 +217,36 @@ class TestPIN2(unittest.TestCase):
     def test_obter_posicao_36(self):
         self.assertEqual(8, target.obter_posicao('D', 7))
 
+    def test_obter_pin_1(self):
+        with self.assertRaises(ValueError, msg='ValueError not raised') as ctx:
+            target.obter_pin(1)
+        self.assertEqual('obter_pin: argumento invalido',
+                         str(ctx.exception))
+    
+    def test_obter_pin_2(self):
+        with self.assertRaises(ValueError, msg='ValueError not raised') as ctx:
+            target.obter_pin(('E','C','D'))
+        self.assertEqual('obter_pin: argumento invalido',
+                         str(ctx.exception))
+
+    def test_obter_pin_3(self):
+        with self.assertRaises(ValueError, msg='ValueError not raised') as ctx:
+            target.obter_pin(('E','C','D','E','C','D','E','C','D','E','C'))
+        self.assertEqual('obter_pin: argumento invalido',
+                         str(ctx.exception))
+
+    def test_obter_pin_4(self):
+        with self.assertRaises(ValueError, msg='ValueError not raised') as ctx:
+            target.obter_pin(('z','E','C','D'))
+        self.assertEqual('obter_pin: argumento invalido',
+                         str(ctx.exception))
+    
+    def test_obter_pin_5(self):
+        with self.assertRaises(ValueError, msg='ValueError not raised') as ctx:
+            target.obter_pin(('', 'E', 'C', 'D'))
+        self.assertEqual('obter_pin: argumento invalido',
+                         str(ctx.exception))
+
 
 class TestDepuracao5(unittest.TestCase):
     def test_eh_utilizador_1(self):
