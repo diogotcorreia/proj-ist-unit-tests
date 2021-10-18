@@ -53,6 +53,9 @@ class TestDocumentacao1(unittest.TestCase):
     
     def test_eh_anagrama_3(self):
         self.assertFalse(target.eh_anagrama('igual', 'igual'))
+    
+    def test_eh_anagrama_3(self):
+        self.assertFalse(target.eh_anagrama('iGual', 'igual'))
 
     def test_corrigir_doc_1(self):
         """
@@ -95,6 +98,12 @@ class TestDocumentacao1(unittest.TestCase):
     def test_corrigir_doc_6(self):
         with self.assertRaises(ValueError, msg='ValueError not raised') as ctx:
             target.corrigir_doc('')
+        self.assertEqual('corrigir_doc: argumento invalido',
+                         str(ctx.exception))
+
+    def test_corrigir_doc_7(self):
+        with self.assertRaises(ValueError, msg='ValueError not raised') as ctx:
+            target.corrigir_doc('letr4s e numer0s')
         self.assertEqual('corrigir_doc: argumento invalido',
                          str(ctx.exception))
     
