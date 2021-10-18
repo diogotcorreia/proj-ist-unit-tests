@@ -33,6 +33,12 @@ class TestDocumentacao1(unittest.TestCase):
         """
         self.assertEqual('x', target.corrigir_palavra('abBAx'))
 
+    def test_corrigir_palavra_3(self):
+        self.assertEqual('', target.corrigir_palavra('aaDBbdAcCeEA'))
+
+    def test_corrigir_palavra_4(self):
+        self.assertEqual('Ol', target.corrigir_palavra('OlaA'))
+
     def test_eh_anagrama_1(self):
         """
         Exemplo enunciado (caso, SaCo)
@@ -44,6 +50,12 @@ class TestDocumentacao1(unittest.TestCase):
         Exemplo enunciado (caso, casos)
         """
         self.assertFalse(target.eh_anagrama('caso', 'casos'))
+    
+    def test_eh_anagrama_3(self):
+        self.assertFalse(target.eh_anagrama('igual', 'igual'))
+    
+    def test_eh_anagrama_3(self):
+        self.assertFalse(target.eh_anagrama('iGual', 'igual'))
 
     def test_corrigir_doc_1(self):
         """
@@ -70,6 +82,31 @@ class TestDocumentacao1(unittest.TestCase):
         doc = 'Programacao porgramacao e programacao'
         self.assertEqual('Programacao e programacao',
                          target.corrigir_doc(doc))
+    
+    def test_corrigir_doc_4(self):
+        with self.assertRaises(ValueError, msg='ValueError not raised') as ctx:
+            target.corrigir_doc('Dois  espaços')
+        self.assertEqual('corrigir_doc: argumento invalido',
+                         str(ctx.exception))
+    
+    def test_corrigir_doc_5(self):
+        with self.assertRaises(ValueError, msg='ValueError not raised') as ctx:
+            target.corrigir_doc(1)
+        self.assertEqual('corrigir_doc: argumento invalido',
+                         str(ctx.exception))
+
+    def test_corrigir_doc_6(self):
+        with self.assertRaises(ValueError, msg='ValueError not raised') as ctx:
+            target.corrigir_doc('')
+        self.assertEqual('corrigir_doc: argumento invalido',
+                         str(ctx.exception))
+
+    def test_corrigir_doc_7(self):
+        with self.assertRaises(ValueError, msg='ValueError not raised') as ctx:
+            target.corrigir_doc('letr4s e numer0s')
+        self.assertEqual('corrigir_doc: argumento invalido',
+                         str(ctx.exception))
+    
 
 class TestPIN2(unittest.TestCase):
     def test_obter_posicao_1(self):
