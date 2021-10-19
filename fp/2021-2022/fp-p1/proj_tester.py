@@ -54,7 +54,7 @@ class TestDocumentacao1(unittest.TestCase):
     def test_eh_anagrama_3(self):
         self.assertFalse(target.eh_anagrama('igual', 'igual'))
     
-    def test_eh_anagrama_3(self):
+    def test_eh_anagrama_4(self):
         self.assertFalse(target.eh_anagrama('iGual', 'igual'))
 
     def test_corrigir_doc_1(self):
@@ -246,6 +246,44 @@ class TestPIN2(unittest.TestCase):
             target.obter_pin(('', 'E', 'C', 'D'))
         self.assertEqual('obter_pin: argumento invalido',
                          str(ctx.exception))
+
+
+class TestVerificacaoDados3(unittest.TestCase):
+    def test_eh_entrada_1(self):
+        self.assertFalse(target.eh_entrada(1))
+
+    def test_eh_entrada_2(self):
+        self.assertFalse(target.eh_entrada(('a','b')))
+
+    def test_eh_entrada_3(self):
+        self.assertFalse(target.eh_entrada(('','[aaaaa]',(1,2))))
+
+    def test_eh_entrada_4(self):
+        self.assertFalse(target.eh_entrada(('A','[aaaaa]',(1,2))))
+
+    def test_eh_entrada_5(self):
+        self.assertFalse(target.eh_entrada(('aa', '', (1,2))))
+
+    def test_eh_entrada_6(self):
+        self.assertFalse(target.eh_entrada(('aa', 'abcdefg', (1,2))))
+
+    def test_eh_entrada_7(self):
+        self.assertFalse(target.eh_entrada(('aa', '[abcdef', (1,2))))
+
+    def test_eh_entrada_8(self):
+        self.assertFalse(target.eh_entrada(('aa', '[aaaaa]', ())))
+
+    def test_eh_entrada_9(self):
+        self.assertFalse(target.eh_entrada(('aa', '[aaaaa]', ('a',2))))
+
+    def test_eh_entrada_10(self):
+        self.assertFalse(target.eh_entrada(('aa', '[aaaaa]', (-1,2))))
+
+    def test_validar_cifra_1(self):
+        self.assertTrue(target.validar_cifra('zzz-yyy-ccc-aaa-bbb', '[abcyz]'))
+
+    def test_validar_cifra_2(self):
+        self.assertTrue(target.validar_cifra('zzz-bb-aa-d-c', '[zabcd]'))
 
 
 class TestDepuracao5(unittest.TestCase):
