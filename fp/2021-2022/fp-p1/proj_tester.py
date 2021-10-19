@@ -285,6 +285,65 @@ class TestVerificacaoDados3(unittest.TestCase):
     def test_validar_cifra_2(self):
         self.assertTrue(target.validar_cifra('zzz-bb-aa-d-c', '[zabcd]'))
 
+    def test_filtrar_bdb_1(self):
+        with self.assertRaises(ValueError, msg='ValueError not raised') as ctx:
+            target.filtrar_bdb(1)
+        self.assertEqual('filtrar_bdb: argumento invalido',
+                         str(ctx.exception))
+
+    def test_filtrar_bdb_2(self):
+        with self.assertRaises(ValueError, msg='ValueError not raised') as ctx:
+            target.filtrar_bdb([('aaaaa-bbb-zx-yz-xy', '[]',(950,300))])
+        self.assertEqual('filtrar_bdb: argumento invalido',
+                         str(ctx.exception))
+    
+    def test_filtrar_bdb_3(self):
+        with self.assertRaises(ValueError, msg='ValueError not raised') as ctx:
+            target.filtrar_bdb([('aaaaa-bbb-zx-yz-xy', '[abxyz]')])
+        self.assertEqual('filtrar_bdb: argumento invalido',
+                         str(ctx.exception))
+
+    def test_filtrar_bdb_4(self):
+        self.assertEqual([], target.filtrar_bdb([('aaaaa-bbb-zx-yz-xy', '[abxyz]', (950, 300))]))
+
+    def test_filtrar_bdb_5(self):
+        self.assertEqual([('a-b-c-d-e-f-g-h', '[xxxxx]', (124, 325, 7)), ('entrada-muito-errada', '[abcde]', (50, 404))], target.filtrar_bdb([('aaaaa-bbb-zx-yz-xy', '[abxyz]', (950, 300)), ('a-b-c-d-e-f-g-h', '[xxxxx]', (124, 325, 7)), ('entrada-muito-errada', '[abcde]', (50, 404))]))
+
+
+class TesteDesencriptacaoDeDados4(unittest.TestCase):
+    def test_obter_num_seguranca_1(self):
+        self.assertEqual(9, target.obter_num_seguranca((1, 10, 100)))
+
+    def test_obter_num_seguranca_2(self):
+        self.assertEqual(9, target.obter_num_seguranca((100, 1, 10)))
+
+    def test_obter_num_seguranca_3(self):
+        self.assertEqual(9, target.obter_num_seguranca((100, 10, 1)))
+
+    def test_obter_num_seguranca_4(self):
+        self.assertEqual(351, target.obter_num_seguranca((420, 69, 31415)))
+
+    def test_obter_num_seguranca_5(self):
+        self.assertEqual(9, target.obter_num_seguranca((1, 100, 10)))
+    
+    def test_obter_num_seguranca_6(self):
+        self.assertEqual(9, target.obter_num_seguranca((10, 100, 1)))
+
+    def test_obter_num_seguranca_7(self):
+        self.assertEqual(9, target.obter_num_seguranca((10, 1, 100)))
+
+    def test_decifrar_texto_1(self):
+        self.assertEqual('esta cifra e quase inquebravel', target.decifrar_texto('qgfo-qutdo-s-egoes-wzegsnfmjqz', 325))
+
+    def test_decifrar_texto_2(self):
+        self.assertEqual('bpqx zfcox b nrxpb fknrbyoxsbi', target.decifrar_texto('qgfo-qutdo-s-egoes-wzegsnfmjqz', 10))
+
+    def test_decifrar_bdb_1(self):
+        with self.assertRaises(ValueError, msg='ValueError not raised') as ctx:
+            target.decifrar_bdb(1)
+        self.assertEqual('decifrar_bdb: argumento invalido',
+                         str(ctx.exception))
+
 
 class TestDepuracao5(unittest.TestCase):
     def test_eh_utilizador_1(self):
