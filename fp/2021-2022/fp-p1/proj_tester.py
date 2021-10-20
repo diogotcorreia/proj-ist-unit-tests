@@ -52,10 +52,10 @@ class TestDocumentacao1(unittest.TestCase):
         self.assertFalse(target.eh_anagrama('caso', 'casos'))
     
     def test_eh_anagrama_3(self):
-        self.assertFalse(target.eh_anagrama('igual', 'igual'))
+        self.assertTrue(target.eh_anagrama('igual', 'igual'))
     
     def test_eh_anagrama_4(self):
-        self.assertFalse(target.eh_anagrama('iGual', 'igual'))
+        self.assertTrue(target.eh_anagrama('iGual', 'igual'))
 
     def test_corrigir_doc_1(self):
         """
