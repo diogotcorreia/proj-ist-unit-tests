@@ -101,6 +101,24 @@ class TestDocumentacao1(unittest.TestCase):
         self.assertEqual('corrigir_doc: argumento invalido',
                          str(ctx.exception))
     
+    def test_corrigir_doc_8(self):
+        with self.assertRaises(ValueError, msg='ValueError not raised') as ctx:
+            target.corrigir_doc('Programacao Programacao porgramacao')
+        self.assertEqual('Programacao Programacao',
+                         str(ctx.exception))
+    
+    def test_corrigir_doc_9(self):
+        with self.assertRaises(ValueError, msg='ValueError not raised') as ctx:
+            target.corrigir_doc('Programacao com objetos e bojetos')
+        self.assertEqual('Programacao com objetos e',
+                         str(ctx.exception))
+
+    def test_corrigir_doc_10(self):
+        with self.assertRaises(ValueError, msg='ValueError not raised') as ctx:
+            target.corrigir_doc('Era la suma souvenir del universo la inmaculada briosa y sobria marioneta danesa de adanes"')
+        self.assertEqual('Era la suma souvenir del la inmaculada briosa y marioneta danesa de',
+                         str(ctx.exception))
+    
 
 class TestPIN2(unittest.TestCase):
     def test_obter_posicao_1(self):
