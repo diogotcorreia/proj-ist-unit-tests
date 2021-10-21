@@ -101,6 +101,21 @@ class TestDocumentacao1(unittest.TestCase):
         self.assertEqual('corrigir_doc: argumento invalido',
                          str(ctx.exception))
     
+    def test_corrigir_doc_8(self):
+        doc = 'Programacao Programacao porgramacao'
+        self.assertEqual('Programacao Programacao',
+                         target.corrigir_doc(doc))
+    
+    def test_corrigir_doc_9(self):
+        doc = 'Programacao com objetos e bojetos'
+        self.assertEqual('Programacao com objetos e',
+                         target.corrigir_doc(doc))
+
+    def test_corrigir_doc_10(self):
+        doc = 'Era la suma souvenir del universo la inmaculada briosa y sobria marioneta danesa de adanes'
+        self.assertEqual('Era la suma souvenir del la inmaculada briosa y marioneta danesa de',
+                         target.corrigir_doc(doc))
+    
 
 class TestPIN2(unittest.TestCase):
     def test_obter_posicao_1(self):
