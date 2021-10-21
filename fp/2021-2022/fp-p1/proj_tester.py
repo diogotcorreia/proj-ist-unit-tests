@@ -113,7 +113,7 @@ class TestDocumentacao1(unittest.TestCase):
 
     def test_corrigir_doc_10(self):
         doc = 'Era la suma souvenir del universo la inmaculada briosa y sobria marioneta danesa de adanes'
-        self.assertEqual('Era la suma souvenir del la inmaculada briosa y marioneta danesa de,
+        self.assertEqual('Era la suma souvenir del la inmaculada briosa y marioneta danesa de',
                          target.corrigir_doc(doc))
     
 
