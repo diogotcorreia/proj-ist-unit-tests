@@ -402,6 +402,18 @@ class TestDepuracao5(unittest.TestCase):
         Exemplo enunciado {'name':'bruce.wayne','pass':'mynameisbatman','rule':{'vals':(2,8),'char':'m'}}
         """
         self.assertTrue(target.eh_utilizador({'name':'bruce.wayne','pass':'mynameisbatman','rule':{'vals':(2,8),'char':'m'}}))
+    
+    def test_eh_senha_valida_1(self):
+        """
+        Exemplo enunciado ('aabcd', {'vals': (1,3), 'char':'a'})
+        """
+        self.assertTrue(target.eh_senha_valida('aabcde', {'vals': (1, 3), 'char': 'a'}))
+
+    def test_eh_senha_valida_2(self):
+        """
+        Exemplo enunciado ('cdefgh', {'vals': (1,3), 'char':'b'})
+        """
+        self.assertFalse(target.eh_senha_valida('cdefgh', {'vals': (1, 3), 'char': 'b'}))
 
 
 #######################################################
