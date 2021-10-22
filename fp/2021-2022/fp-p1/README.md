@@ -10,17 +10,42 @@ Aceitam-se contribuições para mais testes.
 
 ## Como usar?
 
-1. Fazer download do ficheiro [proj_tester.py](https://raw.githubusercontent.com/diogotcorreia/proj-ist-unit-tests/master/fp/2021-2022/fp-p1/proj_tester.py).
+1. Fazer download do ficheiro [proj_tester.py](https://raw.githubusercontent.com/diogotcorreia/proj-ist-unit-tests/master/fp/2021-2022/fp-p1/proj_tester.py), basta fazer `CTRL+S`.
 2. Guardar o ficheiro numa pasta (preferencialmente sozinho, pois irá ser criado um ficheiro `.update_lock` na mesma para verificar atualizações).
-3. Executar o ficheiro com o python com o seguinte comando, assumindo que o terminal se encontra na pasta do ficheiro de testes:
+3. Ir para a pasta do ficheiro de testes no terminal executando o seguinte comando:
 
-   ```bash
-   python proj_tester.py caminho/para/projeto.py
-   ```
+    ```bash
+    cd caminho/para/a/pasta
+    ```
+    Por exemplo, `C:\Users\diogo\Documents\FP\Tester` ou `/home/diogo/Documents/FP/Tester`.
 
-   Onde devem substituir com o caminho para o projeto. Pode ser um caminho relativo, e depende do sistema operativo.
+    Caso apareça o erro `ImportError: No module named requests` têm de correr este comando:
+    ```bash
+    pip install requests
+    ```
+    Se o anterior tiver dado erro corram este:
+    ```bash
+    pip3 install requests
+    ```
 
-   Por exemplo, `C:\Users\diogo\Documents\FP\projeto.py` ou `/home/diogo/Documents/FP/projeto.py`.
+4. Executar o ficheiro com o python com o seguinte comando:
+
+    ```bash
+    python proj_tester.py caminho/para/projeto.py
+    ```
+
+    Ou
+
+    ```bash
+    python proj_tester.py caminho/para/projeto.py 2> resultados.txt
+    ```
+
+    Onde devem substituir com o caminho para o projeto. Pode ser um caminho relativo, e depende do sistema operativo.
+
+    Por exemplo, `C:\Users\diogo\Documents\FP\projeto.py` (para Windows) ou `/home/diogo/Documents/FP/projeto.py` (para Linux/macOS).
+
+    Se utilizarem o último comando podem visualizar os resultados no ficheiro `resultados.txt` na pasta onde foi guardado o ficheiro `proj_tester.py`.
+    
 
 ## Como contribuir?
 
