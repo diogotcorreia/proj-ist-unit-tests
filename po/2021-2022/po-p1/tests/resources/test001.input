@@ -1,0 +1,13 @@
+PARTNER|S1|Toshiba|Tokyo, Japan
+PARTNER|W2|Papelaria Fernandes|Oeiras, Portugal
+PARTNER|P1|Publicações Europa-América|Lisboa, Portugal
+PARTNER|P3|O’Reilly|Köln, Germany
+PARTNER|R2|Jorge Figueiredo|Lisboa, Portugal
+PARTNER|E4|Filomena Figueiredo|Lisboa, Portugal
+PARTNER|ER|Abdul Figueiredo|Casablanca, Morocco
+PARTNER|O9|Hellen Figueiredo|San Francisco, CA, USA
+PARTNER|H2SO4|John Figueiredo|Wellington, New Zealand
+PARTNER|H2O|Rohit Figueiredo|New Delhi, India
+BATCH_S|HIDROGÉNIO|S1|200|5000
+BATCH_S|OXIGÉNIO|S1|1200|2500
+BATCH_M|ÁGUA|R2|800|5000|0.1|HIDROGÉNIO:2#OXIGÉNIO:1

@@ -3,7 +3,7 @@ include ${CONFIG}
 TESTS_CLASSPATH=tests
 
 all: junit.jar compile
-	java -jar junit.jar -cp "$(PROJECT_CLASSPATH):$(TESTS_CLASSPATH)" -p ggctests --disable-banner
+	java -jar junit.jar -cp "$(PROJECT_CLASSPATH):$(TESTS_CLASSPATH)" -scan-classpath --disable-banner
 
 compile:
 	CLASSPATH="$(PROJECT_CLASSPATH):junit.jar" javac -encoding UTF-8 `find . -name \*.java`
