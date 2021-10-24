@@ -19,15 +19,6 @@ Aceitam-se contribuições para mais testes.
     ```
     Por exemplo, `C:\Users\diogo\Documents\FP\Tester` ou `/home/diogo/Documents/FP/Tester`.
 
-    Caso apareça o erro `ImportError: No module named requests` têm de correr este comando:
-    ```bash
-    pip install requests
-    ```
-    Se o anterior tiver dado erro corram este:
-    ```bash
-    pip3 install requests
-    ```
-
 4. Executar o ficheiro com o python com o seguinte comando:
 
     ```bash
@@ -45,6 +36,16 @@ Aceitam-se contribuições para mais testes.
     Por exemplo, `C:\Users\diogo\Documents\FP\projeto.py` (para Windows) ou `/home/diogo/Documents/FP/projeto.py` (para Linux/macOS).
 
     Se utilizarem o último comando podem visualizar os resultados no ficheiro `resultados.txt` na pasta onde foi guardado o ficheiro `proj_tester.py`.
+    
+
+    Caso apareça o erro `ImportError: No module named requests` têm de correr este comando:
+    ```bash
+    pip install requests
+    ```
+    Se o anterior tiver dado erro corram este:
+    ```bash
+    pip3 install requests
+    ```
     
 
 ## Como contribuir?
