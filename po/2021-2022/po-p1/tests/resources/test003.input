@@ -1,0 +1,5 @@
+PARTNER|MM|John Figueiredo|Wellington, New Zealand
+PARTNER|P1|Lages do ChC#o|Lisboa, Portugal
+PARTNER|S1|Toshiba|Tokyo, Japan
+BATCH_S|HIDROGENIO|S1|200|5000
+BATCH_S|OXIGENIO|P1|1200|2500
