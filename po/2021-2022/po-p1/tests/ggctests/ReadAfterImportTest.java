@@ -28,7 +28,7 @@ public class ReadAfterImportTest {
 
             this.runApp();
 
-            assertEquals(getTextFromFile("expected/test" + testId + "-partners.output"), this.interaction.getResult());
+            assertEquals(getTextFromFile("expected/test" + testId + "/partners.output"), this.interaction.getResult());
         }
 
         @Test
@@ -37,7 +37,7 @@ public class ReadAfterImportTest {
 
             this.runApp();
 
-            assertEquals(getTextFromFile("expected/test" + testId + "-products.output"), this.interaction.getResult());
+            assertEquals(getTextFromFile("expected/test" + testId + "/products.output"), this.interaction.getResult());
         }
 
         @Test
@@ -46,7 +46,7 @@ public class ReadAfterImportTest {
 
             this.runApp();
 
-            assertEquals(getTextFromFile("expected/test" + testId + "-batches.output"), this.interaction.getResult());
+            assertEquals(getTextFromFile("expected/test" + testId + "/batches.output"), this.interaction.getResult());
         }
     }
 
