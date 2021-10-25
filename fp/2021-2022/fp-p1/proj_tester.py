@@ -56,12 +56,6 @@ class TestDocumentacao1(unittest.TestCase):
         """
         self.assertFalse(target.eh_anagrama("caso", "casos"))
 
-    def test_eh_anagrama_3(self):
-        self.assertTrue(target.eh_anagrama("caso", "caso"))
-
-    def test_eh_anagrama_4(self):
-        self.assertTrue(target.eh_anagrama("casO", "Caso"))
-
     def test_corrigir_doc_1(self):
         """
         Exemplo enunciado (???)
