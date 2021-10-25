@@ -129,7 +129,7 @@ public class ReadAfterImportTest {
     }
 
     /**
-    Corresponds to test A-07-01-M-ok
+    Corresponds to tests A-07-01-M-ok and A-08-01-M-ok
      */
     @Nested
     public class ShowPartnerByKeyTest extends GenericReadAfterImportTest {
@@ -169,9 +169,9 @@ public class ReadAfterImportTest {
             super("009");
         }
 
-        @ParameterizedTest
+        @ParameterizedTest(name = "get partner MmMmAa1 through key {0}")
         @ValueSource(strings = { "MmMmAa1", "mmmmaa1", "mMmMaA1", "MMMMAA1" })
-        void getPartnerByKey1(String partnerKey) {
+        void getPartnerByKey(String partnerKey) {
             this.interaction.addMenuOptions(6, 1);
             this.interaction.addFieldValues(partnerKey);
 

@@ -41,6 +41,7 @@ public class DateTest extends PoUILibTest {
         assertThrownCommandException(InvalidDateException.class, "Data inválida: -1");
         assertThrownCommandException(InvalidDateException.class, "Data inválida: -30");
         assertThrownCommandException(InvalidDateException.class, "Data inválida: 0");
+        assertNoMoreExceptions();
         assertEquals("", this.interaction.getResult());
     }
 
