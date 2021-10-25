@@ -306,15 +306,6 @@ class TestVerificacaoDados3(unittest.TestCase):
     def test_eh_entrada_13(self):
         self.assertFalse(target.eh_entrada(("aa", "[aaa]a]", (1, 2))))
 
-    def test_eh_entrada_14(self):
-        self.assertFalse(target.eh_entrada(("aa-", "[aaaaa]", (1, 2))))
-
-    def test_eh_entrada_15(self):
-        self.assertFalse(target.eh_entrada(("-aa", "[aaaaa]", (1, 2))))
-
-    def test_eh_entrada_16(self):
-        self.assertFalse(target.eh_entrada(("a--a", "[aaaaa]", (1, 2))))
-
     def test_eh_entrada_17(self):
         self.assertFalse(target.eh_entrada(("aa", "[aaaaa]", ())))
 
@@ -562,75 +553,6 @@ class TestDepuracao5(unittest.TestCase):
     def test_filtrar_senhas_3(self):
         with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
             target.filtrar_senhas([])
-        self.assertEqual("filtrar_senhas: argumento invalido", str(ctx.exception))
-
-    def test_filtrar_senhas_4(self):
-        bdb = [
-            {
-                "outracoisasemsernome": "john.doe",
-                "pass": "aabcde",
-                "rule": {"vals": (1, 3), "char": "a"},
-            },
-            {
-                "name": "jane.doe",
-                "pass": "cdefgh",
-                "rule": {"vals": (1, 3), "char": "b"},
-            },
-            {
-                "name": "jack.doe",
-                "pass": "cccccc",
-                "rule": {"vals": (2, 9), "char": "c"},
-            },
-        ]
-
-        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
-            target.filtrar_senhas(bdb)
-        self.assertEqual("filtrar_senhas: argumento invalido", str(ctx.exception))
-
-    def test_filtrar_senhas_5(self):
-        bdb = [
-            {
-                "nome": "john.doe",
-                "pass": "aabcde",
-                "rule": {"vals": (1, 3), "char": "a"},
-            },
-            {
-                "name": "jane.doe",
-                "pass": "cdefghpqppp",
-                "rule": {"vals": (1, 3), "char": "b"},
-            },
-            {
-                "name": "jack.doe",
-                "pass": "cccccc",
-                "rule": {"vals": (2, 9), "char": "c"},
-            },
-        ]
-
-        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
-            target.filtrar_senhas(bdb)
-        self.assertEqual("filtrar_senhas: argumento invalido", str(ctx.exception))
-
-    def test_filtrar_senhas_6(self):
-        bdb = [
-            {
-                "nome": "john.doe",
-                "pass": "aabcde",
-                "rule": {"vals": (1, 3), "char": "a"},
-            },
-            {
-                "name": "jane.doe",
-                "pass": "cdefgh",
-                "rule": {"vals": (3), "char": "b"},
-            },
-            {
-                "name": "jack.doe",
-                "pass": "cccccc",
-                "rule": {"vals": (2, 9), "char": "c"},
-            },
-        ]
-
-        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
-            target.filtrar_senhas(bdb)
         self.assertEqual("filtrar_senhas: argumento invalido", str(ctx.exception))
 
     def test_filtrar_senhas_7(self):
