@@ -77,6 +77,12 @@ public abstract class PoUILibTest {
     assertEquals("Operação inválida: " + msg, ce.toString());
   }
 
+  protected void assertNoMoreExceptions() {
+    if (this.interaction.getCommandExceptions().size() != 0) {
+      fail("Expected commands to not throw exceptions. The following exceptions were thrown: " + this.interaction.getCommandExceptions());
+    }
+  }
+
   protected void loadFromInputFile(String fileName) {
     try {
       this.warehouseManager.importFile("tests/resources/" + fileName);

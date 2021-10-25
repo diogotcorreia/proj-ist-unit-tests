@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.CsvSource;
 import ggctests.utils.PoUILibTest;
 
 import ggc.app.exceptions.InvalidDateException;
@@ -28,6 +31,7 @@ public class ReadAfterImportTest {
 
             this.runApp();
 
+            assertNoMoreExceptions();
             assertEquals(getTextFromFile("expected/test" + testId + "/partners.output"), this.interaction.getResult());
         }
 
@@ -37,6 +41,7 @@ public class ReadAfterImportTest {
 
             this.runApp();
 
+            assertNoMoreExceptions();
             assertEquals(getTextFromFile("expected/test" + testId + "/products.output"), this.interaction.getResult());
         }
 
@@ -46,6 +51,7 @@ public class ReadAfterImportTest {
 
             this.runApp();
 
+            assertNoMoreExceptions();
             assertEquals(getTextFromFile("expected/test" + testId + "/batches.output"), this.interaction.getResult());
         }
     }
@@ -131,34 +137,48 @@ public class ReadAfterImportTest {
             super("008");
         }
 
-        @Test
-        void getPartnerByKey1() {
+        @ParameterizedTest(name = "get partner with key {0}")
+        @CsvSource(
+            delimiter = ';',
+            value = {
+                "M1;M1|Rohit Figueiredo|New Delhi, India|NORMAL|0|0|0|0",
+                "P1;P1|Lages do Chão|Lisboa, Portugal|NORMAL|0|0|0|0",
+                "W2;W2|Pedraria Fonseca|Oeiras, Portugal|NORMAL|0|0|0|0"
+            }
+        )
+        void getPartnerByKey(String key, String expectedResult) {
             this.interaction.addMenuOptions(6, 1);
-            this.interaction.addFieldValues("M1");
+            this.interaction.addFieldValues(key);
 
             this.runApp();
 
-            assertEquals("M1|Rohit Figueiredo|New Delhi, India|NORMAL|0|0|0|0", this.interaction.getResult());
+            assertNoMoreExceptions();
+            assertEquals(expectedResult, this.interaction.getResult());
         }
 
-        @Test
-        void getPartnerByKey2() {
-            this.interaction.addMenuOptions(6, 1);
-            this.interaction.addFieldValues("P1");
+        void listProducts() {}
+        void listBatches() {}
+    }
 
-            this.runApp();
-
-            assertEquals("P1|Lages do Chão|Lisboa, Portugal|NORMAL|0|0|0|0", this.interaction.getResult());
+    /**
+    Corresponds to test A-07-02-M-ok
+     */
+    @Nested
+    public class PartnerKeyCaseInsensitiveTest extends GenericReadAfterImportTest {
+        public PartnerKeyCaseInsensitiveTest() {
+            super("009");
         }
 
-        @Test
-        void getPartnerByKey3() {
+        @ParameterizedTest
+        @ValueSource(strings = { "MmMmAa1", "mmmmaa1", "mMmMaA1", "MMMMAA1" })
+        void getPartnerByKey1(String partnerKey) {
             this.interaction.addMenuOptions(6, 1);
-            this.interaction.addFieldValues("W2");
+            this.interaction.addFieldValues(partnerKey);
 
             this.runApp();
 
-            assertEquals("W2|Pedraria Fonseca|Oeiras, Portugal|NORMAL|0|0|0|0", this.interaction.getResult());
+            assertNoMoreExceptions();
+            assertEquals("MmMmAa1|Rohit Figueiredo|New Delhi, India|NORMAL|0|0|0|0", this.interaction.getResult());
         }
 
         void listProducts() {}
