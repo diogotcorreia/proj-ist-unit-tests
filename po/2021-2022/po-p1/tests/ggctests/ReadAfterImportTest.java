@@ -2,9 +2,12 @@ package ggctests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.stream.Stream;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.junit.jupiter.params.provider.CsvSource;
 import ggctests.utils.PoUILibTest;
@@ -53,6 +56,33 @@ public class ReadAfterImportTest {
 
             assertNoMoreExceptions();
             assertEquals(getTextFromFile("expected/test" + testId + "/batches.output"), this.interaction.getResult());
+        }
+    }
+
+    /**
+    Corresponds to tests A-01-01-M-ok, A-03-01-M-ok and A-04-01-M-ok
+    */
+    @Nested
+    public class ReadFromEmptyWarehouseTest extends PoUILibTest {
+        protected void setupWarehouseManager() { }
+
+        @ParameterizedTest(name = "empty warehouse: {0}")
+        @MethodSource("emptyResponseMenusProvider")
+        void openMenuExpectingEmptyResponse(String name, Integer[] menuPath) {
+            this.interaction.addMenuOptions(menuPath);
+
+            this.runApp();
+
+            assertNoMoreExceptions();
+            assertEquals("", this.interaction.getResult());
+        }
+
+        static Stream<Arguments> emptyResponseMenusProvider() {
+            return Stream.of(
+                Arguments.of("list products", new Integer[] { 5, 2 }),
+                Arguments.of("list batches", new Integer[] { 5, 1 }),
+                Arguments.of("list partners", new Integer[] { 6, 2 })
+            );
         }
     }
 
