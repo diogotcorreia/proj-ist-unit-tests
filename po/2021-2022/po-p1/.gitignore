@@ -1,3 +1,6 @@
 *.class
 config
 *.jar
+*.app
+*.iml
+.idea/

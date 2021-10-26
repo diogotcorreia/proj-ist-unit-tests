@@ -1,14 +1,11 @@
 package ggctests;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import ggc.app.exceptions.DuplicatePartnerKeyException;
+import ggctests.utils.PoUILibTest;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
-import ggctests.utils.PoUILibTest;
 
-import ggc.app.exceptions.DuplicatePartnerKeyException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RegisterPartnerTest {
 
@@ -28,11 +25,12 @@ public class RegisterPartnerTest {
 
     @Nested
     public class RegisterPartnerWithEmptyWarehouse extends PoUILibTest {
-        protected void setupWarehouseManager() {}
+        protected void setupWarehouseManager() {
+        }
 
         /**
-        Corresponds to test A-09-01-M-ok
-        */
+         * Corresponds to test A-09-01-M-ok
+         */
         @Test
         void registerPartner() {
             this.interaction.addMenuOptions(6, 3, 2);
@@ -52,8 +50,8 @@ public class RegisterPartnerTest {
         }
 
         /**
-        Corresponds to test A-09-02-M-ok
-        */
+         * Corresponds to test A-09-02-M-ok
+         */
         @Test
         void registerPartnerInTheEndOfTheList() {
             this.interaction.addMenuOptions(6, 3, 2);
@@ -63,19 +61,19 @@ public class RegisterPartnerTest {
 
             assertNoMoreExceptions();
             assertEquals("""
-                AAAAS1|Toshiba|Tokyo, Japan|NORMAL|0|0|0|0
-                BBBBW2|Pedraria Fonseca|Oeiras, Portugal|NORMAL|0|0|0|0
-                CCCCCCCCP1|Lages do Chão|Lisboa, Portugal|NORMAL|0|0|0|0
-                DDDDDDP3|ObBrian Rocks|Koln, Germany|NORMAL|0|0|0|0
-                EEEEEER2|Jorge Figueiredo|Lisboa, Portugal|NORMAL|0|0|0|0
-                EFFFFF4|Filomena Figueiredo|Lisboa, Portugal|NORMAL|0|0|0|0
-                RRRrrrrrr|RRR|rr@rrr|NORMAL|0|0|0|0""",
-                this.interaction.getResult());
+                            AAAAS1|Toshiba|Tokyo, Japan|NORMAL|0|0|0|0
+                            BBBBW2|Pedraria Fonseca|Oeiras, Portugal|NORMAL|0|0|0|0
+                            CCCCCCCCP1|Lages do Chão|Lisboa, Portugal|NORMAL|0|0|0|0
+                            DDDDDDP3|ObBrian Rocks|Koln, Germany|NORMAL|0|0|0|0
+                            EEEEEER2|Jorge Figueiredo|Lisboa, Portugal|NORMAL|0|0|0|0
+                            EFFFFF4|Filomena Figueiredo|Lisboa, Portugal|NORMAL|0|0|0|0
+                            RRRrrrrrr|RRR|rr@rrr|NORMAL|0|0|0|0""",
+                    this.interaction.getResult());
         }
 
         /**
-        Corresponds to test A-09-04-M-ok
-        */
+         * Corresponds to test A-09-04-M-ok
+         */
         @Test
         void registerPartnersWithDuplicatedKey() {
             this.interaction.addMenuOptions(6, 3, 3, 3, 2);
@@ -87,14 +85,14 @@ public class RegisterPartnerTest {
             assertThrownCommandException(DuplicatePartnerKeyException.class, "O parceiro 'CCCCCCCCP1' já existe.");
             assertNoMoreExceptions();
             assertEquals("""
-                AAAAS1|Toshiba|Tokyo, Japan|NORMAL|0|0|0|0
-                BBBBW2|Pedraria Fonseca|Oeiras, Portugal|NORMAL|0|0|0|0
-                CCCCCCCCP1|Lages do Chão|Lisboa, Portugal|NORMAL|0|0|0|0
-                DDDDDDP3|ObBrian Rocks|Koln, Germany|NORMAL|0|0|0|0
-                EEEEEER2|Jorge Figueiredo|Lisboa, Portugal|NORMAL|0|0|0|0
-                EFFFFF4|Filomena Figueiredo|Lisboa, Portugal|NORMAL|0|0|0|0
-                YYYYYYYY|wer|rwer|NORMAL|0|0|0|0""",
-                this.interaction.getResult());
+                            AAAAS1|Toshiba|Tokyo, Japan|NORMAL|0|0|0|0
+                            BBBBW2|Pedraria Fonseca|Oeiras, Portugal|NORMAL|0|0|0|0
+                            CCCCCCCCP1|Lages do Chão|Lisboa, Portugal|NORMAL|0|0|0|0
+                            DDDDDDP3|ObBrian Rocks|Koln, Germany|NORMAL|0|0|0|0
+                            EEEEEER2|Jorge Figueiredo|Lisboa, Portugal|NORMAL|0|0|0|0
+                            EFFFFF4|Filomena Figueiredo|Lisboa, Portugal|NORMAL|0|0|0|0
+                            YYYYYYYY|wer|rwer|NORMAL|0|0|0|0""",
+                    this.interaction.getResult());
         }
     }
 

@@ -1,18 +1,17 @@
 package ggctests;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.util.stream.Stream;
+import ggctests.utils.PoUILibTest;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.junit.jupiter.params.provider.CsvSource;
-import ggctests.utils.PoUILibTest;
 
-import ggc.app.exceptions.InvalidDateException;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ReadAfterImportTest {
 
@@ -60,11 +59,12 @@ public class ReadAfterImportTest {
     }
 
     /**
-    Corresponds to tests A-01-01-M-ok, A-03-01-M-ok and A-04-01-M-ok
-    */
+     * Corresponds to tests A-01-01-M-ok, A-03-01-M-ok and A-04-01-M-ok
+     */
     @Nested
     public class ReadFromEmptyWarehouseTest extends PoUILibTest {
-        protected void setupWarehouseManager() { }
+        protected void setupWarehouseManager() {
+        }
 
         @ParameterizedTest(name = "empty warehouse: {0}")
         @MethodSource("emptyResponseMenusProvider")
@@ -79,9 +79,9 @@ public class ReadAfterImportTest {
 
         static Stream<Arguments> emptyResponseMenusProvider() {
             return Stream.of(
-                Arguments.of("list products", new Integer[] { 5, 2 }),
-                Arguments.of("list batches", new Integer[] { 5, 1 }),
-                Arguments.of("list partners", new Integer[] { 6, 2 })
+                    Arguments.of("list products", new Integer[]{5, 2}),
+                    Arguments.of("list batches", new Integer[]{5, 1}),
+                    Arguments.of("list partners", new Integer[]{6, 2})
             );
         }
     }
@@ -92,11 +92,12 @@ public class ReadAfterImportTest {
             super("001");
         }
 
-        void listBatches() {}
+        void listBatches() {
+        }
     }
 
     /**
-    Corresponds to test A-01-02-M-ok
+     * Corresponds to test A-01-02-M-ok
      */
     @Nested
     public class InputWithOnlyPartnersTest extends GenericReadAfterImportTest {
@@ -104,12 +105,15 @@ public class ReadAfterImportTest {
             super("002");
         }
 
-        void listProducts() {}
-        void listBatches() {}
+        void listProducts() {
+        }
+
+        void listBatches() {
+        }
     }
 
     /**
-    Corresponds to test A-01-04-M-ok
+     * Corresponds to test A-01-04-M-ok
      */
     @Nested
     public class InputWithPartnersAndSimpleProducts1Test extends GenericReadAfterImportTest {
@@ -119,7 +123,7 @@ public class ReadAfterImportTest {
     }
 
     /**
-    Corresponds to tests A-03-02-M-ok and A-04-02-M-ok
+     * Corresponds to tests A-03-02-M-ok and A-04-02-M-ok
      */
     @Nested
     public class InputWithPartnersAndSimpleProducts2Test extends GenericReadAfterImportTest {
@@ -129,7 +133,7 @@ public class ReadAfterImportTest {
     }
 
     /**
-    Corresponds to test A-03-03-M-ok
+     * Corresponds to test A-03-03-M-ok
      */
     @Nested
     public class InputWithPartnersAndSimpleProducts3Test extends GenericReadAfterImportTest {
@@ -139,7 +143,7 @@ public class ReadAfterImportTest {
     }
 
     /**
-    Corresponds to test A-04-03-M-ok
+     * Corresponds to test A-04-03-M-ok
      */
     @Nested
     public class InputWithProductWithMultipleBatches1Test extends GenericReadAfterImportTest {
@@ -149,7 +153,7 @@ public class ReadAfterImportTest {
     }
 
     /**
-    Corresponds to test A-04-04-M-ok
+     * Corresponds to test A-04-04-M-ok
      */
     @Nested
     public class InputWithProductWithMultipleBatches2Test extends GenericReadAfterImportTest {
@@ -159,7 +163,7 @@ public class ReadAfterImportTest {
     }
 
     /**
-    Corresponds to tests A-07-01-M-ok and A-08-01-M-ok
+     * Corresponds to tests A-07-01-M-ok and A-08-01-M-ok
      */
     @Nested
     public class ShowPartnerByKeyTest extends GenericReadAfterImportTest {
@@ -169,12 +173,12 @@ public class ReadAfterImportTest {
 
         @ParameterizedTest(name = "get partner with key {0}")
         @CsvSource(
-            delimiter = ';',
-            value = {
-                "M1;M1|Rohit Figueiredo|New Delhi, India|NORMAL|0|0|0|0",
-                "P1;P1|Lages do Chão|Lisboa, Portugal|NORMAL|0|0|0|0",
-                "W2;W2|Pedraria Fonseca|Oeiras, Portugal|NORMAL|0|0|0|0"
-            }
+                delimiter = ';',
+                value = {
+                        "M1;M1|Rohit Figueiredo|New Delhi, India|NORMAL|0|0|0|0",
+                        "P1;P1|Lages do Chão|Lisboa, Portugal|NORMAL|0|0|0|0",
+                        "W2;W2|Pedraria Fonseca|Oeiras, Portugal|NORMAL|0|0|0|0"
+                }
         )
         void getPartnerByKey(String key, String expectedResult) {
             this.interaction.addMenuOptions(6, 1);
@@ -186,12 +190,15 @@ public class ReadAfterImportTest {
             assertEquals(expectedResult, this.interaction.getResult());
         }
 
-        void listProducts() {}
-        void listBatches() {}
+        void listProducts() {
+        }
+
+        void listBatches() {
+        }
     }
 
     /**
-    Corresponds to test A-07-02-M-ok
+     * Corresponds to test A-07-02-M-ok
      */
     @Nested
     public class PartnerKeyCaseInsensitiveTest extends GenericReadAfterImportTest {
@@ -200,7 +207,7 @@ public class ReadAfterImportTest {
         }
 
         @ParameterizedTest(name = "get partner MmMmAa1 through key {0}")
-        @ValueSource(strings = { "MmMmAa1", "mmmmaa1", "mMmMaA1", "MMMMAA1" })
+        @ValueSource(strings = {"MmMmAa1", "mmmmaa1", "mMmMaA1", "MMMMAA1"})
         void getPartnerByKey(String partnerKey) {
             this.interaction.addMenuOptions(6, 1);
             this.interaction.addFieldValues(partnerKey);
@@ -211,8 +218,11 @@ public class ReadAfterImportTest {
             assertEquals("MmMmAa1|Rohit Figueiredo|New Delhi, India|NORMAL|0|0|0|0", this.interaction.getResult());
         }
 
-        void listProducts() {}
-        void listBatches() {}
+        void listProducts() {
+        }
+
+        void listBatches() {
+        }
     }
 
 }
