@@ -225,4 +225,14 @@ public class ReadAfterImportTest {
         }
     }
 
+    /**
+     * Test if the price of a product is being rounded up (correct) or truncated (incorrect)
+     */
+    @Nested
+    public class PriceRoundingUpTest extends GenericReadAfterImportTest {
+        public PriceRoundingUpTest() {
+            super("012");
+        }
+    }
+
 }
