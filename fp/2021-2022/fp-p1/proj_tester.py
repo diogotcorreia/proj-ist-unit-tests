@@ -334,6 +334,9 @@ class TestVerificacaoDados3(unittest.TestCase):
 
     def test_eh_entrada_21(self):
         self.assertTrue(target.eh_entrada(("a-b-c-d-e-f-g", "[xxxxx]", (124, 325, 7))))
+        
+    def test_eh_entrada_22(self):
+        self.assertFalse(target.eh_entrada(("aa", "[aaaaa]", (124, 325, -7))))
 
     def test_validar_cifra_1(self):
         self.assertTrue(target.validar_cifra("zzz-yyy-ccc-aaa-bbb", "[abcyz]"))
