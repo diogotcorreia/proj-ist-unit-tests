@@ -264,6 +264,11 @@ class TestPIN2(unittest.TestCase):
     def test_obter_pin_6(self):
         t = ("CEE", "DDBBB", "ECDBE", "CCCCB")
         self.assertEqual((1, 9, 8, 5), target.obter_pin(t))
+        
+    def test_obter_pin_7(self):
+        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
+            target.obter_pin(["CEE", "DDBBB", "ECDBE", "CCCCB"])
+        self.assertEqual("obter_pin: argumento invalido", str(ctx.exception))
 
 
 class TestVerificacaoDados3(unittest.TestCase):
@@ -338,6 +343,12 @@ class TestVerificacaoDados3(unittest.TestCase):
 
     def test_validar_cifra_3(self):
         self.assertFalse(target.validar_cifra("a-b-c-d-e-f-g-h", "[xxxxx]"))
+        
+    def test_validar_cifra_4(self):
+        self.assertFalse(target.validar_cifra("aaa-b-c-d-e-f", "[bcdef]"))
+        
+    def test_validar_cifra_5(self):
+        self.assertTrue(target.validar_cifra("a-b-c-d-e-f", "[bcdef]"))
 
     def test_filtrar_bdb_1(self):
         with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
@@ -373,6 +384,11 @@ class TestVerificacaoDados3(unittest.TestCase):
                 ]
             ),
         )
+        
+    def test_filtrar_bdb_6(self):
+        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
+            target.filtrar_bdb((("aaaaa-bbb-zx-yz-xy", "[abxyz]", (950, 300))))
+        self.assertEqual("filtrar_bdb: argumento invalido", str(ctx.exception))
 
 
 class TesteDesencriptacaoDeDados4(unittest.TestCase):
@@ -431,6 +447,11 @@ class TesteDesencriptacaoDeDados4(unittest.TestCase):
             ],
             target.decifrar_bdb(bdb),
         )
+        
+    def test_decifrar_bdb_4(self):
+        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
+            target.decifrar_bdb((("qgfo-qutdo-s-egoes-wzegsnfmjqz", "[abcde]", (2223, 424, 1316, 99))))
+        self.assertEqual("decifrar_bdb: argumento invalido", str(ctx.exception))
 
 
 class TestDepuracao5(unittest.TestCase):
@@ -531,6 +552,28 @@ class TestDepuracao5(unittest.TestCase):
                     "name": "bruce.wayne",
                     "pass": "mynameisbatman",
                     "rule": {"vals": (2, 8), "char": "m"},
+                }
+            )
+        )
+        
+    def test_eh_utilizador_9(self):
+        self.assertFalse(
+            target.eh_utilizador(
+                {
+                    "name": "bruce.wayne",
+                    "pass": "mynameisbatman",
+                    "rule": {"vals": (5, 2), "char": "m"},
+                }
+            )
+        )
+        
+    def test_eh_utilizador_10(self):
+        self.assertFalse(
+            target.eh_utilizador(
+                {
+                    "name": "bruce.wayne",
+                    "pass": "mynameisbatman",
+                    "rule": {"vals": (-3, 2), "char": "m"},
                 }
             )
         )
