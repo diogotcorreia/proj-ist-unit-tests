@@ -72,6 +72,7 @@ public class LoadAndSaveTest extends PoUILibTest {
         @Test
         @Order(2)
         void loadFile() {
+            this.resetWarehouseManager();
             this.interaction.addMenuOptions(1, 6, 2);
             this.interaction.addFieldValues("app01.dat");
 
@@ -114,6 +115,7 @@ public class LoadAndSaveTest extends PoUILibTest {
         @Test
         @Order(2)
         void loadFile() {
+            this.resetWarehouseManager();
             this.interaction.addMenuOptions(1, 5, 1, 0, 6, 2);
             this.interaction.addFieldValues("app02.dat");
 
@@ -157,6 +159,7 @@ public class LoadAndSaveTest extends PoUILibTest {
         @Test
         @Order(2)
         void loadFileChangeDateAndSaveFile() {
+            this.resetWarehouseManager();
             this.interaction.addMenuOptions(1, 6, 2, 0, 4, 2);
             this.interaction.addFieldValues("app03.dat", "20");
 
@@ -169,6 +172,7 @@ public class LoadAndSaveTest extends PoUILibTest {
         @Test
         @Order(3)
         void loadFile() {
+            this.resetWarehouseManager();
             this.interaction.addMenuOptions(1, 3);
             this.interaction.addFieldValues("app03.dat");
 
