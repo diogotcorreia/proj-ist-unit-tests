@@ -16,7 +16,7 @@ print("A ler ficheiro", file_name)
 # Import project file and save all functions to the variable "target"
 target_spec = importlib.util.spec_from_loader("target", loader=None)
 target = importlib.util.module_from_spec(target_spec)
-exec(open(file_name).read(), target.__dict__)
+exec(open(file_name, encoding="utf-8").read(), target.__dict__)
 
 
 class TestDocumentacao1(unittest.TestCase):
