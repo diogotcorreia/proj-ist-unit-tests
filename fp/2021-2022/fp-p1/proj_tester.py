@@ -20,49 +20,55 @@ exec(open(file_name, encoding="utf-8").read(), target.__dict__)
 
 
 class TestDocumentacao1(unittest.TestCase):
-    def test_corrigir_palavra_1(self):
+    def test_corrigir_palavra_001(self):
         """
         Exemplo enunciado (database)
         """
         self.assertEqual("database", target.corrigir_palavra("cCdatabasacCADde"))
 
-    def test_corrigir_palavra_2(self):
+    def test_corrigir_palavra_002(self):
         """
         Exemplo enunciado (x)
         """
         self.assertEqual("x", target.corrigir_palavra("abBAx"))
 
-    def test_corrigir_palavra_3(self):
-        self.assertEqual("", target.corrigir_palavra("aaDBbdAcCeEA"))
+    def test_corrigir_palavra_029(self):
+        self.assertEqual("teste", target.corrigir_palavra("sMEjJeqcCQmStvVeFTtfVvVBbJjvgdDNOBbAaLlNaAnoHJrRjzZeEFfsSyYYyoOxQquUXbBvVqQhBkKbnGsxXtwWMmeAapEePzZvVbBUu"))
 
-    def test_corrigir_palavra_4(self):
-        self.assertEqual("abAB", target.corrigir_palavra("abAB"))
+    def test_corrigir_palavra_030(self):
+        self.assertEqual("fundamentosdaprogramacao", target.corrigir_palavra("TtfdDBbjJuhHPSspnZyYtiITzJxAXxaXjdaCcJjyYgEeGmentosewWEdaoOprnNoOZyYQqeElLzohHgrbBcMmCMmamMmaciIQMmqnTtAajJNUuamMohlgGLPpuUH"))
 
-    def test_corrigir_palavra_5(self):
-        self.assertEqual("aabAAB", target.corrigir_palavra("aabAAB"))
+    def test_corrigir_palavra_031(self):
+        self.assertEqual("FundamentosDaProgramacao", target.corrigir_palavra("FNnYyuOonDNnddFfgGsSaEemDdVOmMoDdvyGgYCcyOoYsSentohXKkxHsPpVvDatTPrUuRrogrnNamaCcIiYGHoOhgeEHhWwycCXxzZdDJzZjceEAaaqQyYodpPD"))
 
-    def test_corrigir_palavra_6(self):
-        self.assertEqual("Ol", target.corrigir_palavra("OlaA"))
+    def test_corrigir_palavra_032(self):
+        self.assertEqual("supercalifragilisticoespialidoso", target.corrigir_palavra("yYsupGgwWeEPPpNneENnFfRtTrYypfaAdDFerlLoOcaAascCSzeEZIjJFfiFVKkvflrKkRifTtragXxvVZxQHhsSdDqXgqQGnkZzKNlLzImMuUiyYnaANdDXfFxjJhHcCnNirDdRtTlKkUuilLsPptHnNhiGgbBcowVvWyYesSspkEeKqQcJjCtTiaITIitQqiPOoplGglLLlxUuXMmDdLVvdDXxlidSsoxXscCo"))
 
-    def test_eh_anagrama_1(self):
+    def test_eh_anagrama_003(self):
         """
         Exemplo enunciado (caso, SaCo)
         """
         self.assertTrue(target.eh_anagrama("caso", "SaCo"))
 
-    def test_eh_anagrama_2(self):
+    def test_eh_anagrama_004(self):
         """
         Exemplo enunciado (caso, casos)
         """
         self.assertFalse(target.eh_anagrama("caso", "casos"))
 
-    def test_eh_anagrama_3(self):
-        self.assertTrue(target.eh_anagrama("caso", "caso"))
+    def test_eh_anagrama_033(self):
+        self.assertFalse(target.eh_anagrama("amoro", "amora"))
 
-    def test_eh_anagrama_4(self):
-        self.assertTrue(target.eh_anagrama("casO", "Caso"))
+    def test_eh_anagrama_034(self):
+        self.assertTrue(target.eh_anagrama("Amor", "Roma"))
+        
+    def test_eh_anagrama_035(self):
+        self.assertTrue(target.eh_anagrama("poder", "Pedro"))
+        
+    def test_eh_anagrama_036(self):
+        self.assertTrue(target.eh_anagrama("QuidEstVeritas", "EstVirQuiAdest"))
 
-    def test_corrigir_doc_1(self):
+    def test_corrigir_doc_005(self):
         """
         Exemplo enunciado (???)
         Deve lançar um ValueError
@@ -71,56 +77,67 @@ class TestDocumentacao1(unittest.TestCase):
             target.corrigir_doc("???")
         self.assertEqual("corrigir_doc: argumento invalido", str(ctx.exception))
 
-    def test_corrigir_doc_2(self):
+    def test_corrigir_doc_006(self):
         """
         Exemplo enunciado (Buggy data base has wrong data)
         """
         doc = "BuAaXOoxiIKoOkggyrFfhHXxR duJjUTtaCcmMtaAGga eEMmtxXOjUuJQqQHhqoada JlLjbaoOsuUeYy cChgGvValLCwMmWBbclLsNn LyYlMmwmMrRrongTtoOkyYcCK daRfFKkLlhHrtZKqQkkvVKza"
         self.assertEqual("Buggy data base has wrong data", target.corrigir_doc(doc))
 
-    def test_corrigir_doc_3(self):
-        """
-        Exemplo enunciado (Programacao e programacao)
-        """
-        doc = "Programacao porgramacao e programacao"
-        self.assertEqual("Programacao e programacao", target.corrigir_doc(doc))
-
-    def test_corrigir_doc_4(self):
+    def test_corrigir_doc_037(self):
         with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
-            target.corrigir_doc("Dois  espaços")
+            target.corrigir_doc(5)
+        self.assertEqual("corrigir_doc: argumento invalido", str(ctx.exception))
+        
+    def test_corrigir_doc_038(self):
+        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
+            target.corrigir_doc(())
+        self.assertEqual("corrigir_doc: argumento invalido", str(ctx.exception))
+        
+    def test_corrigir_doc_039(self):
+        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
+            target.corrigir_doc(["a", "b", "c"])
+        self.assertEqual("corrigir_doc: argumento invalido", str(ctx.exception))
+        
+    def test_corrigir_doc_040(self):
+        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
+            target.corrigir_doc(1234567)
+        self.assertEqual("corrigir_doc: argumento invalido", str(ctx.exception))
+        
+    def test_corrigir_doc_041(self):
+        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
+            target.corrigir_doc("Fundamentos da Programacao.")
         self.assertEqual("corrigir_doc: argumento invalido", str(ctx.exception))
 
-    def test_corrigir_doc_5(self):
-        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
-            target.corrigir_doc(1)
-        self.assertEqual("corrigir_doc: argumento invalido", str(ctx.exception))
-
-    def test_corrigir_doc_6(self):
-        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
-            target.corrigir_doc("")
-        self.assertEqual("corrigir_doc: argumento invalido", str(ctx.exception))
-
-    def test_corrigir_doc_7(self):
-        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
-            target.corrigir_doc("letr4s e numer0s")
-        self.assertEqual("corrigir_doc: argumento invalido", str(ctx.exception))
-
-    def test_corrigir_doc_8(self):
-        doc = "Programacao Programacao porgramacao"
-        self.assertEqual("Programacao Programacao", target.corrigir_doc(doc))
-
-    def test_corrigir_doc_9(self):
+    def test_corrigir_doc_042(self):
+        doc = "Fundamentos da Programacao"
+        self.assertEqual("Fundamentos da Programacao", target.corrigir_doc(doc))
+        
+    def test_corrigir_doc_043(self):
+        doc = "Fundamentos da Programacao e Programacao com objetos"
+        self.assertEqual("Fundamentos da Programacao e Programacao com objetos", target.corrigir_doc(doc))
+        
+    def test_corrigir_doc_044(self):
+        doc = "Fundamentos da Programacao e Programacao com objetos"
+        self.assertEqual("Fundamentos da Programacao e Programacao com objetos", target.corrigir_doc(doc))
+        
+    def test_corrigir_doc_045(self):
         doc = "Programacao com objetos e bojetos"
         self.assertEqual("Programacao com objetos e", target.corrigir_doc(doc))
+        
+    def test_corrigir_doc_046(self):
+        doc = "FuKknfbBFdamvVEIicCeetTntUJjuos DddBfFbrRQKkquUlLNnajJ NnzZPnNrBbbBdDogDvVdrwoOWamTtaSfFscwkKWaouUtbBTKQqk"
+        self.assertEqual("Fundamentos da Programacao", target.corrigir_doc(doc))
+        
+    def test_corrigir_doc_047(self):
+        doc = "ProgtBbTrajJmagGcaGgo FfZqQzcmYyQSsqMomPZzUuERraAJjep JjFfqQobjKkuUkKetQqSspPCcAaEeovVTtSvVtTvVss eMmlxqQXOoIiLLlOo XxbhHodDWwjejJtwWoOos"
+        self.assertEqual("Programacao com objetos e", target.corrigir_doc(doc))
+        
+    def test_corrigir_doc_048(self):
+        doc = "ErgGAaxXrRhVvHsSUuJjapPnN WwNnXxgGXxlLMmYyla sgGAauOyEeYoTtmsSoOwkKWaGg CtTcpiIPZJcCjzShHkKsBbmuzVvzZkKdBbDZGgYyszZa sNnjoOJbBTtouvenXxCTtcidDr HGguUYyhdBaAbPpKkeZzlCc univeZUubYRvVryBzKkiIrLlNnsMmLnNlo IiFfaAlOoVuUjJAavPpiIaMmdHhDBbgG ixXiIPpnmacutlLTzZlrRadIia cXtTxayYyYlyiIYumnuUiAaaSsdEejJa DdbiIryYiLjJloJjfFSsBbAWwayYyYsCcpGgGgPgGaaA uUdDIhHiwWyPTtpBbhvVHIiYUvwWVuCcy sLlCQqFfPphHHhLlcoDdgGxXPpFfIibBbriTJjaAtaQqsS drRDmadDrBseESbizZonTtFfUucCeta LoOlmhHonhHbaABeHoOhtaRiIrrMmiuDdUwWaLEeljJZz danesa de"
+        self.assertEqual("Era la suma souvenir del la inmaculada briosa y marioneta danesa de", target.corrigir_doc(doc))
 
-    def test_corrigir_doc_10(self):
-        doc = "Era la suma souvenir del universo la inmaculada briosa y sobria marioneta danesa de adanes"
-        self.assertEqual(
-            "Era la suma souvenir del la inmaculada briosa y marioneta danesa de",
-            target.corrigir_doc(doc),
-        )
-
-
+                
 class TestPIN2(unittest.TestCase):
     def test_obter_posicao_1(self):
         self.assertEqual(1, target.obter_posicao("C", 1))
