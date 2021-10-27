@@ -351,7 +351,7 @@ class TestVerificacaoDados3(unittest.TestCase):
         self.assertFalse(target.validar_cifra("aaa-b-c-d-e-f", "[bcdef]"))
         
     def test_validar_cifra_5(self):
-        self.assertFalse(target.validar_cifra("a-b-c-d-e-f", "[bcdef]"))
+        self.assertTrue(target.validar_cifra("a-b-c-d-e-f", "[bcdef]"))
 
     def test_filtrar_bdb_1(self):
         with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
