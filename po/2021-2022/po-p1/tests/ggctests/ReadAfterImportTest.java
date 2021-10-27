@@ -1,6 +1,7 @@
 package ggctests;
 
 import ggctests.utils.PoUILibTest;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -229,6 +230,7 @@ public class ReadAfterImportTest {
      * Test if the price of a product is being rounded up (correct) or truncated (incorrect)
      */
     @Nested
+    @Disabled("Apparently the import file can't have decimal values, so we'll just ignore this for now")
     public class PriceRoundingUpTest extends GenericReadAfterImportTest {
         public PriceRoundingUpTest() {
             super("012");
