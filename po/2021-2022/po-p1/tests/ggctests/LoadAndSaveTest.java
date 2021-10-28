@@ -204,4 +204,49 @@ public class LoadAndSaveTest extends PoUILibTest {
         assertEquals("", this.interaction.getResult());
     }
 
+    /**
+     * Test saving and loading derived products, including nested derived products
+     */
+    @Nested
+    public class LoadAndSaveDerivedProductsTest extends GenericLoadAndSaveTest {
+        private LoadAndSaveDerivedProductsTest() {
+            super("013");
+        }
+
+        @Test
+        @Order(1)
+        void saveFile() {
+            this.interaction.addMenuOptions(2);
+            this.interaction.addFieldValues("app_test013.dat");
+
+            this.runApp();
+
+            assertNoMoreExceptions();
+            assertFileExists("app_test013.dat");
+            assertEquals("", this.interaction.getResult());
+        }
+
+
+        @Test
+        @Order(2)
+        void loadFile() {
+            this.resetWarehouseManager();
+            this.interaction.addMenuOptions(1, 5, 1, 0, 6, 2, 0, 5, 2);
+            this.interaction.addFieldValues("app_test013.dat");
+
+            this.runApp();
+
+            assertNoMoreExceptions();
+            assertEquals(getTextFromFile("expected/test" + testId + "/products.output") + "\n" +
+                    getTextFromFile("expected/test" + testId + "/partners.output") + "\n" +
+                    getTextFromFile("expected/test" + testId + "/batches.output"), this.interaction.getResult());
+        }
+
+        @AfterAll
+        void cleanUpFiles() {
+            cleanUpFile("app_test013.dat");
+        }
+
+    }
+
 }

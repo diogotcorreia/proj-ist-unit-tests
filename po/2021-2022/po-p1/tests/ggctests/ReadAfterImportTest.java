@@ -237,4 +237,14 @@ public class ReadAfterImportTest {
         }
     }
 
+    /**
+     * Test importing derived products, including nested products
+     */
+    @Nested
+    public class ImportDerivedProductsTest extends GenericReadAfterImportTest {
+        public ImportDerivedProductsTest() {
+            super("013");
+        }
+    }
+
 }
