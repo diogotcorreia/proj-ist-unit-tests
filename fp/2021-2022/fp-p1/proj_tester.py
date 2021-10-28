@@ -837,7 +837,7 @@ class TestDepuracao5(unittest.TestCase):
 
     def test_filtrar_senhas_129(self):
         with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
-            target.filtrar_senhas(())
+            target.filtrar_senhas(True)
         self.assertEqual("filtrar_senhas: argumento invalido", str(ctx.exception))
 
     def test_filtrar_senhas_130(self):
