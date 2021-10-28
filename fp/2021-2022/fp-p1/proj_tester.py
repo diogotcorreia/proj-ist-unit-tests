@@ -19,6 +19,7 @@ target = importlib.util.module_from_spec(target_spec)
 exec(open(file_name, encoding="utf-8").read(), target.__dict__)
 
 
+
 class TestDocumentacao1(unittest.TestCase):
     def test_corrigir_palavra_001(self):
         """
@@ -137,8 +138,14 @@ class TestDocumentacao1(unittest.TestCase):
         doc = "ErgGAaxXrRhVvHsSUuJjapPnN WwNnXxgGXxlLMmYyla sgGAauOyEeYoTtmsSoOwkKWaGg CtTcpiIPZJcCjzShHkKsBbmuzVvzZkKdBbDZGgYyszZa sNnjoOJbBTtouvenXxCTtcidDr HGguUYyhdBaAbPpKkeZzlCc univeZUubYRvVryBzKkiIrLlNnsMmLnNlo IiFfaAlOoVuUjJAavPpiIaMmdHhDBbgG ixXiIPpnmacutlLTzZlrRadIia cXtTxayYyYlyiIYumnuUiAaaSsdEejJa DdbiIryYiLjJloJjfFSsBbAWwayYyYsCcpGgGgPgGaaA uUdDIhHiwWyPTtpBbhvVHIiYUvwWVuCcy sLlCQqFfPphHHhLlcoDdgGxXPpFfIibBbriTJjaAtaQqsS drRDmadDrBseESbizZonTtFfUucCeta LoOlmhHonhHbaABeHoOhtaRiIrrMmiuDdUwWaLEeljJZz danesa de"
         self.assertEqual("Era la suma souvenir del la inmaculada briosa y marioneta danesa de", target.corrigir_doc(doc))
 
+        
                 
 class TestPIN2(unittest.TestCase):
+    """
+    obter_posicao, apenas um caractere + inteiro, dados oficiais não obtidos.
+    Estes testes estão mai completos que os oficiais, ambiguidades não presentes.
+    Exercícios: 007, 049, 050, 051, 052, 053, 054, 055, 056
+    """
     def test_obter_posicao_1(self):
         self.assertEqual(1, target.obter_posicao("C", 1))
 
@@ -247,213 +254,291 @@ class TestPIN2(unittest.TestCase):
     def test_obter_posicao_36(self):
         self.assertEqual(9, target.obter_posicao("D", 9))
 
-    def test_obter_digito_1(self):
+        
+    def test_obter_digito_008(self):
         self.assertEqual(1, target.obter_digito("CEE", 5))
 
-    def test_obter_digito_2(self):
-        self.assertEqual(8, target.obter_digito("BECDECBBDB", 2))
-
-    def test_obter_pin_1(self):
+    def test_obter_digito_057(self):
+        self.assertEqual(5, target.obter_digito("DDCEDEB", 3))
+       
+    def test_obter_digito_058(self):
+        self.assertEqual(8, target.obter_digito("DDCEDEB", 8))
+       
+    def test_obter_digito_059(self):
+        self.assertEqual(8, target.obter_digito("DDCEDEB", 9))
+        
+    def test_obter_digito_060(self):
+        self.assertEqual(8, target.obter_digito("DBDEBCBEBD", 5))
+       
+    
+    def test_obter_pin_009(self):
         with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
-            target.obter_pin(1)
+            target.obter_pin(())
         self.assertEqual("obter_pin: argumento invalido", str(ctx.exception))
 
-    def test_obter_pin_2(self):
-        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
-            target.obter_pin(("E", "C", "D"))
-        self.assertEqual("obter_pin: argumento invalido", str(ctx.exception))
-
-    def test_obter_pin_3(self):
-        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
-            target.obter_pin(("E", "C", "D", "E", "C", "D", "E", "C", "D", "E", "C"))
-        self.assertEqual("obter_pin: argumento invalido", str(ctx.exception))
-
-    def test_obter_pin_4(self):
-        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
-            target.obter_pin(("z", "E", "C", "D"))
-        self.assertEqual("obter_pin: argumento invalido", str(ctx.exception))
-
-    def test_obter_pin_5(self):
-        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
-            target.obter_pin(("", "E", "C", "D"))
-        self.assertEqual("obter_pin: argumento invalido", str(ctx.exception))
-
-    def test_obter_pin_6(self):
+    def test_obter_pin_010(self):
         t = ("CEE", "DDBBB", "ECDBE", "CCCCB")
         self.assertEqual((1, 9, 8, 5), target.obter_pin(t))
         
-    def test_obter_pin_7(self):
+    def test_obter_pin_061(self):
+        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
+            target.obter_pin(25)
+        self.assertEqual("obter_pin: argumento invalido", str(ctx.exception))
+
+    def test_obter_pin_062(self):
+        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
+            target.obter_pin(("CEE"))
+        self.assertEqual("obter_pin: argumento invalido", str(ctx.exception))
+    
+    def test_obter_pin_063(self):
         with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
             target.obter_pin(["CEE", "DDBBB", "ECDBE", "CCCCB"])
         self.assertEqual("obter_pin: argumento invalido", str(ctx.exception))
 
+    def test_obter_pin_064(self):
+        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
+            target.obter_pin(("CEE", "DDBBBA", "ECDBE", "CCCCB"))
+        self.assertEqual("obter_pin: argumento invalido", str(ctx.exception))
 
+    def test_obter_pin_065(self):
+        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
+            target.obter_pin(("CEE", "DDBBB", "", "CCCCB"))
+        self.assertEqual("obter_pin: argumento invalido", str(ctx.exception))
+        
+    def test_obter_pin_066(self):
+        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
+            target.obter_pin(("DDBBB", "ECDBE", "CCCCB"))
+        self.assertEqual("obter_pin: argumento invalido", str(ctx.exception))
+
+    def test_obter_pin_067(self):
+        t = ("BCCDBDCE", "BDEEC", "EDCCEBB", "EECCDBEBC")
+        self.assertEqual((2, 1, 7, 4), target.obter_pin(t))
+        
+    def test_obter_pin_068(self):
+        t = ("DBCDEE", "DDDDE", "DCE", "BB", "EDDD", "BD")
+        self.assertEqual((4, 5, 2, 8, 9, 9), target.obter_pin(t))
+        
+    def test_obter_pin_069(self):
+        t = ("BDD", "BBBEE", "BCCBEE", "EDCCDB", "EDECD", "DDCED", "CB", "BCE", "DCB", "CEBCEB")
+        self.assertEqual((9, 7, 4, 6, 3, 3, 6, 5, 6, 4), target.obter_pin(t))
+        
+
+        
 class TestVerificacaoDados3(unittest.TestCase):
-    def test_eh_entrada_1(self):
-        self.assertFalse(target.eh_entrada(1))
+    def test_eh_entrada_011(self):
+        self.assertFalse(target.eh_entrada(("a-b-c-d-e-f-g-h", "[abcd]", (950, 300))))
 
-    def test_eh_entrada_2(self):
-        self.assertFalse(target.eh_entrada(("a")))
+    def test_eh_entrada_012(self):
+        self.assertFalse(target.eh_entrada(("a-b-c-d-e-f-g-h-2", "[abcde]", (950, 300))))
 
-    def test_eh_entrada_3(self):
-        self.assertFalse(target.eh_entrada(("a", "b")))
-
-    def test_eh_entrada_4(self):
-        self.assertFalse(target.eh_entrada(("a", "b", "c")))
-
-    def test_eh_entrada_5(self):
-        self.assertFalse(target.eh_entrada(("", "[aaaaa]", (1, 2))))
-
-    def test_eh_entrada_6(self):
-        self.assertFalse(target.eh_entrada(("A", "[aaaaa]", (1, 2))))
-
-    def test_eh_entrada_7(self):
-        self.assertFalse(target.eh_entrada(("aa", "", (1, 2))))
-
-    def test_eh_entrada_8(self):
-        self.assertFalse(target.eh_entrada(("aa", "abcde", (1, 2))))
-
-    def test_eh_entrada_9(self):
-        self.assertFalse(target.eh_entrada(("aa", "abcdefg", (1, 2))))
-
-    def test_eh_entrada_10(self):
-        self.assertFalse(target.eh_entrada(("aa", "[abcdef", (1, 2))))
-
-    def test_eh_entrada_11(self):
-        self.assertFalse(target.eh_entrada(("aa", "aabcde]", (1, 2))))
-
-    def test_eh_entrada_12(self):
-        self.assertFalse(target.eh_entrada(("aa", "[a[aaa]", (1, 2))))
-
-    def test_eh_entrada_13(self):
-        self.assertFalse(target.eh_entrada(("aa", "[aaa]a]", (1, 2))))
-
-    def test_eh_entrada_14(self):
-        self.assertFalse(target.eh_entrada(("aa-", "[aaaaa]", (1, 2))))
-
-    def test_eh_entrada_15(self):
-        self.assertFalse(target.eh_entrada(("-aa", "[aaaaa]", (1, 2))))
-
-    def test_eh_entrada_16(self):
-        self.assertFalse(target.eh_entrada(("a--a", "[aaaaa]", (1, 2))))
-
-    def test_eh_entrada_17(self):
-        self.assertFalse(target.eh_entrada(("aa", "[aaaaa]", ())))
-
-    def test_eh_entrada_18(self):
-        self.assertFalse(target.eh_entrada(("aa", "[aaaaa]", ("a", 2))))
-
-    def test_eh_entrada_19(self):
-        self.assertFalse(target.eh_entrada(("aa", "[aaaaa]", (-1, 2))))
-
-    def test_eh_entrada_20(self):
+    def test_eh_entrada_013(self):
         self.assertTrue(target.eh_entrada(("a-b-c-d-e-f-g-h", "[xxxxx]", (950, 300))))
-
-    def test_eh_entrada_21(self):
-        self.assertTrue(target.eh_entrada(("a-b-c-d-e-f-g", "[xxxxx]", (124, 325, 7))))
         
-    def test_eh_entrada_22(self):
-        self.assertFalse(target.eh_entrada(("aa", "[aaaaa]", (124, 325, -7))))
+    def test_eh_entrada_018(self):
+        self.assertTrue(target.eh_entrada(("qgfo-qutdo-s-egoes-wzegsnfmjqz", "[abcde]", (2223, 424, 1316, 99))))
 
-    def test_validar_cifra_1(self):
-        self.assertTrue(target.validar_cifra("zzz-yyy-ccc-aaa-bbb", "[abcyz]"))
+    def test_eh_entrada_070(self):
+        self.assertFalse(target.eh_entrada(()))
 
-    def test_validar_cifra_2(self):
-        self.assertTrue(target.validar_cifra("zzz-bb-aa-d-c", "[zabcd]"))
+    def test_eh_entrada_071(self):
+        self.assertFalse(target.eh_entrada(["a-b-c-d-e-f-g-h", "[abcde]", (950, 300)]))
 
-    def test_validar_cifra_3(self):
+    def test_eh_entrada_072(self):
+        self.assertFalse(target.eh_entrada(("a-b-c-d-e-f-g-h", "[abcde]")))
+
+    def test_eh_entrada_073(self):
+        self.assertFalse(target.eh_entrada(("a-b-c-d-e-f-g-h", "[abcde]", (950,300), "ola")))
+
+    def test_eh_entrada_074(self):
+        self.assertFalse(target.eh_entrada(("ERRADO", "[abcde]", (950, 300))))
+
+    def test_eh_entrada_075(self):
+        self.assertFalse(target.eh_entrada(("errado2", "[abcde]", (950, 300))))
+
+    def test_eh_entrada_076(self):
+        self.assertFalse(target.eh_entrada(("ainda errado", "[abcde]", (950, 300))))
+
+    def test_eh_entrada_077(self):
+        self.assertFalse(target.eh_entrada(("ainda-errado", 25, (950, 300))))
+
+    def test_eh_entrada_078(self):
+        self.assertFalse(target.eh_entrada(("ainda-errado", "[12345]", (950, 300))))
+
+    def test_eh_entrada_079(self):
+        self.assertFalse(target.eh_entrada(("ainda-errado", "abcde", (950, 300))))
+
+    def test_eh_entrada_080(self):
+        self.assertFalse(target.eh_entrada(("ainda-errado", "[abcde]", (950, ))))
+
+    def test_eh_entrada_081(self):
+        self.assertFalse(target.eh_entrada(("ainda-errado", "[abcde]", 950)))
+
+    def test_eh_entrada_082(self):
+        self.assertFalse(target.eh_entrada(("ainda-errado", "[abcde]", (950, "a"))))
+
+    def test_eh_entrada_083(self):
+        self.assertFalse(target.eh_entrada(("ainda-errado", "[abcde]", (950, -30))))
+
+    def test_eh_entrada_084(self):
+        self.assertTrue(target.eh_entrada(("agora-sim", "[abcde]", (2, 3, 7, 200))))
+
+    def test_eh_entrada_085(self):
+        self.assertTrue(target.eh_entrada(("esta-entrada-e-correta", "[abzxy]", (20, 2, 1979))))
+
+
+    def test_validar_cifra_014(self):
         self.assertFalse(target.validar_cifra("a-b-c-d-e-f-g-h", "[xxxxx]"))
-        
-    def test_validar_cifra_4(self):
-        self.assertFalse(target.validar_cifra("aaa-b-c-d-e-f", "[bcdef]"))
-        
-    def test_validar_cifra_5(self):
-        self.assertTrue(target.validar_cifra("xx-yy-aa-bb-cd-cd-ee", "[abcde]"))
 
-    def test_filtrar_bdb_1(self):
+    def test_validar_cifra_015(self):
+        self.assertTrue(target.validar_cifra("a-b-c-d-e-f-g-h", "[abcde]"))
+
+    def test_validar_cifra_086(self):
+        self.assertFalse(target.validar_cifra("xxyyaabbcdcdeex", "[abcde]"))
+
+    def test_validar_cifra_087(self):
+        self.assertTrue(target.validar_cifra("fundamentos-da-programacao", "[aodmn]"))
+
+    def test_validar_cifra_088(self):
+        self.assertTrue(target.validar_cifra("xxyyaabbcdcdee", "[abcde]"))
+
+    def test_validar_cifra_089(self):
+        self.assertTrue(target.validar_cifra("lorem-ipsum-dolor-sit-amet-consectetur-adipiscing-elit-sed-do-eiusmod-tempor-incididunt-ut-labore-et-dolore-magna-aliqua-ut-enim-ad-minim-veniam-quis-nostrud-exercitation-ullamco-laboris-nisi-ut-aliquip-ex-ea-commodo-consequat-duis-aute-irure-dolor-in-reprehenderit-in-voluptate-velit-esse-cillum-dolore-eu-fugiat-nulla-pariatur-excepteur-sint-occaecat-cupidatat-non-proident-sunt-in-culpa-qui-officia-deserunt-mollit-anim-id-est-laborum", "[ietao]"))
+
+    
+    def test_filtrar_bdb_016(self):
         with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
-            target.filtrar_bdb(1)
+            target.filtrar_bdb(" ")
         self.assertEqual("filtrar_bdb: argumento invalido", str(ctx.exception))
 
-    def test_filtrar_bdb_2(self):
-        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
-            target.filtrar_bdb([("aaaaa-bbb-zx-yz-xy", "[]", (950, 300))])
-        self.assertEqual("filtrar_bdb: argumento invalido", str(ctx.exception))
-
-    def test_filtrar_bdb_3(self):
-        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
-            target.filtrar_bdb([("aaaaa-bbb-zx-yz-xy", "[abxyz]")])
-        self.assertEqual("filtrar_bdb: argumento invalido", str(ctx.exception))
-
-    def test_filtrar_bdb_4(self):
-        self.assertEqual(
-            [], target.filtrar_bdb([("aaaaa-bbb-zx-yz-xy", "[abxyz]", (950, 300))])
-        )
-
-    def test_filtrar_bdb_5(self):
+    def test_filtrar_bdb_017(self):
         self.assertEqual(
             [
-                ("a-b-c-d-e-f-g-h", "[xxxxx]", (124, 325, 7)),
                 ("entrada-muito-errada", "[abcde]", (50, 404)),
             ],
             target.filtrar_bdb(
                 [
                     ("aaaaa-bbb-zx-yz-xy", "[abxyz]", (950, 300)),
-                    ("a-b-c-d-e-f-g-h", "[xxxxx]", (124, 325, 7)),
+                    ("a-b-c-d-e-f-g-h", "[abcde]", (124, 325, 7)),
                     ("entrada-muito-errada", "[abcde]", (50, 404)),
                 ]
             ),
         )
-        
-    def test_filtrar_bdb_6(self):
+
+    def test_filtrar_bdb_090(self):
         with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
-            target.filtrar_bdb((("aaaaa-bbb-zx-yz-xy", "[abxyz]", (950, 300))))
+            target.filtrar_bdb(())
         self.assertEqual("filtrar_bdb: argumento invalido", str(ctx.exception))
 
+    def test_filtrar_bdb_091(self):
+        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
+            target.filtrar_bdb([100])
+        self.assertEqual("filtrar_bdb: argumento invalido", str(ctx.exception))
 
+    def test_filtrar_bdb_092(self):
+        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
+            target.filtrar_bdb([(), ()])
+        self.assertEqual("filtrar_bdb: argumento invalido", str(ctx.exception))
+
+    def test_filtrar_bdb_093(self):
+        self.assertEqual(
+            [
+                ("programar-e-fixe", "[raefh]", (3, 4, 5)),
+            ],
+            target.filtrar_bdb(
+                [
+                    ("programar-e-fixe", "[raefh]", (3, 4, 5)),
+                    ("entrada-sem-erros", "[erasd]", (52, 404)),
+                    ("fundamentos-da-programacao", "[aodmn]", (1, 2)),
+                ]
+            ),
+        )
+
+    def test_filtrar_bdb_094(self):
+        self.assertEqual([],
+            target.filtrar_bdb(
+                [
+                    ("beautiful-is-better-than-ugly", "[teuab]", (1, 2)),
+                    ("explicit-is-better-than-implicit", "[itecl]", (3, 4)),
+                    ("simple-is-better-than-complex", "[etilm]", (5, 6)),
+                    ("complex-is-better-than-complicated", "[etcai]", (7, 8)),
+                ]
+            ),
+        )
+
+    def test_filtrar_bdb_095(self):
+        self.assertEqual(
+            [
+                ("beautiful-is-better-than-ugly", "[etuab]", (1, 2)),
+                ("explicit-is-better-than-implicit", "[tiecl]", (3, 4)),
+                ("simple-is-better-than-complex", "[etiml]", (5, 6)),
+                ("complex-is-better-than-complicated", "[etcia]", (7, 8)),
+            ],
+            target.filtrar_bdb(
+                [
+                    ("beautiful-is-better-than-ugly", "[etuab]", (1, 2)),
+                    ("explicit-is-better-than-implicit", "[tiecl]", (3, 4)),
+                    ("simple-is-better-than-complex", "[etiml]", (5, 6)),
+                    ("complex-is-better-than-complicated", "[etcia]", (7, 8)),
+                ]
+            ),
+        )
+
+
+        
 class TesteDesencriptacaoDeDados4(unittest.TestCase):
-    def test_obter_num_seguranca_1(self):
-        self.assertEqual(9, target.obter_num_seguranca((1, 10, 100)))
-
-    def test_obter_num_seguranca_2(self):
-        self.assertEqual(9, target.obter_num_seguranca((100, 1, 10)))
-
-    def test_obter_num_seguranca_3(self):
-        self.assertEqual(9, target.obter_num_seguranca((100, 10, 1)))
-
-    def test_obter_num_seguranca_4(self):
-        self.assertEqual(351, target.obter_num_seguranca((420, 69, 31415)))
-
-    def test_obter_num_seguranca_5(self):
-        self.assertEqual(9, target.obter_num_seguranca((1, 100, 10)))
-
-    def test_obter_num_seguranca_6(self):
-        self.assertEqual(9, target.obter_num_seguranca((10, 100, 1)))
-
-    def test_obter_num_seguranca_7(self):
-        self.assertEqual(9, target.obter_num_seguranca((10, 1, 100)))
-
-    def test_obter_num_seguranca_8(self):
+    def test_obter_num_seguranca_019(self):
         self.assertEqual(325, target.obter_num_seguranca((2223, 424, 1316, 99)))
 
-    def test_decifrar_texto_1(self):
+    def test_obter_num_seguranca_096(self):
+        self.assertEqual(70, target.obter_num_seguranca((777, 707, 901)))
+
+    def test_obter_num_seguranca_097(self):
+        self.assertEqual(161, target.obter_num_seguranca((4929, 19786, 6046, 18239, 17005, 17656, 11057, 14014, 11739, 17495)))
+
+    def test_obter_num_seguranca_098(self):
+        self.assertEqual(19, target.obter_num_seguranca((1390, 1558, 483, 1748, 1879, 1930, 1501, 41, 1175, 502)))
+
+    def test_obter_num_seguranca_099(self):
+        self.assertEqual(1, target.obter_num_seguranca((79, 1289, 589, 144, 1230, 275, 1016, 1200, 1933, 1383, 446, 795, 277, 1941, 1190, 441, 1788, 583, 1653, 1551, 56, 1286, 251, 1365, 723, 1501, 644, 1964, 404, 1631, 732, 252, 677, 1625, 902, 422, 131, 288, 136, 1387, 31, 1368, 20, 619, 1027, 475, 1256, 435, 1237, 387, 156, 385, 1013, 967, 1208, 1868, 386, 900, 675, 1191, 1627, 1437, 704, 1900, 591, 1145, 1275, 1296, 707, 1494, 1002, 1421, 99, 1774, 1334, 1283, 290, 548, 1127, 1199, 1515, 595, 297, 1339, 1700, 1748, 1390, 201, 216, 274, 266, 379)))
+        
+
+    def test_decifrar_texto_020(self):
         self.assertEqual(
             "esta cifra e quase inquebravel",
             target.decifrar_texto("qgfo-qutdo-s-egoes-wzegsnfmjqz", 325),
         )
 
-    def test_decifrar_texto_2(self):
+    def test_decifrar_texto_100(self):
         self.assertEqual(
-            "bpqx zfcox b nrxpb fknrbyoxsbi",
-            target.decifrar_texto("qgfo-qutdo-s-egoes-wzegsnfmjqz", 10),
+            "programar e muito fixe",
+            target.decifrar_texto("bfaudoyod-q-yiuha-rwjs", 793),
         )
 
-    def test_decifrar_bdb_1(self):
+    def test_decifrar_texto_101(self):
+        self.assertEqual(
+            "beautiful is better than ugly",
+            target.decifrar_texto("uztpmdype-bn-wxomzk-mcti-pzgr", 526),
+        )
+
+    def test_decifrar_texto_102(self):
+        self.assertEqual(
+            "explicit is better than implicit",
+            target.decifrar_texto("vqgezvzm-bj-sxkmvk-myte-zfgezvzm", 1152),
+        )
+
+    def test_decifrar_texto_103(self):
+        self.assertEqual(
+            "simple is better than complex",
+            target.decifrar_texto("fxzeyt-xf-otgirg-iupa-pdzeytk", 9060),
+        )
+
+
+    def test_decifrar_bdb_021(self):
         with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
-            target.decifrar_bdb(1)
+            target.decifrar_bdb(["nothing"])
         self.assertEqual("decifrar_bdb: argumento invalido", str(ctx.exception))
 
-    def test_decifrar_bdb_2(self):
+    def test_decifrar_bdb_022(self):
         bdb = [
             ("qgfo-qutdo-s-egoes-wzegsnfmjqz", "[abcde]", (2223, 424, 1316, 99)),
             ("lctlgukvzwy-ji-xxwmzgugkgw", "[abxyz]", (2388, 367, 5999)),
@@ -467,15 +552,44 @@ class TesteDesencriptacaoDeDados4(unittest.TestCase):
             ],
             target.decifrar_bdb(bdb),
         )
-        
-    def test_decifrar_bdb_4(self):
+
+    def test_decifrar_bdb_104(self):
         with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
-            target.decifrar_bdb((("qgfo-qutdo-s-egoes-wzegsnfmjqz", "[abcde]", (2223, 424, 1316, 99))))
+            target.decifrar_bdb((('bfaudoyod-q-yiuha-rwjs', '[adouy]', (2, 795, 3223, 4316)), ('lctlgukvzwy-ji-xxwmzgugkgw', '[abxyz]', (2388, 367, 5999)), ('nyccjoj-vfrex-ncalml', '[xxxxx]', (50, 404))))
         self.assertEqual("decifrar_bdb: argumento invalido", str(ctx.exception))
+        
+    def test_decifrar_bdb_105(self):
+        bdb = [
+            ('bfaudoyod-q-yiuha-rwjs', '[adouy]', (2, 795, 3223, 4316)),
+        ]
+        self.assertEqual(
+            [
+                "programar e muito fixe",
+            ],
+            target.decifrar_bdb(bdb),
+        )
 
-
+    def test_decifrar_bdb_106(self):
+        bdb = [
+            ('qvplizula-xj-stkivg-iype-lvcn', '[ilvpa]', (762, 2586, 310)),
+            ('avljeaer-go-xcprap-rdyj-ekljeaer', '[earjl]', (929, 2915, 380)),
+            ('zrtysn-rz-inacla-coju-jxtysne', '[nacjr]', (3354, 33, 805, 1859)),
+            ('dtp-kav-whivv-sx-pzmy-phl', '[pvhad]', (1706, 1048, 380, 4385))
+        ]
+        self.assertEqual(
+            [
+                "beautiful is better than ugly",
+                "explicit is better than implicit",
+                "simple is better than complex",
+                "may the force be with you",
+            ],
+            target.decifrar_bdb(bdb),
+        )
+       
+    
+    
 class TestDepuracao5(unittest.TestCase):
-    def test_eh_utilizador_1(self):
+    def test_eh_utilizador_023(self):
         """
         Exemplo enunciado {'name':'john.doe','pass':'aabcde','rule':{'vals':(1,3),'char':'a'}}
         """
@@ -489,7 +603,7 @@ class TestDepuracao5(unittest.TestCase):
             )
         )
 
-    def test_eh_utilizador_2(self):
+    def test_eh_utilizador_024(self):
         """
         Exemplo enunciado {'name':'john.doe','pass':'aabcde','rule':{'vals':1,'char':'a'}}
         """
@@ -499,7 +613,13 @@ class TestDepuracao5(unittest.TestCase):
             )
         )
 
-    def test_eh_utilizador_3(self):
+    def test_eh_utilizador_107(self):
+        self.assertFalse(target.eh_utilizador(56.7))
+
+    def test_eh_utilizador_108(self):
+        self.assertFalse(target.eh_utilizador(("name", "pass", "rule")))
+
+    def test_eh_utilizador_109(self):
         """
         Exemplo enunciado {'name':'bruce','surname':'wayne','pass':'mynameisbatman','rule':{'vals':(2,8),'char':'m'}}
         """
@@ -514,7 +634,7 @@ class TestDepuracao5(unittest.TestCase):
             )
         )
 
-    def test_eh_utilizador_4(self):
+    def test_eh_utilizador_110(self):
         """
         Exemplo enunciado {'pass':'mynameisbatman','rule':{'vals':(2,8),'char':'m'}}
         """
@@ -524,7 +644,7 @@ class TestDepuracao5(unittest.TestCase):
             )
         )
 
-    def test_eh_utilizador_5(self):
+    def test_eh_utilizador_111(self):
         """
         Exemplo enunciado {'name':'','pass':'mynameisbatman','rule':{'vals':(2,8),'char':'m'}}
         """
@@ -538,7 +658,29 @@ class TestDepuracao5(unittest.TestCase):
             )
         )
 
-    def test_eh_utilizador_6(self):
+    def test_eh_utilizador_112(self):
+        self.assertFalse(
+            target.eh_utilizador(
+                {
+                    "name": 56,
+                    "pass": "mynameisbatman",
+                    "rule": {"vals": (2, 8), "char": "m"},
+                }
+            )
+        )
+
+    def test_eh_utilizador_113(self):
+        self.assertFalse(
+            target.eh_utilizador(
+                {
+                    "name": "bruce.wayne",
+                    "pass": "mynameisbatman",
+                    "rule": {},
+                }
+            )
+        )
+
+    def test_eh_utilizador_114(self):
         """
         Exemplo enunciado {'name':'bruce.wayne','pass':'mynameisbatman','rule':{}}
         """
@@ -548,7 +690,29 @@ class TestDepuracao5(unittest.TestCase):
             )
         )
 
-    def test_eh_utilizador_7(self):
+    def test_eh_utilizador_115(self):
+        self.assertFalse(
+            target.eh_utilizador(
+                {
+                    "name": "bruce.wayne",
+                    "pass": "mynameisbatman",
+                    "rule": {"vals": (2, 1), "char": "m"},
+                }
+            )
+        )
+
+    def test_eh_utilizador_116(self):
+        self.assertFalse(
+            target.eh_utilizador(
+                {
+                    "name": "bruce.wayne",
+                    "pass": "mynameisbatman",
+                    "rule": {"vals": (-2, 8), "char": "m"},
+                }
+            )
+        )
+
+    def test_eh_utilizador_117(self):
         """
         Exemplo enunciado {'name':'bruce.wayne','pass':'mynameisbatman','rule':{'vals':(2,8),'char':'ma'}}
         """
@@ -562,7 +726,7 @@ class TestDepuracao5(unittest.TestCase):
             )
         )
 
-    def test_eh_utilizador_8(self):
+    def test_eh_utilizador_118(self):
         """
         Exemplo enunciado {'name':'bruce.wayne','pass':'mynameisbatman','rule':{'vals':(2,8),'char':'m'}}
         """
@@ -576,35 +740,14 @@ class TestDepuracao5(unittest.TestCase):
             )
         )
         
-    def test_eh_utilizador_9(self):
-        self.assertFalse(
-            target.eh_utilizador(
-                {
-                    "name": "bruce.wayne",
-                    "pass": "mynameisbatman",
-                    "rule": {"vals": (5, 2), "char": "m"},
-                }
-            )
-        )
-        
-    def test_eh_utilizador_10(self):
-        self.assertFalse(
-            target.eh_utilizador(
-                {
-                    "name": "bruce.wayne",
-                    "pass": "mynameisbatman",
-                    "rule": {"vals": (-3, 2), "char": "m"},
-                }
-            )
-        )
-
-    def test_eh_senha_valida_1(self):
+    
+    def test_eh_senha_valida_025(self):
         """
         Exemplo enunciado ('aabcd', {'vals': (1,3), 'char':'a'})
         """
         self.assertTrue(target.eh_senha_valida("aabcde", {"vals": (1, 3), "char": "a"}))
 
-    def test_eh_senha_valida_2(self):
+    def test_eh_senha_valida_026(self):
         """
         Exemplo enunciado ('cdefgh', {'vals': (1,3), 'char':'b'})
         """
@@ -612,91 +755,63 @@ class TestDepuracao5(unittest.TestCase):
             target.eh_senha_valida("cdefgh", {"vals": (1, 3), "char": "b"})
         )
 
-    def test_filtrar_senhas_1(self):
-        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
-            target.filtrar_senhas(1)
-        self.assertEqual("filtrar_senhas: argumento invalido", str(ctx.exception))
+    def test_eh_senha_valida_119(self):
+        self.assertTrue(
+            target.eh_senha_valida("aaaaa", {"vals": (1, 5), "char": "a"})
+        )
 
-    def test_filtrar_senhas_2(self):
-        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
-            target.filtrar_senhas(1)
-        self.assertEqual("filtrar_senhas: argumento invalido", str(ctx.exception))
+    def test_eh_senha_valida_120(self):
+        self.assertFalse(
+            target.eh_senha_valida("aaaaaa", {"vals": (1, 5), "char": "a"})
+        )
 
-    def test_filtrar_senhas_3(self):
+    def test_eh_senha_valida_121(self):
+        self.assertFalse(
+            target.eh_senha_valida("aaaaa", {"vals": (2, 5), "char": "d"})
+        )
+
+    def test_eh_senha_valida_122(self):
+        self.assertFalse(
+            target.eh_senha_valida("ddddei", {"vals": (2, 5), "char": "d"})
+        )
+
+    def test_eh_senha_valida_123(self):
+        self.assertTrue(
+            target.eh_senha_valida("addddei", {"vals": (2, 5), "char": "d"})
+        )
+
+    def test_eh_senha_valida_124(self):
+        self.assertFalse(
+            target.eh_senha_valida("adedidodei", {"vals": (2, 5), "char": "d"})
+        )
+
+    def test_eh_senha_valida_125(self):
+        self.assertTrue(
+            target.eh_senha_valida("ajejidojeii", {"vals": (3, 3), "char": "j"})
+        )
+
+    def test_eh_senha_valida_126(self):
+        self.assertTrue(
+            target.eh_senha_valida("aXaxaaa", {"vals": (1, 3), "char": "X"})
+        )
+
+    def test_eh_senha_valida_127(self):
+        self.assertTrue(
+            target.eh_senha_valida("..adedidodei", {"vals": (2, 5), "char": "d"})
+        )
+
+    def test_eh_senha_valida_128(self):
+        self.assertTrue(
+            target.eh_senha_valida("fundamentosdaprogramacao21-22", {"vals": (2, 5), "char": "n"})
+        )
+
+
+    def test_filtrar_senhas_027(self):
         with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
             target.filtrar_senhas([])
         self.assertEqual("filtrar_senhas: argumento invalido", str(ctx.exception))
 
-    def test_filtrar_senhas_4(self):
-        bdb = [
-            {
-                "outracoisasemsernome": "john.doe",
-                "pass": "aabcde",
-                "rule": {"vals": (1, 3), "char": "a"},
-            },
-            {
-                "name": "jane.doe",
-                "pass": "cdefgh",
-                "rule": {"vals": (1, 3), "char": "b"},
-            },
-            {
-                "name": "jack.doe",
-                "pass": "cccccc",
-                "rule": {"vals": (2, 9), "char": "c"},
-            },
-        ]
-
-        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
-            target.filtrar_senhas(bdb)
-        self.assertEqual("filtrar_senhas: argumento invalido", str(ctx.exception))
-
-    def test_filtrar_senhas_5(self):
-        bdb = [
-            {
-                "nome": "john.doe",
-                "pass": "aabcde",
-                "rule": {"vals": (1, 3), "char": "a"},
-            },
-            {
-                "name": "jane.doe",
-                "pass": "cdefghpqppp",
-                "rule": {"vals": (1, 3), "char": "b"},
-            },
-            {
-                "name": "jack.doe",
-                "pass": "cccccc",
-                "rule": {"vals": (2, 9), "char": "c"},
-            },
-        ]
-
-        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
-            target.filtrar_senhas(bdb)
-        self.assertEqual("filtrar_senhas: argumento invalido", str(ctx.exception))
-
-    def test_filtrar_senhas_6(self):
-        bdb = [
-            {
-                "nome": "john.doe",
-                "pass": "aabcde",
-                "rule": {"vals": (1, 3), "char": "a"},
-            },
-            {
-                "name": "jane.doe",
-                "pass": "cdefgh",
-                "rule": {"vals": (3), "char": "b"},
-            },
-            {
-                "name": "jack.doe",
-                "pass": "cccccc",
-                "rule": {"vals": (2, 9), "char": "c"},
-            },
-        ]
-
-        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
-            target.filtrar_senhas(bdb)
-        self.assertEqual("filtrar_senhas: argumento invalido", str(ctx.exception))
-
-    def test_filtrar_senhas_7(self):
+    def test_filtrar_senhas_028(self):
         bdb = [
             {
                 "name": "john.doe",
@@ -720,6 +835,63 @@ class TestDepuracao5(unittest.TestCase):
             target.filtrar_senhas(bdb),
         )
 
+    def test_filtrar_senhas_129(self):
+        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
+            target.filtrar_senhas(())
+        self.assertEqual("filtrar_senhas: argumento invalido", str(ctx.exception))
+
+    def test_filtrar_senhas_130(self):
+        with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
+            target.filtrar_senhas("nothing")
+        self.assertEqual("filtrar_senhas: argumento invalido", str(ctx.exception))
+
+    def test_filtrar_senhas_131(self):
+        bdb = [
+            {
+                'name': 'bruce.wayne',
+                'pass': 'mynameisbatman',
+                'rule': {'vals': (1, 3), 'char': 'm'},
+            },
+            {
+                "name": "peter.parker",
+                "pass": "sppidie",
+                "rule": {"vals": (1, 4), "char": "p"},
+            },
+            {
+                "name": "clark.kent",
+                "pass": "notsure",
+                "rule": {"vals": (2, 9), "char": "c"},
+            },
+        ]
+
+        self.assertEqual(
+            ["bruce.wayne", "clark.kent"],
+            target.filtrar_senhas(bdb),
+        )
+
+    def test_filtrar_senhas_132(self):
+        bdb = [
+            {
+                "name": "bruce.wayne",
+                "pass": "XXmynameisbatman",
+                "rule": {"vals": (1, 3), "char": "m"},
+            },
+            {
+                "name": "peter.parker",
+                "pass": "spidie",
+                "rule": {"vals": (1, 4), "char": "p"},
+            },
+            {
+                "name": "clark.kent",
+                "pass": "notsure",
+                "rule": {"vals": (2, 9), "char": "c"},
+            },
+        ]
+
+        self.assertEqual(
+            ["clark.kent", "peter.parker"],
+            target.filtrar_senhas(bdb),
+        )
 
 #######################################################
 # Logic to handle updates automatically. DO NOT TOUCH #
