@@ -338,7 +338,7 @@ class TestVerificacaoDados3(unittest.TestCase):
         self.assertTrue(target.eh_entrada(("qgfo-qutdo-s-egoes-wzegsnfmjqz", "[abcde]", (2223, 424, 1316, 99))))
 
     def test_eh_entrada_070(self):
-        self.assertFalse(target.eh_entrada(()))
+        self.assertFalse(target.eh_entrada(True))
 
     def test_eh_entrada_071(self):
         self.assertFalse(target.eh_entrada(["a-b-c-d-e-f-g-h", "[abcde]", (950, 300)]))
@@ -426,7 +426,7 @@ class TestVerificacaoDados3(unittest.TestCase):
 
     def test_filtrar_bdb_090(self):
         with self.assertRaises(ValueError, msg="ValueError not raised") as ctx:
-            target.filtrar_bdb(())
+            target.filtrar_bdb(True)
         self.assertEqual("filtrar_bdb: argumento invalido", str(ctx.exception))
 
     def test_filtrar_bdb_091(self):
@@ -659,6 +659,16 @@ class TestDepuracao5(unittest.TestCase):
         )
 
     def test_eh_utilizador_112(self):
+        """
+        Exemplo enunciado {'name':'bruce.wayne','pass':'mynameisbatman','rule':{}}
+        """
+        self.assertFalse(
+            target.eh_utilizador(
+                {"name": "bruce.wayne", "pass": True, "rule": {"vals": (2, 8), "char": "m"}}
+            )
+        )
+
+    def test_eh_utilizador_113(self):
         self.assertFalse(
             target.eh_utilizador(
                 {
@@ -669,7 +679,7 @@ class TestDepuracao5(unittest.TestCase):
             )
         )
 
-    def test_eh_utilizador_113(self):
+    def test_eh_utilizador_114(self):
         self.assertFalse(
             target.eh_utilizador(
                 {
@@ -680,23 +690,13 @@ class TestDepuracao5(unittest.TestCase):
             )
         )
 
-    def test_eh_utilizador_114(self):
-        """
-        Exemplo enunciado {'name':'bruce.wayne','pass':'mynameisbatman','rule':{}}
-        """
-        self.assertFalse(
-            target.eh_utilizador(
-                {"name": "bruce.wayne", "pass": "mynameisbatman", "rule": {}}
-            )
-        )
-
     def test_eh_utilizador_115(self):
         self.assertFalse(
             target.eh_utilizador(
                 {
                     "name": "bruce.wayne",
                     "pass": "mynameisbatman",
-                    "rule": {"vals": (2, 1), "char": "m"},
+                    "rule": {"vals": (-2, 8), "char": "m"},
                 }
             )
         )
@@ -707,7 +707,7 @@ class TestDepuracao5(unittest.TestCase):
                 {
                     "name": "bruce.wayne",
                     "pass": "mynameisbatman",
-                    "rule": {"vals": (-2, 8), "char": "m"},
+                    "rule": {"vals": (2, 1), "char": "m"},
                 }
             )
         )
