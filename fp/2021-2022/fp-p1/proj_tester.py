@@ -119,8 +119,8 @@ class TestDocumentacao1(unittest.TestCase):
         self.assertEqual("Fundamentos da Programacao e Programacao com objetos", target.corrigir_doc(doc))
         
     def test_corrigir_doc_044(self):
-        doc = "Fundamentos da Programacao e Programacao com objetos"
-        self.assertEqual("Fundamentos da Programacao e Programacao com objetos", target.corrigir_doc(doc))
+        doc = "Fundamentos da Programacao e programacao com objetos"
+        self.assertEqual("Fundamentos da Programacao e com objetos", target.corrigir_doc(doc))
         
     def test_corrigir_doc_045(self):
         doc = "Programacao com objetos e bojetos"
