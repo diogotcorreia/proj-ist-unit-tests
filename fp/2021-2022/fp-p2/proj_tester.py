@@ -137,6 +137,26 @@ class TestTADAnimal(unittest.TestCase):
         self.assertEqual(0, target.obter_fome(animal))
 
 
+class TestTADPrado(unittest.TestCase):
+    def test_cria_prado(self):
+        dim = target.cria_posicao(11, 4)
+        obs = (target.cria_posicao(4, 2), target.cria_posicao(5, 2))
+        an1 = tuple(target.cria_animal('rabbit', 5, 0) for i in range(3))
+        an2 = (target.cria_animal('lynx', 20, 15), )
+        pos = tuple(
+            target.cria_posicao(p[0], p[1])
+            for p in ((5, 1), (7, 2), (10, 1), (6, 1)))
+        prado = target.cria_prado(dim, obs, an1 + an2, pos)
+        self.assertEqual(12, target.obter_tamanho_x(prado))
+        self.assertEqual(5, target.obter_tamanho_y(prado))
+        self.assertEqual(
+            """+----------+
+|....rL...r|
+|...@@.r...|
+|..........|
++----------+""", target.prado_para_str(prado))
+
+
 #################################################################
 # Custom TADs for test mocking (abstract testing). DO NOT TOUCH #
 #################################################################
@@ -227,18 +247,19 @@ class MockPrado:
         self._barfoo = p
 
     def foobar(self):
-        return MockPrado(self._foo, self._bar,
-                         tuple(map(lambda x: animalMocks[1](x), self._foobar)),
-                         self._barfoo)
+        return MockPrado(
+            self._foo, self._bar,
+            tuple(map(lambda x: target.cria_copia_animal(x), self._foobar)),
+            self._barfoo)
 
     def foo(self, p):
         for x, y in zip(self._foobar, self._barfoo):
-            if posicoes_iguais(y, p):
+            if target.posicoes_iguais(y, p):
                 return x
 
     def bar(self, p):
         a = tuple(
-            filter(lambda x: not posicoes_iguais(x[1], p),
+            filter(lambda x: not target.posicoes_iguais(x[1], p),
                    zip(self._foobar, self._barfoo)))
         self._foobar = tuple(i for i, j in a)
         self._barfoo = tuple(j for i, j in a)
@@ -246,7 +267,9 @@ class MockPrado:
 
     def barbar(self, p1, p2):
         a = tuple(
-            map(lambda x: (x[0], p2) if posicoes_iguais(x[1], p1) else x,
+            map(
+                lambda x: (x[0], p2)
+                if target.posicoes_iguais(x[1], p1) else x,
                 zip(self._foobar, self._barfoo)))
         self._foobar = tuple(i for i, j in a)
         self._barfoo = tuple(j for i, j in a)
@@ -259,19 +282,20 @@ class MockPrado:
 
     def baz(self, p):
         for x in self._bar:
-            if posicoes_iguais(x, p):
+            if target.posicoes_iguais(x, p):
                 return True
-        return obter_pos_x(p) == 0 or obter_pos_y(p) == 0 or obter_pos_x(
-            p) == obter_pos_x(self._foo) or obter_pos_y(p) == obter_pos_y(
-                self._foo)
+        return target.obter_pos_x(p) == 0 or target.obter_pos_y(
+            p) == 0 or target.obter_pos_x(p) == target.obter_pos_x(
+                self._foo) or target.obter_pos_y(p) == target.obter_pos_y(
+                    self._foo)
 
     def barbaz(self, p2):
-        if (not posicoes_iguais(self._foo,
-                                p2._foo)) or len(p2._bar) != len(self._bar):
+        if (not target.posicoes_iguais(
+                self._foo, p2._foo)) or len(p2._bar) != len(self._bar):
             return False
-        for a, b in zip(ordenar_posicoes(self._bar),
-                        ordenar_posicoes(p2._bar)):
-            if not posicoes_iguais(a, b):
+        for a, b in zip(target.ordenar_posicoes(self._bar),
+                        target.ordenar_posicoes(p2._bar)):
+            if not target.posicoes_iguais(a, b):
                 return False
         if not (len(p2._foobar) == len(self._foobar) == len(p2._barfoo) == len(
                 self._barfoo)):
@@ -280,9 +304,9 @@ class MockPrado:
         for x, y in zip(self._foobar, self._barfoo):
             z = False
             for i in range(len(b)):
-                if posicoes_iguais(y, b[i]):
+                if target.posicoes_iguais(y, b[i]):
                     z = True
-                    if not animais_iguais(x, a[i]):
+                    if not target.animais_iguais(x, a[i]):
                         return False
                     del a[i]
                     del b[i]
@@ -291,38 +315,40 @@ class MockPrado:
         return len(a) == len(b) == 0
 
     def __foobaz(self, x, y):
-        baz = cria_posicao(x, y)
-        a = foo(baz)
-        return "@" if baz(baz) else animal_para_char(a) if a else "."
+        baz = target.cria_posicao(x, y)
+        a = self.foo(baz)
+        return "@" if self.baz(baz) else target.animal_para_char(
+            a) if a else "."
 
     def foobaz(self):
-        foo = "+" + "".join(["-"] * (obter_pos_x(self._foo) - 1)) + "+"
+        foo = "+" + "".join(["-"] * (target.obter_pos_x(self._foo) - 1)) + "+"
         a = "\n".join(
             map(
                 lambda y: "".join(
-                    map(lambda x: self.__foobaz(x, y),
-                        range(1, obter_pos_x(self._foo)))),
-                range(1, obter_pos_y(self._foo))))
-        return "\n".join(foo, a, foo)
+                    ('|', *map(lambda x: self.__foobaz(x, y),
+                               range(1, target.obter_pos_x(self._foo))), '|')),
+                range(1, target.obter_pos_y(self._foo))))
+        return "\n".join((foo, a, foo))
 
 
 pradoMocks = (
     lambda d, r, a, p: MockPrado(d, r, a, p), lambda p: p.foobar(),
-    lambda p: posicaoMocks[2](p._foo) + 1, lambda p: posicaoMocks[3]
-    (p._foo) + 1, lambda p: len(tuple(filter(animalMocks[12], p._foobar))),
-    lambda p: len(tuple(filter(animalMocks[13], p._foobar))),
-    lambda p: ordenar_posicoes(p._barfoo), lambda p, l: p.foo(l),
+    lambda p: target.obter_pos_x(p._foo) + 1,
+    lambda p: target.obter_pos_y(p._foo) + 1,
+    lambda p: len(tuple(filter(eh_predador, p._foobar))),
+    lambda p: len(tuple(filter(eh_presa, p._foobar))),
+    lambda p: target.ordenar_posicoes(p._barfoo), lambda p, l: p.foo(l),
     lambda p, l: p.bar(l), lambda p, l1, l2: p.barbar(l1),
     lambda p, a, l: p.barfoo(a, l), lambda p: instanceof(p, MockPrado),
     lambda p, l: bool(p.foo(l)), lambda p, l: p.baz(l),
     lambda p, l: not (bool(p.foo(l)) or b.baz(l)),
-    lambda p1, p2: tpye(p1) == type(p2) == MockPrado and p1.barbaz(p2),
+    lambda p1, p2: type(p1) == type(p2) == MockPrado and p1.barbaz(p2),
     lambda p: p.foobaz())
 
-pradoFnNames = ('cria_prado', 'cria_copia_prado', 'obter_tamanho_x',
-                'obter_tamanho_y', 'obter_numero_predadores',
-                'obter_numero_presas', 'obter_posicao_animais', 'obter_animal',
-                'eliminar_animal', "mover_animal", "inserir_animal",
+pradoFnNames = ("cria_prado", "cria_copia_prado", "obter_tamanho_x",
+                "obter_tamanho_y", "obter_numero_predadores",
+                "obter_numero_presas", "obter_posicao_animais", "obter_animal",
+                "eliminar_animal", "mover_animal", "inserir_animal",
                 "eh_prado", "eh_posicao_animal", "eh_posicao_obstaculo",
                 "eh_posicao_livre", "prados_iguais", "prado_para_str")
 
