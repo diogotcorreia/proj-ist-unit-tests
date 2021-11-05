@@ -44,13 +44,97 @@ class TestTADPosicao(unittest.TestCase):
         Exemplo enunciado das funções de alto nível
         """
         p = target.cria_posicao(7, 0)
-        t = target.obter_posicoes_adjacentes(p2)
+        t = target.obter_posicoes_adjacentes(p)
         self.assertTupleEqual(("(8, 0)", "(7, 1)", "(6, 0)"),
                               tuple(target.posicao_para_str(x) for x in t))
         self.assertTupleEqual(("(6, 0)", "(8, 0)", "(7, 1)"),
                               tuple(
                                   target.posicao_para_str(x)
                                   for x in target.ordenar_posicoes(t)))
+
+
+class TestTADAnimal(unittest.TestCase):
+    def test_cria_animal_fail(self):
+        for r, a in ((0, 5), (0, 0), (-3, 3), (-1, 0)):
+            with self.subTest(msg="Testing with r <= 0 or a < 0:", r=r, a=a):
+                with self.assertRaises(ValueError,
+                                       msg="ValueError not raised") as ctx:
+                    target.cria_animal('rabbit', -1, 2)
+                self.assertEqual("cria_animal: argumentos invalidos",
+                                 str(ctx.exception))
+
+    def test_animal_para_str(self):
+        tests = (
+            ('rabbit', 5, 0, 'rabbit [0/5]'),
+            ('fox', 20, 10, 'fox [0/20;0/10]'),
+        )
+        for name, r, a, result in tests:
+            with self.subTest(name=name, r=r, a=a):
+                animal = target.cria_animal(name, r, a)
+                self.assertEqual(result, target.animal_para_str(animal))
+
+    def test_animal_para_char(self):
+        tests = (
+            ('rabbit', 5, 0, 'r'),
+            ('fox', 20, 10, 'F'),
+        )
+        for name, r, a, result in tests:
+            with self.subTest(name=name, r=r, a=a):
+                animal = target.cria_animal(name, r, a)
+                self.assertEqual(result, target.animal_para_char(animal))
+
+    def test_cria_animal(self):
+        """
+        Testa um animal e verifica que os seletores e reconhecedores retornam
+        as propriedades corretas.
+        """
+        tests = (
+            ('rabbit', 5, 0, False, True),
+            ('fox', 20, 10, True, False),
+        )
+        for name, r, a, predador, presa in tests:
+            with self.subTest(name=name, r=r, a=a):
+                animal = target.cria_animal(name, r, a)
+                self.assertEqual(name, target.obter_especie(animal))
+                self.assertEqual(r, target.obter_freq_reproducao(animal))
+                self.assertEqual(a, target.obter_freq_alimentacao(animal))
+                self.assertTrue(target.eh_animal(animal))
+                self.assertEqual(predador, target.eh_predador(animal))
+                self.assertEqual(presa, target.eh_presa(animal))
+
+    def test_cria_copia_animal(self):
+        """
+        Relembra-se que a cópia não pode ser o mesmo objeto que o original,
+        isto é, "original is copia" tem de retornar False.
+        """
+        tests = (
+            ('rabbit', 5, 0),
+            ('fox', 20, 10),
+        )
+        for name, r, a in tests:
+            with self.subTest(name=name, r=r, a=a):
+                animal1 = target.cria_animal(name, r, a)
+                animal2 = target.cria_copia_animal(animal1)
+                self.assertIsNot(animal1, animal2)
+                self.assertTrue(target.animais_iguais(animal1, animal2))
+
+    def test_aumenta_idade(self):
+        animal = target.cria_animal("fox", 20, 10)
+        target.aumenta_idade(target.aumenta_idade(animal))
+        self.assertEqual("fox [2/20;0/10]", target.animal_para_str(animal))
+        self.assertEqual(2, target.obter_idade(animal))
+
+    def test_aumenta_fome_predador(self):
+        animal = target.cria_animal("fox", 20, 10)
+        target.aumenta_fome(target.aumenta_fome(animal))
+        self.assertEqual("fox [0/20;2/10]", target.animal_para_str(animal))
+        self.assertEqual(2, target.obter_fome(animal))
+
+    def test_aumenta_fome_presa(self):
+        animal = target.cria_animal("rabbit", 7, 0)
+        target.aumenta_fome(target.aumenta_fome(animal))
+        self.assertEqual("rabbit [0/7]", target.animal_para_str(animal))
+        self.assertEqual(0, target.obter_fome(animal))
 
 
 #################################################################
@@ -116,14 +200,14 @@ animalMocks = (lambda s, r, a: MockAnimal(s, r, a, 0, 0), lambda a: a.foobar(),
                lambda a: a._barfoo, lambda a: a._foofoo,
                lambda a: a.foo(a._barfoo + 1), lambda a: a.foo(0),
                lambda a: a.bar(a._foofoo + 1), lambda a: a.bar(0),
-               lambda a: instanceof(a, MockAnimal),
-               lambda a: instanceof(a, MockAnimal) and a._foobar > 0,
-               lambda a: instanceof(a, MockAnimal) and a._foobar == 0,
+               lambda a: isinstance(a, MockAnimal),
+               lambda a: isinstance(a, MockAnimal) and a._foobar > 0,
+               lambda a: isinstance(a, MockAnimal) and a._foobar == 0,
                lambda a, b: type(a) == type(b) == MockAnimal and a.barfoo(b),
                lambda a: a._foo[0].upper()
                if a._foobar > 0 else a._foo[0].lower(),
-               lambda b: a._foo + " [" + a._barfoo + "/" + a._bar +
-               (";" + a.foofoo + "/" + a._foobar
+               lambda a: a._foo + " [" + str(a._barfoo) + "/" + str(a._bar) +
+               (";" + str(a._foofoo) + "/" + str(a._foobar)
                 if a._foobar > 0 else "") + "]")
 
 animalFnNames = ("cria_animal", "cria_copia_animal", "obter_especie",
