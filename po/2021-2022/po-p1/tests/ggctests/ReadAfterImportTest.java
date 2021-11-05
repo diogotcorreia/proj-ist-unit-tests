@@ -2,6 +2,7 @@ package ggctests;
 
 import ggctests.utils.PoUILibTest;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -244,6 +245,113 @@ public class ReadAfterImportTest {
     public class ImportDerivedProductsTest extends GenericReadAfterImportTest {
         public ImportDerivedProductsTest() {
             super("013");
+        }
+    }
+
+    /**
+     * Corresponds to test A-03-04-M-ok
+     */
+    @Nested
+    public class InputWithUnorderedProductsTest extends GenericReadAfterImportTest {
+        public InputWithUnorderedProductsTest() {
+            super("014");
+        }
+    }
+
+    /**
+     * Corresponds to test A-03-05-M-ok
+     */
+    @Nested
+    public class InputWithMixedCaseProductsTest extends GenericReadAfterImportTest {
+        public InputWithMixedCaseProductsTest() {
+            super("015");
+        }
+    }
+
+    /**
+     * Corresponds to test A-03-06-M-ok
+     */
+    @Nested
+    public class InputWithSingleProductWithMultipleBatchesTest extends GenericReadAfterImportTest {
+        public InputWithSingleProductWithMultipleBatchesTest() {
+            super("016");
+        }
+    }
+
+    /**
+     * Corresponds to test A-03-07-M-ok
+     */
+    @Nested
+    public class InputWithMultipleBatchesTest extends GenericReadAfterImportTest {
+        public InputWithMultipleBatchesTest() {
+            super("017");
+        }
+    }
+
+    /**
+     * Corresponds to test A-04-05-M-ok
+     */
+    @Nested
+    @DisplayName("A-04-05-M-ok - Ver lotes inseridos ordenados por produto mas fora de ordem por parceiro")
+    public class InputWithBatchesOrderedByProductButUnorderedByPartnerTest extends GenericReadAfterImportTest {
+        public InputWithBatchesOrderedByProductButUnorderedByPartnerTest() {
+            super("018");
+        }
+    }
+
+    /**
+     * Corresponds to test A-04-06-M-ok
+     */
+    @Nested
+    @DisplayName("A-04-06-M-ok - Ver lotes inseridos ordenados por produto mas fora de ordem por preço e existências")
+    public class InputWithBatchesOrderedByProductButUnorderedByPriceAndQuantityTest extends GenericReadAfterImportTest {
+        public InputWithBatchesOrderedByProductButUnorderedByPriceAndQuantityTest() {
+            super("019");
+        }
+    }
+
+    /**
+     * Corresponds to test A-04-07-M-ok
+     */
+    @Nested
+    @DisplayName("A-04-07-M-ok - Ver lotes inseridos deordenados por produto e por lote")
+    public class InputWithUnorderedBatchesTest extends GenericReadAfterImportTest {
+        public InputWithUnorderedBatchesTest() {
+            super("020");
+        }
+    }
+
+    /**
+     * Corresponds to test A-08-02-M-ok
+     */
+    @Nested
+    @DisplayName("A-08-02-M-ok - Ver lista de parceiros importados desordenado")
+    public class InputWithUnorderedPartnersTest extends GenericReadAfterImportTest {
+        public InputWithUnorderedPartnersTest() {
+            super("021");
+        }
+
+        void listProducts() {
+        }
+
+        void listBatches() {
+        }
+    }
+
+    /**
+     * Corresponds to test A-08-03-M-ok
+     */
+    @Nested
+    @DisplayName("A-08-03-M-ok - Ver lista de parceiros importados desordenado com maiúsculas e minúsculas")
+    public class InputWithUnorderedMixedCasePartnersTest extends GenericReadAfterImportTest {
+        public InputWithUnorderedMixedCasePartnersTest() {
+            super("022");
+        }
+
+        void listProducts() {
+        }
+
+        void listBatches() {
         }
     }
 
