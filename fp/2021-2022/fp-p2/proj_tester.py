@@ -2,6 +2,7 @@ import unittest
 import importlib.util
 import sys
 import requests
+from itertools import combinations
 
 if len(sys.argv) < 2:
     print(
@@ -17,6 +18,10 @@ print("A ler ficheiro", file_name)
 target_spec = importlib.util.spec_from_loader("target", loader=None)
 target = importlib.util.module_from_spec(target_spec)
 exec(open(file_name, encoding="utf-8").read(), target.__dict__)
+
+print("Desejas correr os testes de verificação de abstração? [y/N]")
+response = input()
+ENABLE_MOCK_TESTING = response.lower() == "y"
 
 
 class TestTADPosicao(unittest.TestCase):
@@ -51,6 +56,17 @@ class TestTADPosicao(unittest.TestCase):
                               tuple(
                                   target.posicao_para_str(x)
                                   for x in target.ordenar_posicoes(t)))
+
+    @unittest.skipUnless(ENABLE_MOCK_TESTING, "skipping mock tests")
+    def test_posicao_mock(self, *_):
+        """
+        Testa as barreiras de abstração do TAD Posição
+        """
+        __mocks = enable_mocks(target, posicaoFnNames, posicaoMocks)
+        try:
+            self.test_cria_posicao_enunciado_alto_nivel()
+        finally:
+            restore_mocks(target, __mocks)
 
 
 class TestTADAnimal(unittest.TestCase):
@@ -135,6 +151,21 @@ class TestTADAnimal(unittest.TestCase):
         target.aumenta_fome(target.aumenta_fome(animal))
         self.assertEqual("rabbit [0/7]", target.animal_para_str(animal))
         self.assertEqual(0, target.obter_fome(animal))
+
+    @unittest.skipUnless(ENABLE_MOCK_TESTING, "skipping mock tests")
+    def test_animal_mock(self, *_):
+        """
+        Testa as barreiras de abstração do TAD Animal
+        """
+        __mocks = enable_mocks(target, animalFnNames, animalMocks)
+        try:
+            pass
+            # TODO
+            # self.test_eh_animal_fertil()
+            # self.test_eh_animal_faminto()
+            # self.test_reproduz_animal()
+        finally:
+            restore_mocks(target, __mocks)
 
 
 class TestTADPrado(unittest.TestCase):
@@ -281,6 +312,65 @@ class TestTADPrado(unittest.TestCase):
 |...@@.r...|
 |........F.|
 +----------+""", target.prado_para_str(prado))
+
+    @unittest.skipUnless(ENABLE_MOCK_TESTING, "skipping mock tests")
+    def test_prado_mock(self, *_):
+        """
+        Testa as barreiras de abstração do TAD Prado
+        """
+        mocks_to_use = (
+            ("posicao", posicaoFnNames, posicaoMocks),
+            ("animal", animalFnNames, animalMocks),
+        )
+
+        for active_mocks in sum((tuple(combinations(mocks_to_use, r))
+                                 for r in range(1,
+                                                len(mocks_to_use) + 1)), ()):
+            names = ', '.join(map(lambda x: x[0], active_mocks))
+            fnNames = sum(map(lambda x: x[1], active_mocks), ())
+            mocks = sum(map(lambda x: x[1], active_mocks), ())
+
+            with self.subTest(msg="Active mocks: {}".format(names)):
+                __mocks = enable_mocks(target, fnNames, mocks)
+                try:
+                    pass
+                    # TODO
+                    # self.test_obter_valor_numerico()
+                    # self.test_obter_movimento()
+                finally:
+                    restore_mocks(target, __mocks)
+
+
+class TestFuncoesAdicionais(unittest.TestCase):
+    # TODO
+
+    @unittest.skipUnless(ENABLE_MOCK_TESTING, "skipping mock tests")
+    def test_funcoes_adicionais_mock(self, *_):
+        """
+        Testa as barreiras de abstração das funções adicionais
+        """
+        mocks_to_use = (
+            ("posicao", posicaoFnNames, posicaoMocks),
+            ("animal", animalFnNames, animalMocks),
+            ("prado", pradoFnNames, pradoMocks),
+        )
+
+        for active_mocks in sum((tuple(combinations(mocks_to_use, r))
+                                 for r in range(1,
+                                                len(mocks_to_use) + 1)), ()):
+            names = ', '.join(map(lambda x: x[0], active_mocks))
+            fnNames = sum(map(lambda x: x[1], active_mocks), ())
+            mocks = sum(map(lambda x: x[1], active_mocks), ())
+
+            with self.subTest(msg="Active mocks: {}".format(names)):
+                __mocks = enable_mocks(target, fnNames, mocks)
+                try:
+                    pass
+                    # TODO
+                    # self.test_geracao()
+                    # self.test_simula_ecossistema()
+                finally:
+                    restore_mocks(target, __mocks)
 
 
 #################################################################
@@ -478,6 +568,26 @@ pradoFnNames = ("cria_prado", "cria_copia_prado", "obter_tamanho_x",
                 "eliminar_animal", "mover_animal", "inserir_animal",
                 "eh_prado", "eh_posicao_animal", "eh_posicao_obstaculo",
                 "eh_posicao_livre", "prados_iguais", "prado_para_str")
+
+
+def enable_mocks(target, fn_names, functions):
+    restore = []
+    setattr(target, '__mock', True)
+    for (fn_name, fn) in zip(fn_names, functions):
+        try:  # ignore undefined functions
+            old_fn = getattr(target, fn_name)
+            restore.append((fn_name, old_fn))
+            setattr(target, fn_name, fn)
+        except:
+            pass
+    return restore
+
+
+def restore_mocks(target, restore):
+    setattr(target, '__mock', False)
+    for (fn_name, fn) in restore:
+        setattr(target, fn_name, fn)
+
 
 #######################################################
 # Logic to handle updates automatically. DO NOT TOUCH #
