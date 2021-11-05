@@ -147,13 +147,139 @@ class TestTADPrado(unittest.TestCase):
             target.cria_posicao(p[0], p[1])
             for p in ((5, 1), (7, 2), (10, 1), (6, 1)))
         prado = target.cria_prado(dim, obs, an1 + an2, pos)
-        self.assertEqual(12, target.obter_tamanho_x(prado))
-        self.assertEqual(5, target.obter_tamanho_y(prado))
-        self.assertEqual(
-            """+----------+
+
+        with self.subTest(msg="Test obter_tamanho_x"):
+            self.assertEqual(12, target.obter_tamanho_x(prado))
+        with self.subTest(msg="Test obter_tamanho_y"):
+            self.assertEqual(5, target.obter_tamanho_y(prado))
+        with self.subTest(msg="Test prado_para_str"):
+            self.assertEqual(
+                """+----------+
 |....rL...r|
 |...@@.r...|
 |..........|
++----------+""", target.prado_para_str(prado))
+        with self.subTest(msg="Test obter_numero_predadores"):
+            self.assertEqual(1, target.obter_numero_predadores(prado))
+        with self.subTest(msg="Test obter_numero_presas"):
+            self.assertEqual(3, target.obter_numero_presas(prado))
+        with self.subTest(msg="Test obter_posicao_animais"):
+            t = target.obter_posicao_animais(prado)
+            self.assertTupleEqual(("(5, 1)", "(6, 1)", "(10, 1)", "(7, 2)"),
+                                  tuple(target.posicao_para_str(x) for x in t))
+        for (x, y), animal in zip(((5, 1), (7, 2), (10, 1), (6, 1)),
+                                  an1 + an2):
+            with self.subTest(msg="Test obter_animal and eh_posicao_animal",
+                              x=x,
+                              y=y):
+                pos_animal = target.cria_posicao(x, y)
+                a = target.obter_animal(prado, pos_animal)
+                self.assertTrue(target.eh_posicao_animal(prado, pos_animal))
+                self.assertTrue(target.animais_iguais(animal, a))
+        # both rocks and the border
+        for x, y in ((4, 2), (5, 2), (0, 0), (0, 5), (3, 0), (11, 4), (11, 2),
+                     (7, 4)):
+            with self.subTest(msg="Test eh_posicao_obstaculo (expecting true)",
+                              x=x,
+                              y=y):
+                pos_obs = target.cria_posicao(x, y)
+                self.assertTrue(target.eh_posicao_obstaculo(prado, pos_obs))
+        with self.subTest("Test eh_posicao_obstaculo (expecting false)"):
+            self.assertFalse(
+                target.eh_posicao_obstaculo(prado, target.cria_posicao(3, 2)))
+        with self.subTest("Test eh_posicao_livre (expecting true)"):
+            self.assertTrue(
+                target.eh_posicao_livre(prado, target.cria_posicao(3, 3)))
+        with self.subTest("Test eh_posicao_livre (expecting false)"):
+            self.assertFalse(
+                target.eh_posicao_livre(prado, target.cria_posicao(5, 1)))
+
+    def test_mover_animal(self):
+        dim = target.cria_posicao(11, 4)
+        obs = (target.cria_posicao(4, 2), target.cria_posicao(5, 2))
+        an1 = tuple(target.cria_animal('rabbit', 5, 0) for i in range(3))
+        an2 = (target.cria_animal('lynx', 20, 15), )
+        pos = tuple(
+            target.cria_posicao(p[0], p[1])
+            for p in ((5, 1), (7, 2), (10, 1), (6, 1)))
+        prado = target.cria_prado(dim, obs, an1 + an2, pos)
+
+        p1 = target.cria_posicao(7, 2)
+        p2 = target.cria_posicao(9, 3)
+        prado = target.mover_animal(prado, p1, p2)
+        with self.subTest(msg="Test prado_para_str"):
+            self.assertEqual(
+                """+----------+
+|....rL...r|
+|...@@.....|
+|........r.|
++----------+""", target.prado_para_str(prado))
+
+    def test_cria_copia_prado(self):
+        """
+        Relembra-se que a cópia não pode ser o mesmo objeto que o original,
+        isto é, "original is copia" tem de retornar False.
+        """
+        dim = target.cria_posicao(11, 4)
+        obs = (target.cria_posicao(4, 2), target.cria_posicao(5, 2))
+        an1 = tuple(target.cria_animal('rabbit', 5, 0) for i in range(3))
+        an2 = (target.cria_animal('lynx', 20, 15), )
+        pos = tuple(
+            target.cria_posicao(p[0], p[1])
+            for p in ((5, 1), (7, 2), (10, 1), (6, 1)))
+        prado = target.cria_prado(dim, obs, an1 + an2, pos)
+
+        prado_copia = target.cria_copia_prado(prado)
+
+        self.assertIsNot(prado, prado_copia)
+        self.assertTrue(target.prados_iguais(prado, prado_copia))
+
+        with self.subTest(msg="Mover animal na cópia"):
+            p1 = target.cria_posicao(7, 2)
+            p2 = target.cria_posicao(9, 3)
+            prado = target.mover_animal(prado, p1, p2)
+
+            self.assertFalse(target.prados_iguais(prado, prado_copia))
+
+    def test_eliminar_animal(self):
+        dim = target.cria_posicao(11, 4)
+        obs = (target.cria_posicao(4, 2), target.cria_posicao(5, 2))
+        an1 = tuple(target.cria_animal('rabbit', 5, 0) for i in range(3))
+        an2 = (target.cria_animal('lynx', 20, 15), )
+        pos = tuple(
+            target.cria_posicao(p[0], p[1])
+            for p in ((5, 1), (7, 2), (10, 1), (6, 1)))
+        prado = target.cria_prado(dim, obs, an1 + an2, pos)
+
+        p1 = target.cria_posicao(7, 2)
+        prado = target.eliminar_animal(prado, p1)
+        with self.subTest(msg="Test prado_para_str"):
+            self.assertEqual(
+                """+----------+
+|....rL...r|
+|...@@.....|
+|..........|
++----------+""", target.prado_para_str(prado))
+
+    def test_inserir_animal(self):
+        dim = target.cria_posicao(11, 4)
+        obs = (target.cria_posicao(4, 2), target.cria_posicao(5, 2))
+        an1 = tuple(target.cria_animal('rabbit', 5, 0) for i in range(3))
+        an2 = (target.cria_animal('lynx', 20, 15), )
+        pos = tuple(
+            target.cria_posicao(p[0], p[1])
+            for p in ((5, 1), (7, 2), (10, 1), (6, 1)))
+        prado = target.cria_prado(dim, obs, an1 + an2, pos)
+
+        a = target.cria_animal('fox', 30, 7)
+        p1 = target.cria_posicao(9, 3)
+        prado = target.inserir_animal(prado, a, p1)
+        with self.subTest(msg="Test prado_para_str"):
+            self.assertEqual(
+                """+----------+
+|....rL...r|
+|...@@.r...|
+|........F.|
 +----------+""", target.prado_para_str(prado))
 
 
@@ -310,6 +436,7 @@ class MockPrado:
                         return False
                     del a[i]
                     del b[i]
+                    break
             if not z:
                 return False
         return len(a) == len(b) == 0
@@ -338,10 +465,10 @@ pradoMocks = (
     lambda p: len(tuple(filter(eh_predador, p._foobar))),
     lambda p: len(tuple(filter(eh_presa, p._foobar))),
     lambda p: target.ordenar_posicoes(p._barfoo), lambda p, l: p.foo(l),
-    lambda p, l: p.bar(l), lambda p, l1, l2: p.barbar(l1),
+    lambda p, l: p.bar(l), lambda p, l1, l2: p.barbar(l1, l2),
     lambda p, a, l: p.barfoo(a, l), lambda p: instanceof(p, MockPrado),
     lambda p, l: bool(p.foo(l)), lambda p, l: p.baz(l),
-    lambda p, l: not (bool(p.foo(l)) or b.baz(l)),
+    lambda p, l: not (bool(p.foo(l)) or p.baz(l)),
     lambda p1, p2: type(p1) == type(p2) == MockPrado and p1.barbaz(p2),
     lambda p: p.foobaz())
 
