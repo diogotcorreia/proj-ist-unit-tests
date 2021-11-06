@@ -1,6 +1,5 @@
 package ggctests;
 
-import ggc.WarehouseManager;
 import ggc.app.exceptions.FileOpenFailedException;
 import ggctests.utils.PoUILibTest;
 import org.junit.jupiter.api.AfterAll;
@@ -42,7 +41,7 @@ public class LoadAndSaveTest extends PoUILibTest {
         }
 
         protected void resetWarehouseManager() {
-            this.warehouseManager = new WarehouseManager();
+            this.warehouseManager = newWarehouseManager();
         }
     }
 
