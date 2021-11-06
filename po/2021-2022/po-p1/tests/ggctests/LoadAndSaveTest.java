@@ -1,7 +1,5 @@
 package ggctests;
 
-import ggc.WarehouseManager;
-import ggc.app.exceptions.FileOpenFailedException;
 import ggctests.utils.PoUILibTest;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.MethodOrderer;
@@ -42,7 +40,7 @@ public class LoadAndSaveTest extends PoUILibTest {
         }
 
         protected void resetWarehouseManager() {
-            this.warehouseManager = new WarehouseManager();
+            this.warehouseManager = newWarehouseManager();
         }
     }
 
@@ -199,7 +197,7 @@ public class LoadAndSaveTest extends PoUILibTest {
 
         this.runApp();
 
-        assertThrownCommandException(FileOpenFailedException.class, "Problema ao abrir 'file_that_does_not_exist.dat'.");
+        assertThrownCommandException("FileOpenFailedException", "Problema ao abrir 'file_that_does_not_exist.dat'.");
         assertNoMoreExceptions();
         assertEquals("", this.interaction.getResult());
     }

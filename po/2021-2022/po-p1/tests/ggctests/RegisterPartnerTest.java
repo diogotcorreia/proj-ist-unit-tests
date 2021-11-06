@@ -1,7 +1,5 @@
 package ggctests;
 
-import ggc.app.exceptions.DuplicatePartnerKeyException;
-import ggc.app.exceptions.UnknownPartnerKeyException;
 import ggctests.utils.PoUILibTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -64,7 +62,7 @@ public class RegisterPartnerTest {
 
             this.runApp();
 
-            assertThrownCommandException(UnknownPartnerKeyException.class, "O parceiro '" + key + "' não existe.");
+            assertThrownCommandException("UnknownPartnerKeyException", "O parceiro '" + key + "' não existe.");
             assertNoMoreExceptions();
             assertEquals("", this.interaction.getResult());
         }
@@ -139,8 +137,8 @@ public class RegisterPartnerTest {
 
             this.runApp();
 
-            assertThrownCommandException(DuplicatePartnerKeyException.class, "O parceiro 'YYYYYYYY' já existe.");
-            assertThrownCommandException(DuplicatePartnerKeyException.class, "O parceiro 'CCCCCCCCP1' já existe.");
+            assertThrownCommandException("DuplicatePartnerKeyException", "O parceiro 'YYYYYYYY' já existe.");
+            assertThrownCommandException("DuplicatePartnerKeyException", "O parceiro 'CCCCCCCCP1' já existe.");
             assertNoMoreExceptions();
             assertEquals("""
                             AAAAS1|Toshiba|Tokyo, Japan|NORMAL|0|0|0|0
@@ -171,10 +169,10 @@ public class RegisterPartnerTest {
 
             this.runApp();
 
-            assertThrownCommandException(DuplicatePartnerKeyException.class, "O parceiro 'aaAAS1' já existe.");
-            assertThrownCommandException(DuplicatePartnerKeyException.class, "O parceiro 'ddddddp3' já existe.");
-            assertThrownCommandException(DuplicatePartnerKeyException.class, "O parceiro 'WEWE' já existe.");
-            assertThrownCommandException(DuplicatePartnerKeyException.class, "O parceiro 'WewE' já existe.");
+            assertThrownCommandException("DuplicatePartnerKeyException", "O parceiro 'aaAAS1' já existe.");
+            assertThrownCommandException("DuplicatePartnerKeyException", "O parceiro 'ddddddp3' já existe.");
+            assertThrownCommandException("DuplicatePartnerKeyException", "O parceiro 'WEWE' já existe.");
+            assertThrownCommandException("DuplicatePartnerKeyException", "O parceiro 'WewE' já existe.");
             assertNoMoreExceptions();
             assertEquals("""
                             AAAAS1|Toshiba|Tokyo, Japan|NORMAL|0|0|0|0

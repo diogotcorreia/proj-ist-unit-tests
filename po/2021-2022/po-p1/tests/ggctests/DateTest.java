@@ -1,6 +1,5 @@
 package ggctests;
 
-import ggc.app.exceptions.InvalidDateException;
 import ggctests.utils.PoUILibTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -49,7 +48,7 @@ public class DateTest extends PoUILibTest {
 
         this.runApp();
 
-        assertThrownCommandException(InvalidDateException.class, "Data inválida: " + value);
+        assertThrownCommandException("InvalidDateException", "Data inválida: " + value);
         assertNoMoreExceptions();
         assertEquals("", this.interaction.getResult());
     }
