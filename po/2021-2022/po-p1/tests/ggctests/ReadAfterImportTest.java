@@ -355,4 +355,98 @@ public class ReadAfterImportTest {
         }
     }
 
+    @Nested
+    public class ListPartnerBatchesTest extends PoUILibTest {
+        public ListPartnerBatchesTest() {
+            super(true);
+        }
+
+        protected void setupWarehouseManager() {
+        }
+
+        @Test
+        @DisplayName("A-05-01-M-ok - Ver lotes de parceiro não existente")
+        void withUnknownPartner() {
+            loadFromInputFile("test025.input");
+            this.interaction.addMenuOptions(5, 3);
+            this.interaction.addFieldValues("MM1");
+
+            this.runApp();
+
+            assertThrownCommandException("UnknownPartnerKeyException", "O parceiro 'MM1' não existe.");
+            assertNoMoreExceptions();
+            assertEquals("", this.interaction.getResult());
+        }
+
+        @Test
+        @DisplayName("A-05-02-M-ok - Ver lotes de parceiro sem lotes")
+        void withEmptyBatchList() {
+            loadFromInputFile("test026.input");
+            this.interaction.addMenuOptions(5, 3);
+            this.interaction.addFieldValues("R1");
+
+            this.runApp();
+
+            assertNoMoreExceptions();
+            assertEquals("", this.interaction.getResult());
+        }
+
+        @ParameterizedTest(name = "{2}")
+        @CsvSource({
+                "027,R1,A-05-03-M-ok - Ver lotes de parceiro com um lote de um produto",
+                "028,M1,A-05-04-M-ok - Ver lotes de parceiro com lotes de um produto",
+                "013,STEVE_INV,Show batches by partner from from a warehouse with more batches"
+        })
+        void listBatchesByPartner(String testId, String partnerKey, String testName) {
+            loadFromInputFile("test" + testId + ".input");
+            this.interaction.addMenuOptions(5, 3);
+            this.interaction.addFieldValues(partnerKey);
+
+            this.runApp();
+
+            assertNoMoreExceptions();
+            assertEquals(getTextFromFile("expected/test" + testId + "/partnerBatches.output"), this.interaction.getResult());
+        }
+    }
+
+    @Nested
+    public class ListProductBatchesTest extends PoUILibTest {
+        public ListProductBatchesTest() {
+            super(true);
+        }
+
+        protected void setupWarehouseManager() {
+        }
+
+        @Test
+        @DisplayName("A-06-01-M-ok - Ver lotes de produto não existente")
+        void withUnknownPartner() {
+            this.interaction.addMenuOptions(5, 4);
+            this.interaction.addFieldValues("ROLHA");
+
+            this.runApp();
+
+            assertThrownCommandException("UnknownProductKeyException", "O produto 'ROLHA' não existe.");
+            assertNoMoreExceptions();
+            assertEquals("", this.interaction.getResult());
+        }
+
+        @ParameterizedTest(name = "{2}")
+        @CsvSource({
+                "029,HIDROGENIO,A-06-02-M-ok - Ver lotes de produto com um lote",
+                "030,HIDROGENIO,A-06-03-M-ok - Ver lotes de produto com vários lotes",
+                "013,STONE_PICKAXE,Show batch by product from a warehouse with more batches"
+        })
+        void listBatchesByProduct(String testId, String partnerKey, String testName) {
+            loadFromInputFile("test" + testId + ".input");
+            this.interaction.addMenuOptions(5, 4);
+            this.interaction.addFieldValues(partnerKey);
+
+            this.runApp();
+
+            assertNoMoreExceptions();
+            assertEquals(getTextFromFile("expected/test" + testId + "/productBatches.output"), this.interaction.getResult());
+        }
+    }
+
 }

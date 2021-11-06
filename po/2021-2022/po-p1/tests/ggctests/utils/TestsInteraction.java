@@ -48,7 +48,7 @@ public class TestsInteraction implements InteractionDriver {
                 if (option == 0)
                     return;
 
-                if (option < 0 || option > menu.size() - 1 || !menu.entry(option - 1).isValid()) {
+                if (option < 0 || option > menu.size() || !menu.entry(option - 1).isValid()) {
                     throw new RuntimeException("Option " + option + " is not in the menu");
                 } else {
                     menu.entry(option - 1).performCommand();
