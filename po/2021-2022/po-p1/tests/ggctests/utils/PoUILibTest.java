@@ -27,33 +27,29 @@ public abstract class PoUILibTest {
     private static Constructor<ggc.app.main.Menu> mainMenuConstructor;
 
     static {
-      try {
-        warehouseManagerClass = Class.forName("ggc.WarehouseManager");
-      } catch (ClassNotFoundException e) {
         try {
-          warehouseManagerClass = Class.forName("ggc.core.WarehouseManager");
-        } catch (ClassNotFoundException ex) {
-          fail("Could not find a WarehouseManager class to hook into. Searched at ggc.WarehouseManager and ggc.core.WarehouseManager", ex);
+            warehouseManagerClass = tryClassNames("ggc.WarehouseManager", "ggc.core.WarehouseManager");
+        } catch (ClassNotFoundException e) {
+            fail("Could not find a WarehouseManager class to hook into. Searched at ggc.WarehouseManager and ggc.core.WarehouseManager", e);
         }
-      }
-      try {
-        warehouseManagerConstructor = warehouseManagerClass.getConstructor();
-      } catch (NoSuchMethodException e) {
-        fail("Could not find the default constructor for WarehouseManager. Make sure it has a public constructor without arguments", e);
-      }
 
-      try {
-        warehouseManagerImportFileMethod = warehouseManagerClass.getMethod("importFile", String.class);
-      } catch (NoSuchMethodException e) {
-        fail("Could not find a public importFile(String) method on WarehouseManager", e);
-      }
+        try {
+            warehouseManagerConstructor = warehouseManagerClass.getConstructor();
+        } catch (NoSuchMethodException e) {
+            fail("Could not find the default constructor for WarehouseManager. Make sure it has a public constructor without arguments", e);
+        }
 
-      try {
-        mainMenuConstructor = ggc.app.main.Menu.class.getConstructor(warehouseManagerClass);
-      } catch (NoSuchMethodException e) {
-        fail("Could not find a constructor on main menu that takes a WarehouseManager", e);
-      }
+        try {
+            warehouseManagerImportFileMethod = warehouseManagerClass.getMethod("importFile", String.class);
+        } catch (NoSuchMethodException e) {
+            fail("Could not find a public importFile(String) method on WarehouseManager", e);
+        }
 
+        try {
+            mainMenuConstructor = ggc.app.main.Menu.class.getConstructor(warehouseManagerClass);
+        } catch (NoSuchMethodException e) {
+            fail("Could not find a constructor on main menu that takes a WarehouseManager", e);
+        }
     }
 
     private boolean resetWarehouseManagerBeforeEach = false;
@@ -73,12 +69,12 @@ public abstract class PoUILibTest {
     protected abstract void setupWarehouseManager();
 
     public Object newWarehouseManager() {
-      try {
-        return warehouseManagerConstructor.newInstance();
-      } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-        fail("Failed to instantiate a new WarehouseManager with a public empty constructor", e);
-      }
-      return null;
+        try {
+            return warehouseManagerConstructor.newInstance();
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
+            fail("Failed to instantiate a new WarehouseManager with a public empty constructor", e);
+        }
+        return null;
     }
 
     @BeforeAll
@@ -118,7 +114,8 @@ public abstract class PoUILibTest {
         this.dialog.close();
     }
 
-    protected void assertThrownCommandException(Class<? extends CommandException> clazz, String msg) {
+    protected void assertThrownCommandException(String className, String msg) {
+        Class<? extends CommandException> clazz = getCommandException(className);
         if (this.interaction.getCommandExceptions().size() == 0) {
             fail("Exception " + clazz.getName() + " was not thrown");
         }
@@ -151,6 +148,27 @@ public abstract class PoUILibTest {
             fail("[Test Error] Could not load output from resource file " + fileName);
             return "";
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    private Class<? extends CommandException> getCommandException(String name) {
+      try {
+          return (Class<? extends CommandException>) tryClassNames("ggc.app.exceptions." + name, "ggc.app.exception." + name);
+      } catch (ClassNotFoundException e) {
+          fail("Could not find app exception (" + name + ") via reflection", e);
+      }
+      return null;
+    }
+
+    private static Class<?> tryClassNames(String... classNames) throws ClassNotFoundException {
+        for (String c : classNames) {
+          try {
+            return Class.forName(c);
+          } catch (ClassNotFoundException ignore) {
+            // try next class
+          }
+        }
+        throw new ClassNotFoundException(classNames[0]);
     }
 
 }
