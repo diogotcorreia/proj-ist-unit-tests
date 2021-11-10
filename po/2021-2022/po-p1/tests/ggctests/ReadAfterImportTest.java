@@ -279,6 +279,18 @@ public class ReadAfterImportTest {
     }
 
     /**
+     * Test if it is registering same batches or not
+     */
+    @Nested
+    public class InputWithSameBatches extends GenericReadAfterImportTest {
+    public InputWithSameBatches() {
+        super("031");
+    }
+
+
+}
+
+    /**
      * Corresponds to test A-03-07-M-ok
      */
     @Nested
