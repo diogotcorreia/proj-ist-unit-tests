@@ -143,6 +143,7 @@ public class AcquisitionTest extends PoUILibTest {
         assertNoMoreExceptions();
         assertEquals("""
                 COMPRA|0|M1|papel|10|200|0
+                papel|20|10
                 M1|Rohit Figueiredo|New Delhi, India|NORMAL|0|200|0|0""", this.interaction.getResult());
     }
 
