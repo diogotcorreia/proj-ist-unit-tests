@@ -142,7 +142,7 @@ public class BalanceTest extends PoUILibTest{
         assertEquals("""
                 Saldo disponível: 0
                 Saldo contabilístico: 0
-                M1|Rohit Figueiredo|New Delhi, India|SELECTION|10000|900|0|900
+                M1|Rohit Figueiredo|New Delhi, India|SELECTION|9000|900|0|900
                 S1|Toshiba|Tokyo, Japan|NORMAL|0|0|0|0
                 Saldo disponível: 0
                 Saldo contabilístico: 360
@@ -241,7 +241,7 @@ public class BalanceTest extends PoUILibTest{
         assertEquals("""
                 Saldo disponível: 0
                 Saldo contabilístico: 0
-                M1|Rohit Figueiredo|New Delhi, India|ELITE|20000|1800|0|1800
+                M1|Rohit Figueiredo|New Delhi, India|ELITE|18000|1800|0|1800
                 S1|Toshiba|Tokyo, Japan|NORMAL|0|0|0|0
                 Saldo disponível: 0
                 Saldo contabilístico: 360
@@ -415,7 +415,7 @@ public class BalanceTest extends PoUILibTest{
         assertEquals("""
                 Saldo disponível: 0
                 Saldo contabilístico: 0
-                M1|Rohit Figueiredo|New Delhi, India|SELECTION|10000|900|0|900
+                M1|Rohit Figueiredo|New Delhi, India|SELECTION|9000|900|0|900
                 S1|Toshiba|Tokyo, Japan|NORMAL|0|0|0|0
                 Saldo disponível: 0
                 Saldo contabilístico: 360
@@ -505,7 +505,7 @@ public class BalanceTest extends PoUILibTest{
         assertEquals("""
                   Saldo disponível: 0
                   Saldo contabilístico: 0
-                  M1|Rohit Figueiredo|New Delhi, India|ELITE|20000|1800|0|1800
+                  M1|Rohit Figueiredo|New Delhi, India|ELITE|18000|1800|0|1800
                   S1|Toshiba|Tokyo, Japan|NORMAL|0|0|0|0
                   Saldo disponível: 0
                   Saldo contabilístico: 360

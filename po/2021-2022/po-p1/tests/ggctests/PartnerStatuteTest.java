@@ -34,7 +34,7 @@ public class PartnerStatuteTest extends PoUILibTest{
         assertNoMoreExceptions();
         assertEquals("""
                 VENDA|0|M1|HIDROGENIO|2|400|360|10|0
-                M1|Rohit Figueiredo|New Delhi, India|SELECTION|4000|0|360|360""", this.interaction.getResult());
+                M1|Rohit Figueiredo|New Delhi, India|SELECTION|3600|0|360|360""", this.interaction.getResult());
     }
 
     @Test
@@ -56,7 +56,7 @@ public class PartnerStatuteTest extends PoUILibTest{
 
         assertNoMoreExceptions();
         assertEquals("""
-                M1|Rohit Figueiredo|New Delhi, India|ELITE|104000|0|9360|9360""", this.interaction.getResult());
+                M1|Rohit Figueiredo|New Delhi, India|ELITE|93600|0|9360|9360""", this.interaction.getResult());
     }
 
     @Test
@@ -88,10 +88,10 @@ public class PartnerStatuteTest extends PoUILibTest{
 
         assertNoMoreExceptions();
         assertEquals("""
-                M1|Rohit Figueiredo|New Delhi, India|ELITE|104000|0|9360|9360
+                M1|Rohit Figueiredo|New Delhi, India|ELITE|93600|0|9360|9360
                 Data actual: 69
                 VENDA|2|M1|VIDRO|5|5000|5000|10
-                M1|Rohit Figueiredo|New Delhi, India|SELECTION|26000|0|14360|14360""", this.interaction.getResult());
+                M1|Rohit Figueiredo|New Delhi, India|SELECTION|23400|0|14360|14360""", this.interaction.getResult());
     }
 
     @Test
@@ -115,7 +115,7 @@ public class PartnerStatuteTest extends PoUILibTest{
 
         assertNoMoreExceptions();
         assertEquals("""
-                M1|Rohit Figueiredo|New Delhi, India|NORMAL|4000|0|5240|5240""", this.interaction.getResult());
+                M1|Rohit Figueiredo|New Delhi, India|NORMAL|3600|0|5240|5240""", this.interaction.getResult());
     }
 
     @Test
@@ -133,7 +133,7 @@ public class PartnerStatuteTest extends PoUILibTest{
 
         assertNoMoreExceptions();
         assertEquals("""
-                M1|Rohit Figueiredo|New Delhi, India|ELITE|100000|0|9000|9000""", this.interaction.getResult());
+                M1|Rohit Figueiredo|New Delhi, India|ELITE|90000|0|9000|9000""", this.interaction.getResult());
     }
 
 
