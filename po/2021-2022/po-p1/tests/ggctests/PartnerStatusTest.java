@@ -137,5 +137,5 @@ public class PartnerStatusTest extends PoUILibTest{
         M1|Rohit Figueiredo|New Delhi, India|ELITE|100000|0|9000|9000""", this.interaction.getResult());
     }
 
-    
+
 }
