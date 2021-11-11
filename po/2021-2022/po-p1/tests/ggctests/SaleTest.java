@@ -102,7 +102,7 @@ public class SaleTest extends PoUILibTest {
                 H|10|2
                 H2O|30|1|0.1|H:2#O:1
                 H2OOH|25|1|0.3|H2O:1#OH:1
-                O|50|1
+                O|50|5
                 OH|20|1|0.2|O:1#H:1""", this.interaction.getResult());
     }
 
