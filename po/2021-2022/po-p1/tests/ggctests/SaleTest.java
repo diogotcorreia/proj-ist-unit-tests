@@ -80,4 +80,30 @@ public class SaleTest extends PoUILibTest {
                 VIDRO|1|35""", this.interaction.getResult());
     }
 
+    /**
+     * This tests an edge case of selling derived products requiring aggregation, which most likely won't be tested by the official tests.
+     * A visualization of the problem can be found here: https://user-images.githubusercontent.com/56204853/141300485-53925ecb-4b1b-4965-8e2f-96abf5e5af1e.png
+     * If you're failing this test, it's because the batches were changed even tough you didn't have enough stock.
+     */
+    @Test
+    @DisplayName("Attempt sell without stock of derived product composed of derived products that share the same simple product")
+    void sellDerivedProductWithNestedDerivedProductSharingTheSameSimpleProductInsufficientQuantity() {
+        loadFromInputFile("test047.input");
+        this.interaction.addMenuOptions(7, 3, 1, 0);
+        this.interaction.addFieldValues("QUI", "2", "H2OOH", "3", "0"); // sale
+        this.interaction.addMenuOptions(5, 1); // list products
+
+        this.runApp();
+
+        assertThrownCommandException("UnavailableProductException", "Produto 'H': pedido=3, existências=2");
+        assertThrownCommandException("UnknownTransactionKeyException", "A transacção '0' não existe.");
+        assertNoMoreExceptions();
+        assertEquals("""
+                H|10|2
+                H2O|30|1|0.1|H:2#O:1
+                H2OOH|25|1|0.3|H2O:1#OH:1
+                O|50|1
+                OH|20|1|0.2|O:1#H:1""", this.interaction.getResult());
+    }
+
 }
