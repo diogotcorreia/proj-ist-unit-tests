@@ -279,11 +279,12 @@ public class ReadAfterImportTest {
     }
 
     /**
-     * Test if it is registering same batches or not
+     * Test if it is registering duplicate batches or not
      */
     @Nested
-    public class InputWithSameBatches extends GenericReadAfterImportTest {
-    public InputWithSameBatches() {
+    @DisplayName("Test if imports duplicate batches correctly")
+    public class InputWithDuplicateBatches extends GenericReadAfterImportTest {
+    public InputWithDuplicateBatches() {
         super("031");
     }
 
