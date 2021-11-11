@@ -60,7 +60,7 @@ public class PartnerStatuteTest extends PoUILibTest{
     }
 
     @Test
-    @DisplayName("Partner downgrade to ELITE from SELECTION and see partner")
+    @DisplayName("Partner downgrade from ELITE to SELECTION and see partner")
     void downgradePartnerStatuteEliteToSelection() {
         super.loadFromInputFile("test039.input");
         this.interaction.addMenuOptions(7, 3);
@@ -115,7 +115,7 @@ public class PartnerStatuteTest extends PoUILibTest{
 
         assertNoMoreExceptions();
         assertEquals("""
-                M1|Rohit Figueiredo|New Delhi, India|NORMAL|3600|0|5240|5240""", this.interaction.getResult());
+                M1|Rohit Figueiredo|New Delhi, India|NORMAL|360|0|5240|5240""", this.interaction.getResult());
     }
 
     @Test
