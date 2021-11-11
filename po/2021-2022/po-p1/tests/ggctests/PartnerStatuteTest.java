@@ -6,10 +6,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class PartnerStatusTest extends PoUILibTest{
+public class PartnerStatuteTest extends PoUILibTest{
 
-    public PartnerStatusTest()
-    {
+    public PartnerStatuteTest() {
         super(true);
     }
 
@@ -18,9 +17,9 @@ public class PartnerStatusTest extends PoUILibTest{
     }
 
     @Test
-    @DisplayName("Parceiro sobe para Selection e ver parceiro")
-    void upgradeParterStatusSelection() {
-        super.loadFromInputFile("test041.input");
+    @DisplayName("Partner upgrade to SELECTION and see partner")
+    void upgradePartnerStatuteSelection() {
+        super.loadFromInputFile("test039.input");
         this.interaction.addMenuOptions(7, 3);
         this.interaction.addFieldValues("M1","10", "HIDROGENIO", "2");
         this.interaction.addMenuOptions(5);
@@ -39,9 +38,9 @@ public class PartnerStatusTest extends PoUILibTest{
     }
 
     @Test
-    @DisplayName("Parceiro sobe de Selection para Elite e ver parceiro")
-    void upgradeParterStatusSelectiontoELite() {
-        super.loadFromInputFile("test041.input");
+    @DisplayName("Partner upgrade from SELECTION to ELITE and see partner")
+    void upgradePartnerStatuteSelectionToELite() {
+        super.loadFromInputFile("test039.input");
         this.interaction.addMenuOptions(7, 3);
         this.interaction.addFieldValues("M1","10", "HIDROGENIO", "2");
         this.interaction.addMenuOptions(5);
@@ -57,13 +56,13 @@ public class PartnerStatusTest extends PoUILibTest{
 
         assertNoMoreExceptions();
         assertEquals("""
-        M1|Rohit Figueiredo|New Delhi, India|ELITE|104000|0|9360|9360""", this.interaction.getResult());
+                M1|Rohit Figueiredo|New Delhi, India|ELITE|104000|0|9360|9360""", this.interaction.getResult());
     }
 
     @Test
-    @DisplayName("Parceiro Elite passa para Selection e ver parceiro")
-    void upgradeParterStatusELitetoSelection() {
-        super.loadFromInputFile("test041.input");
+    @DisplayName("Partner downgrade to ELITE from SELECTION and see partner")
+    void downgradePartnerStatuteEliteToSelection() {
+        super.loadFromInputFile("test039.input");
         this.interaction.addMenuOptions(7, 3);
         this.interaction.addFieldValues("M1","10", "HIDROGENIO", "2");
         this.interaction.addMenuOptions(5);
@@ -89,16 +88,16 @@ public class PartnerStatusTest extends PoUILibTest{
 
         assertNoMoreExceptions();
         assertEquals("""
-        M1|Rohit Figueiredo|New Delhi, India|ELITE|104000|0|9360|9360
-        Data actual: 69
-        VENDA|2|M1|VIDRO|5|5000|5000|10
-        M1|Rohit Figueiredo|New Delhi, India|SELECTION|26000|0|14360|14360""", this.interaction.getResult());
+                M1|Rohit Figueiredo|New Delhi, India|ELITE|104000|0|9360|9360
+                Data actual: 69
+                VENDA|2|M1|VIDRO|5|5000|5000|10
+                M1|Rohit Figueiredo|New Delhi, India|SELECTION|26000|0|14360|14360""", this.interaction.getResult());
     }
 
     @Test
-    @DisplayName("Parceiro sobe para Selection e desce para Normal, ver parceiro")
-    void upgradePartnerdAndDowngrade() {
-        super.loadFromInputFile("test041.input");
+    @DisplayName("Partner upgrade to SELECTION and downgrade to NORMAL, see partner")
+    void upgradePartnerToSelectionAndDowngrade() {
+        super.loadFromInputFile("test039.input");
         this.interaction.addMenuOptions(7, 3);
         this.interaction.addFieldValues("M1","10", "HIDROGENIO", "2");
         this.interaction.addMenuOptions(5);
@@ -120,9 +119,9 @@ public class PartnerStatusTest extends PoUILibTest{
     }
 
     @Test
-    @DisplayName("Parceiro sobe de Normal para Elite e ver parceiro")
-    void partnerStatusNormalToElite() {
-        super.loadFromInputFile("test041.input");
+    @DisplayName("Partner upgrade from NORMAL to ELITE, see partner")
+    void partnerStatuteNormalToElite() {
+        super.loadFromInputFile("test039.input");
         this.interaction.addMenuOptions(7, 3);
         this.interaction.addFieldValues("M1","10", "HIDROGENIO", "50");
         this.interaction.addMenuOptions(5);
@@ -134,7 +133,7 @@ public class PartnerStatusTest extends PoUILibTest{
 
         assertNoMoreExceptions();
         assertEquals("""
-        M1|Rohit Figueiredo|New Delhi, India|ELITE|100000|0|9000|9000""", this.interaction.getResult());
+                M1|Rohit Figueiredo|New Delhi, India|ELITE|100000|0|9000|9000""", this.interaction.getResult());
     }
 
 
