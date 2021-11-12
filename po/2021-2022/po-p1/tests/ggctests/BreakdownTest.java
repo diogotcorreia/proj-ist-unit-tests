@@ -89,8 +89,9 @@ public class BreakdownTest extends PoUILibTest {
         loadFromInputFile("test038.input");
         this.interaction.addMenuOptions(7, 2, 0);
         this.interaction.addFieldValues("R1", "GARRAFA", "5");
-        this.interaction.addMenuOptions(5, 1, 0, 7, 1, 0, 6, 1);
+        this.interaction.addMenuOptions(5, 1, 0, 7, 1, 0, 6, 1, 0);
         this.interaction.addFieldValues("0", "R1");
+        this.interaction.addMenuOptions(9); // balance
 
         this.runApp();
 
@@ -102,6 +103,33 @@ public class BreakdownTest extends PoUILibTest {
                 SAL|16|525
                 VIDRO|10|550
                 DESAGREGAÇÃO|0|R1|GARRAFA|5|90|90|0|ROLHA:5:10#SAL:25:400#VIDRO:50:500
-                R1|António Figueiredo|Lisboa|NORMAL|900|0|0|0""", this.interaction.getResult());
+                R1|António Figueiredo|Lisboa|NORMAL|900|0|0|0
+                Saldo disponível: 90
+                Saldo contabilístico: 90""", this.interaction.getResult());
+    }
+
+    @Test
+    @DisplayName("Breakdown with negative base value")
+    void breakdownWithNegativeBaseValue() {
+        loadFromInputFile("test048.input");
+        this.interaction.addMenuOptions(7, 2, 0);
+        this.interaction.addFieldValues("R1", "GARRAFA", "5");
+        this.interaction.addMenuOptions(5, 1, 0, 7, 1, 0, 6, 1, 0);
+        this.interaction.addFieldValues("0", "R1");
+        this.interaction.addMenuOptions(9); // balance
+
+        this.runApp();
+
+        assertNoMoreExceptions();
+        assertEquals("""
+                GARRAFA|200|0|0.1|ROLHA:1#SAL:5#VIDRO:10
+                HIDROGENIO|200|5000
+                ROLHA|2|505
+                SAL|16|525
+                VIDRO|50|550
+                DESAGREGAÇÃO|0|R1|GARRAFA|5|-1910|0|0|ROLHA:5:10#SAL:25:400#VIDRO:50:2500
+                R1|António Figueiredo|Lisboa|NORMAL|0|0|0|0
+                Saldo disponível: 0
+                Saldo contabilístico: 0""", this.interaction.getResult());
     }
 }
