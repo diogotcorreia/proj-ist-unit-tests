@@ -92,7 +92,7 @@ public class BalanceTest extends PoUILibTest{
     }
 
     @Test
-    @DisplayName("Partner SELECTION buys and seels simple product")
+    @DisplayName("Partner SELECTION buys and sells simple product")
     void sellSimpleProductAlongTimeSelection() {
         super.loadFromInputFile("test039.input");
         this.interaction.addMenuOptions(7, 3);
@@ -141,7 +141,7 @@ public class BalanceTest extends PoUILibTest{
         assertEquals("""
                 Saldo disponível: 0
                 Saldo contabilístico: 0
-                M1|Rohit Figueiredo|New Delhi, India|SELECTION|9000|900|0|900
+                M1|Rohit Figueiredo|New Delhi, India|SELECTION|9000|900|1000|900
                 S1|Toshiba|Tokyo, Japan|NORMAL|0|0|0|0
                 Saldo disponível: 0
                 Saldo contabilístico: 360
@@ -195,11 +195,11 @@ public class BalanceTest extends PoUILibTest{
     void sellSimpleProductAlongTimeElite() {
         super.loadFromInputFile("test039.input");
         this.interaction.addMenuOptions(7, 3);
-        this.interaction.addFieldValues("M1","10", "VIDRO", "2");
+        this.interaction.addFieldValues("M1","10", "VIDRO", "3");
         this.interaction.addMenuOptions(5);
         this.interaction.addFieldValues("0");
         this.interaction.addMenuOptions(4);
-        this.interaction.addFieldValues("M1","VIDRO","900","2");
+        this.interaction.addFieldValues("M1","VIDRO","900","3");
         this.interaction.addMenuOptions(0,9,6,2,0,7,3); // 0
         this.interaction.addFieldValues("M1","10", "HIDROGENIO", "2");
         this.interaction.addMenuOptions(0,9,4); // 0
@@ -240,7 +240,7 @@ public class BalanceTest extends PoUILibTest{
         assertEquals("""
                 Saldo disponível: 0
                 Saldo contabilístico: 0
-                M1|Rohit Figueiredo|New Delhi, India|ELITE|18000|1800|0|1800
+                M1|Rohit Figueiredo|New Delhi, India|ELITE|27000|2700|3000|2700
                 S1|Toshiba|Tokyo, Japan|NORMAL|0|0|0|0
                 Saldo disponível: 0
                 Saldo contabilístico: 360
@@ -263,7 +263,7 @@ public class BalanceTest extends PoUILibTest{
                 Saldo contabilístico: 360
                 Data actual: 10
                 Saldo disponível: 0
-                Saldo contabilístico: 360
+                Saldo contabilístico: 400
                 Data actual: 11
                 Saldo disponível: 0
                 Saldo contabilístico: 380
@@ -414,7 +414,7 @@ public class BalanceTest extends PoUILibTest{
         assertEquals("""
                 Saldo disponível: 0
                 Saldo contabilístico: 0
-                M1|Rohit Figueiredo|New Delhi, India|SELECTION|9000|900|0|900
+                M1|Rohit Figueiredo|New Delhi, India|SELECTION|9000|900|1000|900
                 S1|Toshiba|Tokyo, Japan|NORMAL|0|0|0|0
                 Saldo disponível: 0
                 Saldo contabilístico: 360
@@ -463,13 +463,13 @@ public class BalanceTest extends PoUILibTest{
     void sellDerivedProductAlongTimeElite() {
         super.loadFromInputFile("test040.input");
         this.interaction.addMenuOptions(7, 3);
-        this.interaction.addFieldValues("M1","10", "VIDRO", "2");
+        this.interaction.addFieldValues("M1", "10", "VIDRO", "3");
         this.interaction.addMenuOptions(5);
         this.interaction.addFieldValues("0");
         this.interaction.addMenuOptions(4);
-        this.interaction.addFieldValues("M1","VIDRO","900","2");
+        this.interaction.addFieldValues("M1", "VIDRO","900","3");
         this.interaction.addMenuOptions(0,9,6,2,0,7,3); // 0
-        this.interaction.addFieldValues("M1","10", "MOLOTOV", "2");
+        this.interaction.addFieldValues("M1", "10", "MOLOTOV", "2");
         this.interaction.addMenuOptions(0,9,4); // 0
         this.interaction.addFieldValues("2"); //2
         this.interaction.addMenuOptions(9,4,3);
@@ -502,49 +502,49 @@ public class BalanceTest extends PoUILibTest{
 
         assertNoMoreExceptions();
         assertEquals("""
-                  Saldo disponível: 0
-                  Saldo contabilístico: 0
-                  M1|Rohit Figueiredo|New Delhi, India|ELITE|18000|1800|0|1800
-                  S1|Toshiba|Tokyo, Japan|NORMAL|0|0|0|0
-                  Saldo disponível: 0
-                  Saldo contabilístico: 360
-                  Saldo disponível: 0
-                  Saldo contabilístico: 360
-                  Data actual: 7
-                  Saldo disponível: 0
-                  Saldo contabilístico: 360
-                  Data actual: 8
-                  Saldo disponível: 0
-                  Saldo contabilístico: 360
-                  Data actual: 9
-                  Saldo disponível: 0
-                  Saldo contabilístico: 360
-                  Data actual: 10
-                  Saldo disponível: 0
-                  Saldo contabilístico: 360
-                  Data actual: 11
-                  Saldo disponível: 0
-                  Saldo contabilístico: 380
-                  Data actual: 12
-                  Saldo disponível: 0
-                  Saldo contabilístico: 380
-                  Data actual: 13
-                  Saldo disponível: 0
-                  Saldo contabilístico: 380
-                  Data actual: 14
-                  Saldo disponível: 0
-                  Saldo contabilístico: 400
-                  Data actual: 15
-                  Saldo disponível: 0
-                  Saldo contabilístico: 400
-                  Data actual: 16
-                  Saldo disponível: 0
-                  Saldo contabilístico: 400
-                  Saldo disponível: 400
-                  Saldo contabilístico: 400
-                  Saldo disponível: 400
-                  Saldo contabilístico: 400
-                  Data actual: 46""", this.interaction.getResult());
+                Saldo disponível: 0
+                Saldo contabilístico: 0
+                M1|Rohit Figueiredo|New Delhi, India|ELITE|27000|2700|3000|2700
+                S1|Toshiba|Tokyo, Japan|NORMAL|0|0|0|0
+                Saldo disponível: 0
+                Saldo contabilístico: 360
+                Saldo disponível: 0
+                Saldo contabilístico: 360
+                Data actual: 7
+                Saldo disponível: 0
+                Saldo contabilístico: 360
+                Data actual: 8
+                Saldo disponível: 0
+                Saldo contabilístico: 360
+                Data actual: 9
+                Saldo disponível: 0
+                Saldo contabilístico: 360
+                Data actual: 10
+                Saldo disponível: 0
+                Saldo contabilístico: 400
+                Data actual: 11
+                Saldo disponível: 0
+                Saldo contabilístico: 380
+                Data actual: 12
+                Saldo disponível: 0
+                Saldo contabilístico: 380
+                Data actual: 13
+                Saldo disponível: 0
+                Saldo contabilístico: 380
+                Data actual: 14
+                Saldo disponível: 0
+                Saldo contabilístico: 400
+                Data actual: 15
+                Saldo disponível: 0
+                Saldo contabilístico: 400
+                Data actual: 16
+                Saldo disponível: 0
+                Saldo contabilístico: 400
+                Saldo disponível: 400
+                Saldo contabilístico: 400
+                Saldo disponível: 400
+                Saldo contabilístico: 400
+                Data actual: 46""", this.interaction.getResult());
     }
 
 }
