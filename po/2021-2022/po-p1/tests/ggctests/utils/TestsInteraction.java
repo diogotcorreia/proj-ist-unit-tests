@@ -71,8 +71,9 @@ public class TestsInteraction implements InteractionDriver {
                 if (fieldValues.size() == 0)
                     throw new RuntimeException("Command is asking for more fields than expected");
 
-                if (!in.parse(fieldValues.remove()))
-                    throw new RuntimeException("Field " + in.prompt() + " was expecting a different value type");
+                String value = fieldValues.remove();
+                if (!in.parse(value))
+                    throw new RuntimeException("Field " + in.prompt() + " was expecting a different value type. Received '" + value + "'");
             }
         }
     }
