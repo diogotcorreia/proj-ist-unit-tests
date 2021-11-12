@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class AcquisitionTest extends PoUILibTest {
 
     public AcquisitionTest() {
-      super(true);
+        super(true);
     }
 
     protected void setupWarehouseManager() {
@@ -145,6 +145,81 @@ public class AcquisitionTest extends PoUILibTest {
                 COMPRA|0|M1|papel|10|200|0
                 papel|20|10
                 M1|Rohit Figueiredo|New Delhi, India|NORMAL|0|200|0|0""", this.interaction.getResult());
+    }
+
+    @Test
+    @DisplayName("Acquire batch of unknown derived product")
+    void acquireBatchOfUnknownDerivedProduct() {
+        loadFromInputFile("test013.input");
+        this.interaction.addMenuOptions(7, 4, 1, 0);
+        this.interaction.addFieldValues("CT1", "STONE_AXE", "10", "3", "s", "2", "0.3", "COBBLESTONE", "3", "STICK", "2", "0");
+        this.interaction.addMenuOptions(5, 1, 0, 6, 1);
+        this.interaction.addFieldValues("CT1");
+
+        this.runApp();
+
+        assertNoMoreExceptions();
+        assertEquals("""
+                COMPRA|0|CT1|STONE_AXE|3|30|0
+                COBBLESTONE|400|8000
+                DIAMOND|400|7000
+                DIAMOND_SWORD|400|7000|2.3|DIAMOND:2#STICK:1
+                GLASS|300|64|0.15|SAND:1
+                OAK_LOG|200|5000
+                OAK_WOOD|1200|2600|0.2|OAK_LOG:1
+                SAND|100|64
+                SIGN|800|5000|0.5|OAK_WOOD:6#STICK:1
+                STICK|800|8000|0.1|OAK_WOOD:2
+                STONE_AXE|10|3|0.3|COBBLESTONE:3#STICK:2
+                STONE_PICKAXE|400|7000|2.1|COBBLESTONE:3#STICK:2
+                STONE_SWORD|500|12000|1.0|COBBLESTONE:2#STICK:1
+                CT1|Crafting Table 1|Kitchen|NORMAL|0|30|0|0""", this.interaction.getResult());
+    }
+
+    @Test
+    @DisplayName("Acquire batch of unknown derived product composed of unknown product")
+    void acquireBatchOfUnknownDerivedProductComposedOfUnknownProduct() {
+        loadFromInputFile("test013.input");
+        this.interaction.addMenuOptions(7, 4, 1, 0);
+        this.interaction.addFieldValues("CT1", "STONE_AXE", "10", "3", "s", "2", "0.3", "STONE", "3", "STICK", "2", "0");
+        this.interaction.addMenuOptions(5, 1, 0, 6, 1);
+        this.interaction.addFieldValues("CT1");
+
+        this.runApp();
+
+        assertThrownCommandException("UnknownProductKeyException", "O produto 'STONE' não existe.");
+        assertThrownCommandException("UnknownTransactionKeyException", "A transacção '0' não existe.");
+        assertNoMoreExceptions();
+        assertEquals("""
+                COBBLESTONE|400|8000
+                DIAMOND|400|7000
+                DIAMOND_SWORD|400|7000|2.3|DIAMOND:2#STICK:1
+                GLASS|300|64|0.15|SAND:1
+                OAK_LOG|200|5000
+                OAK_WOOD|1200|2600|0.2|OAK_LOG:1
+                SAND|100|64
+                SIGN|800|5000|0.5|OAK_WOOD:6#STICK:1
+                STICK|800|8000|0.1|OAK_WOOD:2
+                STONE_PICKAXE|400|7000|2.1|COBBLESTONE:3#STICK:2
+                STONE_SWORD|500|12000|1.0|COBBLESTONE:2#STICK:1
+                CT1|Crafting Table 1|Kitchen|NORMAL|0|0|0|0""", this.interaction.getResult());
+    }
+
+    @Test
+    @DisplayName("A-11-06-M-ok - Compra lote de produto não existente sem produtos")
+    void acquireBatchWithUnknownPartner() {
+        loadFromInputFile("test036.input");
+        this.interaction.addMenuOptions(7, 4, 1, 0);
+        this.interaction.addFieldValues("MM1", "PAPEL", "20", "10", "0");
+        this.interaction.addMenuOptions(5, 1, 0, 6, 1);
+        this.interaction.addFieldValues("M1");
+
+        this.runApp();
+
+        assertThrownCommandException("UnknownPartnerKeyException", "O parceiro 'MM1' não existe.");
+        assertThrownCommandException("UnknownTransactionKeyException", "A transacção '0' não existe.");
+        assertNoMoreExceptions();
+        assertEquals("M1|Rohit Figueiredo|New Delhi, India|NORMAL|0|0|0|0", this.interaction.getResult());
     }
 
 }
