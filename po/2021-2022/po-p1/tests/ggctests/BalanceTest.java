@@ -263,7 +263,7 @@ public class BalanceTest extends PoUILibTest{
                 Saldo contabilístico: 360
                 Data actual: 10
                 Saldo disponível: 0
-                Saldo contabilístico: 400
+                Saldo contabilístico: 360
                 Data actual: 11
                 Saldo disponível: 0
                 Saldo contabilístico: 380
@@ -397,13 +397,13 @@ public class BalanceTest extends PoUILibTest{
         this.interaction.addMenuOptions(9,4,3);
         this.interaction.addFieldValues("1"); //13
         this.interaction.addMenuOptions(9,4,3);
-        this.interaction.addFieldValues("1"); //14 change P$
+        this.interaction.addFieldValues("1"); //14 change P4
         this.interaction.addMenuOptions(9,4,3);
         this.interaction.addFieldValues("1");// 15
         this.interaction.addMenuOptions(9,4,3);
         this.interaction.addFieldValues("1"); // 16
         this.interaction.addMenuOptions(9,7,5);
-        this.interaction.addFieldValues("1"); // pay
+        this.interaction.addFieldValues("2"); // pay
         this.interaction.addMenuOptions(0,9);
         this.interaction.addFieldValues("30"); // see if value changed
         this.interaction.addMenuOptions(9,4,3); // it shouldn't
@@ -450,9 +450,9 @@ public class BalanceTest extends PoUILibTest{
                 Data actual: 16
                 Saldo disponível: 0
                 Saldo contabilístico: 520
-                Saldo disponível: 0
+                Saldo disponível: 520
                 Saldo contabilístico: 520
-                Saldo disponível: 0
+                Saldo disponível: 520
                 Saldo contabilístico: 520
                 Data actual: 46""", this.interaction.getResult());
     }
@@ -521,7 +521,7 @@ public class BalanceTest extends PoUILibTest{
                 Saldo contabilístico: 360
                 Data actual: 10
                 Saldo disponível: 0
-                Saldo contabilístico: 400
+                Saldo contabilístico: 360
                 Data actual: 11
                 Saldo disponível: 0
                 Saldo contabilístico: 380
