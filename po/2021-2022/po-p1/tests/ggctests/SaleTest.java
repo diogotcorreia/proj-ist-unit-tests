@@ -83,7 +83,7 @@ public class SaleTest extends PoUILibTest {
     /**
      * This tests an edge case of selling derived products requiring aggregation, which most likely won't be tested by the official tests.
      * A visualization of the problem can be found here: https://user-images.githubusercontent.com/56204853/141300485-53925ecb-4b1b-4965-8e2f-96abf5e5af1e.png
-     * If you're failing this test, it's because the batches were changed even tough you didn't have enough stock.
+     * If you're failing this test, it's because the batches were changed even though you didn't have enough stock.
      */
     @Test
     @DisplayName("Attempt sell without stock of derived product composed of derived products that share the same simple product")
