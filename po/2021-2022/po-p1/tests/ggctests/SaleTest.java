@@ -106,4 +106,42 @@ public class SaleTest extends PoUILibTest {
                 OH|20|1|0.2|O:1#H:1""", this.interaction.getResult());
     }
 
+    @Test
+    @DisplayName("Sell simple product in stock")
+    void sellSimpleProductInStock() {
+        loadFromInputFile("test046.input");
+        this.interaction.addMenuOptions(7, 3, 1, 0);
+        this.interaction.addFieldValues("M1", "2", "SAL", "5", "0");
+        this.interaction.addMenuOptions(5, 1); // list products
+
+        this.runApp();
+
+        assertNoMoreExceptions();
+        assertEquals("""
+                VENDA|0|M1|SAL|5|200|200|2
+                GARRAFA|13|2|0.1|ROLHA:10#VIDRO:5
+                ROLHA|2|75
+                SAL|40|495
+                VIDRO|1|45""", this.interaction.getResult());
+    }
+
+    @Test
+    @DisplayName("Sell derived product in stock")
+    void sellDerivedProductInStock() {
+        loadFromInputFile("test046.input");
+        this.interaction.addMenuOptions(7, 3, 1, 0);
+        this.interaction.addFieldValues("M1", "2", "GARRAFA", "2", "0");
+        this.interaction.addMenuOptions(5, 1); // list products
+
+        this.runApp();
+
+        assertNoMoreExceptions();
+        assertEquals("""
+                VENDA|0|M1|GARRAFA|2|26|26|2
+                GARRAFA|13|0|0.1|ROLHA:10#VIDRO:5
+                ROLHA|2|75
+                SAL|40|500
+                VIDRO|1|45""", this.interaction.getResult());
+    }
+
 }
