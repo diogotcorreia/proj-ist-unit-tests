@@ -34,7 +34,7 @@ public class PartnerStatuteTest extends PoUILibTest{
         assertNoMoreExceptions();
         assertEquals("""
                 VENDA|0|M1|HIDROGENIO|2|400|360|10|0
-                M1|Rohit Figueiredo|New Delhi, India|SELECTION|3600|0|360|360""", this.interaction.getResult());
+                M1|Rohit Figueiredo|New Delhi, India|SELECTION|3600|0|400|360""", this.interaction.getResult());
     }
 
     @Test
@@ -55,8 +55,7 @@ public class PartnerStatuteTest extends PoUILibTest{
         this.runApp();
 
         assertNoMoreExceptions();
-        assertEquals("""
-                M1|Rohit Figueiredo|New Delhi, India|ELITE|93600|0|9360|9360""", this.interaction.getResult());
+        assertEquals("M1|Rohit Figueiredo|New Delhi, India|ELITE|93600|0|10400|9360", this.interaction.getResult());
     }
 
     @Test
@@ -64,17 +63,17 @@ public class PartnerStatuteTest extends PoUILibTest{
     void downgradePartnerStatuteEliteToSelection() {
         super.loadFromInputFile("test039.input");
         this.interaction.addMenuOptions(7, 3);
-        this.interaction.addFieldValues("M1","10", "HIDROGENIO", "2");
+        this.interaction.addFieldValues("M1", "10", "HIDROGENIO", "2");
         this.interaction.addMenuOptions(5);
         this.interaction.addFieldValues("0");
         this.interaction.addMenuOptions(3);
-        this.interaction.addFieldValues("M1","10", "SAL", "10");
+        this.interaction.addFieldValues("M1", "10", "SAL", "10");
         this.interaction.addMenuOptions(5);
         this.interaction.addFieldValues("1");
         this.interaction.addMenuOptions(0, 6, 1);
         this.interaction.addFieldValues("M1");
         this.interaction.addMenuOptions(0, 7, 3);
-        this.interaction.addFieldValues("M1","10", "VIDRO", "5");
+        this.interaction.addFieldValues("M1", "10", "VIDRO", "5");
         this.interaction.addMenuOptions(0, 4);
         this.interaction.addFieldValues("69");
         this.interaction.addMenuOptions(3,7,1);
@@ -88,10 +87,10 @@ public class PartnerStatuteTest extends PoUILibTest{
 
         assertNoMoreExceptions();
         assertEquals("""
-                M1|Rohit Figueiredo|New Delhi, India|ELITE|93600|0|9360|9360
+                M1|Rohit Figueiredo|New Delhi, India|ELITE|93600|0|10400|9360
                 Data actual: 69
                 VENDA|2|M1|VIDRO|5|5000|5000|10
-                M1|Rohit Figueiredo|New Delhi, India|SELECTION|23400|0|14360|14360""", this.interaction.getResult());
+                M1|Rohit Figueiredo|New Delhi, India|SELECTION|23400|0|15400|14360""", this.interaction.getResult());
     }
 
     @Test
@@ -114,8 +113,7 @@ public class PartnerStatuteTest extends PoUILibTest{
         this.runApp();
 
         assertNoMoreExceptions();
-        assertEquals("""
-                M1|Rohit Figueiredo|New Delhi, India|NORMAL|360|0|5240|5240""", this.interaction.getResult());
+        assertEquals("M1|Rohit Figueiredo|New Delhi, India|NORMAL|360|0|800|5240", this.interaction.getResult());
     }
 
     @Test
@@ -132,8 +130,7 @@ public class PartnerStatuteTest extends PoUILibTest{
         this.runApp();
 
         assertNoMoreExceptions();
-        assertEquals("""
-                M1|Rohit Figueiredo|New Delhi, India|ELITE|90000|0|9000|9000""", this.interaction.getResult());
+        assertEquals("M1|Rohit Figueiredo|New Delhi, India|ELITE|90000|0|10000|9000", this.interaction.getResult());
     }
 
 
