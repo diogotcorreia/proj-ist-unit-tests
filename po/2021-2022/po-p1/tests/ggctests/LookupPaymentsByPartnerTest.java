@@ -60,4 +60,19 @@ public class LookupPaymentsByPartnerTest extends PoUILibTest {
         assertEquals("", this.interaction.getResult());
     }
 
+    @Test
+    @DisplayName("Show partner with paid sales")
+    void showPartnerWithPaidSales() {
+        loadFromInputFile("test027.input");
+        this.interaction.addMenuOptions(7, 3, 3, 5, 0);
+        this.interaction.addFieldValues("M1", "10", "ROLHA", "10", "M1", "5", "VIDRO", "25", "1");
+        this.interaction.addMenuOptions(8, 2);
+        this.interaction.addFieldValues("M1");
+
+        this.runApp();
+
+        assertNoMoreExceptions();
+        assertEquals("VENDA|1|M1|VIDRO|25|25000|22500|5|0", this.interaction.getResult());
+    }
+
 }
