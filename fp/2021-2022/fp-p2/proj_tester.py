@@ -313,6 +313,34 @@ class TestTADPrado(unittest.TestCase):
 |........F.|
 +----------+""", target.prado_para_str(prado))
 
+    def test_obter_valor_numerico(self):
+        dim = target.cria_posicao(5, 16)
+        animal = target.cria_animal('rabbit', 5, 0)
+        posicao = target.cria_posicao(3, 5)
+        prado = target.cria_prado(dim, (), (animal, ), (posicao, ))
+
+        for x, y, res in ((0, 0, 0), (5, 0, 5), (0, 1, 6), (4, 1, 10),
+                          (4, 11, 70), (5, 16, 101)):
+            with self.subTest(x=x, y=y, valor_numerico=res):
+                pos = target.cria_posicao(x, y)
+                self.assertEqual(res, target.obter_valor_numerico(prado, pos))
+
+    def test_obter_movimento(self):
+        dim = target.cria_posicao(11, 4)
+        obs = (target.cria_posicao(4, 2), target.cria_posicao(5, 2))
+        an1 = tuple(target.cria_animal('rabbit', 5, 0) for i in range(3))
+        an2 = (target.cria_animal('lynx', 20, 15), )
+        pos = tuple(
+            target.cria_posicao(p[0], p[1])
+            for p in ((5, 1), (7, 2), (10, 1), (6, 1)))
+        prado = target.cria_prado(dim, obs, an1 + an2, pos)
+
+        for x, y, res in ((5, 1, '(4, 1)'), (6, 1, '(5, 1)'), (10, 1,
+                                                               '(10, 2)')):
+            with self.subTest(x=5, y=1, resultado=res):
+                mov = target.obter_movimento(prado, target.cria_posicao(x, y))
+                self.assertEqual(res, target.posicao_para_str(mov))
+
     @unittest.skipUnless(ENABLE_MOCK_TESTING, "skipping mock tests")
     def test_prado_mock(self, *_):
         """
@@ -328,15 +356,13 @@ class TestTADPrado(unittest.TestCase):
                                                 len(mocks_to_use) + 1)), ()):
             names = ', '.join(map(lambda x: x[0], active_mocks))
             fnNames = sum(map(lambda x: x[1], active_mocks), ())
-            mocks = sum(map(lambda x: x[1], active_mocks), ())
+            mocks = sum(map(lambda x: x[2], active_mocks), ())
 
             with self.subTest(msg="Active mocks: {}".format(names)):
                 __mocks = enable_mocks(target, fnNames, mocks)
                 try:
-                    pass
-                    # TODO
-                    # self.test_obter_valor_numerico()
-                    # self.test_obter_movimento()
+                    self.test_obter_valor_numerico()
+                    self.test_obter_movimento()
                 finally:
                     restore_mocks(target, __mocks)
 
