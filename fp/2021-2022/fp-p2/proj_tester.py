@@ -342,9 +342,37 @@ class TestTADPrado(unittest.TestCase):
                 self.assertEqual(res, target.posicao_para_str(mov))
 
     @unittest.skipUnless(ENABLE_MOCK_TESTING, "skipping mock tests")
-    def test_prado_mock(self, *_):
+    def test_prado_mock_low_level(self, *_):
         """
-        Testa as barreiras de abstração do TAD Prado
+        Testa as barreiras de abstração do TAD Prado nas funções do TAD
+        """
+        mocks_to_use = (
+            ("posicao", posicaoFnNames, posicaoMocks),
+            ("animal", animalFnNames, animalMocks),
+            ("prado", pradoFnNames, pradoMocks),
+        )
+
+        for active_mocks in sum((tuple(combinations(mocks_to_use, r))
+                                 for r in range(1,
+                                                len(mocks_to_use) + 1)), ()):
+            names = ', '.join(map(lambda x: x[0], active_mocks))
+            fnNames = sum(map(lambda x: x[1], active_mocks), ())
+            mocks = sum(map(lambda x: x[2], active_mocks), ())
+
+            with self.subTest(msg="Active mocks: {}".format(names)):
+                __mocks = enable_mocks(target, fnNames, mocks)
+                try:
+                    self.test_cria_prado()
+                    self.test_cria_copia_prado()
+                    self.test_eliminar_animal()
+                    self.test_inserir_animal()
+                finally:
+                    restore_mocks(target, __mocks)
+
+    @unittest.skipUnless(ENABLE_MOCK_TESTING, "skipping mock tests")
+    def test_prado_mock_high_level(self, *_):
+        """
+        Testa as barreiras de abstração do TAD Prado nas funções de alto nível
         """
         mocks_to_use = (
             ("posicao", posicaoFnNames, posicaoMocks),
@@ -386,7 +414,7 @@ class TestFuncoesAdicionais(unittest.TestCase):
                                                 len(mocks_to_use) + 1)), ()):
             names = ', '.join(map(lambda x: x[0], active_mocks))
             fnNames = sum(map(lambda x: x[1], active_mocks), ())
-            mocks = sum(map(lambda x: x[1], active_mocks), ())
+            mocks = sum(map(lambda x: x[2], active_mocks), ())
 
             with self.subTest(msg="Active mocks: {}".format(names)):
                 __mocks = enable_mocks(target, fnNames, mocks)
