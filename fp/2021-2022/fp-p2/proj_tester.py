@@ -337,7 +337,7 @@ class TestTADPrado(unittest.TestCase):
 
         for x, y, res in ((5, 1, '(4, 1)'), (6, 1, '(5, 1)'), (10, 1,
                                                                '(10, 2)')):
-            with self.subTest(x=5, y=1, resultado=res):
+            with self.subTest(x=x, y=y, resultado=res):
                 mov = target.obter_movimento(prado, target.cria_posicao(x, y))
                 self.assertEqual(res, target.posicao_para_str(mov))
 
