@@ -628,7 +628,7 @@ def check_for_updates():
         print("Esta é a primeira vez que estás a correr o programa.")
 
     print(
-        "Esta operação irá substituir o teu ficheiro local com a nova versão, apagando quaisqueres alterações que tenham sido feitas aos testes locais."
+        "Esta operação irá substituir o teu ficheiro local com a nova versão, apagando quaisquer alterações que tenham sido feitas aos testes locais."
     )
     print("Desejas atualizar dos testes? [y/N]")
     response = input()
