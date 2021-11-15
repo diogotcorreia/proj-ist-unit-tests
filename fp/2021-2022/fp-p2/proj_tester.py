@@ -630,7 +630,7 @@ def check_for_updates():
     print(
         "Esta operação irá substituir o teu ficheiro local com a nova versão, apagando quaisquer alterações que tenham sido feitas aos testes locais."
     )
-    print("Desejas atualizar dos testes? [y/N]")
+    print("Desejas atualizar os testes? [y/N]")
     response = input()
     if response.lower() == "y":
         update_files(latest_hash)
