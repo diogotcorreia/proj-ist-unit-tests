@@ -13,9 +13,6 @@ fi
 bin="${1}"
 tests="${2}"
 
-echo "$bin"
-echo "$tests"
-
 for infile in $PWD/$tests/*.in; do
     basename=${infile%.*}
 	($PWD/$bin) < $infile > $basename.result
