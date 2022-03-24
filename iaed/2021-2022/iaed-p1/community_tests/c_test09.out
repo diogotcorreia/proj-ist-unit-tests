@@ -1,0 +1,10 @@
+airport AAA
+airport AAB
+invalid flight
+invalid flight
+flight already exists
+invalid duration
+invalid date
+AA1 AAA AAB 02-02-2022 04:20
+AA2 AAA AAB 31-12-2022 23:59
+AA4 AAA AAB 01-01-2022 00:01
