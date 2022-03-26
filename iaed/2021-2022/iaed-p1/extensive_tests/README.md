@@ -1,6 +1,6 @@
 ## Extensive tests
 
-These tests' purpose is to test efficiency and to aid in the optimization of your code if you are having **Time Limit Exceeded**
+This directory's purpose is to test efficiency and to aid in the optimization of your code if you are having **Time Limit Exceeded**
 errors in Mooshak.
 
 **Time Limit Exceeded** errors can happen as a result of flawed loops, however, in this project, time limit exceeded erros might also 
