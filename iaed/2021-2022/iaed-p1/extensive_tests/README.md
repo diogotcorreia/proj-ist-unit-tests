@@ -1,14 +1,12 @@
 ## Extensive tests
 
----
-
-These tests are here to test efficiency and to aid in optimization of your code if you are having **Time Limit Exceeded**
+These tests' purpose is to test efficiency and to aid in the optimization of your code if you are having **Time Limit Exceeded**
 errors in Mooshak.
 
 **Time Limit Exceeded** errors can happen as a result of flawed loops, however, in this project, time limit exceeded erros might also 
-occur as a result of poor code optimization not directly to your sorting algorithm complexity.
+occur as a result of poor code optimization not directly related to your sorting algorithm's complexity.
 
 If you are having trouble with time limit errors this directory might be useful.
 
-The script provided will generate an extensive test with 20 airports and 15000 flights as default, 
+The script provided will generate an extensive test with 20 airports, 15000 flights and the l command at the end, 
 but you can alter it to your liking, more information in the comments
