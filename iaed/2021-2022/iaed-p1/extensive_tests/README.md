@@ -12,7 +12,7 @@ The script provided will generate an extensive test with 20 airports, 15000 flig
 but you can alter it to your liking, more information in the comments
 
 Some known Time Limit Exceeded errors that have been fixed with better optimization are:
-- T30, 
+- T30
 - T41 
 - T42 
 - T45
