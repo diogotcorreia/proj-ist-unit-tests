@@ -1,0 +1,19 @@
+airport AAB
+airport AAA
+airport AAD
+airport AAC
+AA1111 AAA AAD 16-03-2022 14:50
+AA1111 AAA AAD 16-03-2022 14:50
+AA1112 AAB AAC 16-03-2022 14:50
+invalid flight code
+flight already exists
+AAE: no such airport ID
+AAF: no such airport ID
+invalid date
+invalid date
+invalid duration
+AA1111 AAA AAD 16-03-2022 14:50
+AA1112 AAB AAC 16-03-2022 14:50
+AA1112 AAB AAC 31-12-2022 14:50
+AA1112 AAB AAC 01-01-2023 14:50
+AC1112 AAD AAC 17-03-2022 17:50
