@@ -26,19 +26,13 @@ def main(nr_airports, nr_flights, last_command):
         for airport in airports:
             print(f"a {airport} Country City", file=f)
     
-    # create nr of random flights specified, evenly distributed by all airports created airports as origin 
+    # create nr of random flights specified, evenly distributed by all airports created as flight's origin
     with open("extensive_test.in", "a") as f:
         x = tuple(zip(airports, airports[1:]))
         for i in range(len(x)):
             n = 1
             while n <= nr_flights / (nr_airports - 1):
-                day = r(1, 30)
-                month = r(1, 12)
-                min = r(0, 59)
-                hour = r(0,23)
-                dur_min = r(0, 59)
-                dur_hour = r(0, 11)
-                print(f"v {flights[i]}{n} {x[i][0]} {x[i][1]} {day:02}-{month:02}-2022 {hour:02}:{min:02} {dur_hour:02}:{dur_min:02} 50", file=f)
+                print(f"v {flights[i]}{n} {x[i][0]} {x[i][1]} {r(1, 30):02}-{r(1, 12):02}-2022 {r(0,23):02}:{r(0, 59):02} {r(0, 11):02}:{r(0, 59):02} 50", file=f)
                 n += 1
         print(f"{last_command}\nq", file=f)
 
