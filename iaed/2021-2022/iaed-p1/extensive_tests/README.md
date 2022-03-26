@@ -8,5 +8,5 @@ occur as a result of poor code optimization not directly related to your sorting
 
 If you are having trouble with time limit errors this directory might be useful.
 
-The script provided will generate an extensive test with 20 airports, 15000 flights and the l command at the end, 
+The script provided will generate an extensive test with 20 airports, 15000 flights and the *l* command at the end, 
 but you can alter it to your liking, more information in the comments
