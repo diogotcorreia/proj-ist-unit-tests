@@ -81,6 +81,7 @@ elif [ ! -x "$bin" ]; then
     echo -e "${RED}\"$bin\" is not executable${RESET}"
     exit 1
 fi
+bin="$(realpath "$bin")" # handle paths that don't start with a dot
 
 for infile in "$tests/"*.in; do
     test_name="$(basename -s .in "$infile")"
