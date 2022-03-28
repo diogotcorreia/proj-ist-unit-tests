@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 # Author: Francisco Salgueiro
 
+RED='\033[0;31m'
+YELLOW='\033[0;33m'
+GREEN='\033[0;32m'
+BOLD='\033[1m'
+RESET='\033[0m'
+
 usage() {
     echo "usage: $0 [flags] <path to executable> <path to tests dir>"
     echo "-d display diff in the terminal"
@@ -32,7 +38,7 @@ while getopts ":dvch" OPTION; do
             MODE=clean
             ;;
         v)
-            WRAPPER=valgrind
+            WRAPPER="valgrind --error-exitcode=1 --track-origins=yes"
             ;;
         h)
             usage
@@ -51,10 +57,10 @@ bin="$1"
 tests="$2"
 
 if [ ! -d "$tests" ]; then
-    echo Test dir '"'$tests'"' is not a directory
+    echo -e "${RED}"Test dir '"'$tests'"' is not a directory"${RESET}"
     exit 1
 elif ! ls $tests/*.in &> /dev/null; then
-    echo Test dir '"'$tests'"' does not contain any tests
+    echo -e "${RED}"Test dir '"'$tests'"' does not contain any tests"${RESET}"
     exit 1
 fi
 
@@ -65,10 +71,10 @@ if [[ "$MODE" == "clean" ]]; then
 fi
 
 if [ ! -f "$bin" ]; then
-    echo '"'$bin'"' is not a file
+    echo -e "${RED}" '"'$bin'"' is not a file"${RESET}"
     exit 1
 elif [ ! -x "$bin" ]; then
-    echo '"'$bin'"' is not executable
+    echo -e "${RED}" '"'$bin'"' is not executable"${RESET}"
     exit 1
 fi
 
@@ -77,12 +83,15 @@ for infile in "$tests/"*.in; do
     actual_output_file="$(dirname $infile)/${test_name}.result"
     expected_output_file="$(dirname $infile)/${test_name}.out"
 
-    "$WRAPPER" "$bin" < "$infile" > "$actual_output_file" && \
-        "$DIFF" "$expected_output_file" "$actual_output_file" || \
-        echo "TEST FAILED: $test_name"
+    echo
+    echo -e "${BOLD}Running test: ${test_name}${RESET}"
+    $WRAPPER "$bin" < "$infile" > "$actual_output_file" && \
+        "$DIFF" "$expected_output_file" "$actual_output_file" && \
+        echo -e "${GREEN}TEST PASS: $test_name${RESET}" || \
+        echo -e "${RED}TEST FAIL: $test_name${RESET}"
 done
 
 if [[ "$DIFF" != "colordiff" && "$DIFF" != "silent_diff" ]]; then
     echo ""
-    echo "NOTA: Instala colordiff para ver as diferenças a cores"
+    echo "${YELLOW}NOTA: Instala colordiff para ver as diferenças a cores${RESET}"
 fi
