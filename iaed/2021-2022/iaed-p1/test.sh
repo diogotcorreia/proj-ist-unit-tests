@@ -52,7 +52,7 @@ while getopts ":dvch" OPTION; do
 done
 shift "$(( OPTIND - 1 ))"
 
-if [[ $# -lt 2 ]]; then
+if [[ $# != 2 ]]; then
     usage
     exit 1
 fi
