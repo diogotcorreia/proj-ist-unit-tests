@@ -3,7 +3,8 @@
 
 usage() {
     echo "usage: $0 [flags] <path to executable> <path to tests dir>"
-    echo "-v display diff in the terminal"
+    echo "-d display diff in the terminal"
+    echo "-v run tests in valgrind"
     echo "-c clean generated result files instead of testing"
     echo "-h help - shows this message"
 }
@@ -12,11 +13,16 @@ silent_diff() {
     cmp --silent "$1" "$2"
 }
 
-DIFF=silent_diff
+noop_wrapper() {
+    $@
+}
 
-while getopts ":vch" OPTION; do
+DIFF=silent_diff
+WRAPPER=noop_wrapper
+
+while getopts ":dvch" OPTION; do
     case "$OPTION" in
-        v)
+        d)
             DIFF=diff
             if command -v colordiff &>/dev/null; then
                 DIFF=colordiff
@@ -24,6 +30,9 @@ while getopts ":vch" OPTION; do
             ;;
         c)
             MODE=clean
+            ;;
+        v)
+            WRAPPER=valgrind
             ;;
         h)
             usage
@@ -68,7 +77,7 @@ for infile in "$tests/"*.in; do
     actual_output_file="$(dirname $infile)/${test_name}.result"
     expected_output_file="$(dirname $infile)/${test_name}.out"
 
-    "$bin" < "$infile" > "$actual_output_file" && \
+    "$WRAPPER" "$bin" < "$infile" > "$actual_output_file" && \
         "$DIFF" "$expected_output_file" "$actual_output_file" || \
         echo "TEST FAILED: $test_name"
 done
