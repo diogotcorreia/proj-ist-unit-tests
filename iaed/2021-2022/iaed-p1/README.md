@@ -4,9 +4,9 @@ A repo with custom tests for the first project of IAED
 
 Automatically test with the script:
 ```
-./test.sh <relative_path_to_executable> <relative_path_to_tests_dir> <flags>
+./test.sh <flags> <relative_path_to_executable> <relative_path_to_tests_dir>
 ```
-`-v` flag shows in the terminal the diff of expected output with actual output<br>
+`-d` flag shows in the terminal the diff of expected output with actual output<br>
 
 `-c` flag removes generated `.result` files
 
