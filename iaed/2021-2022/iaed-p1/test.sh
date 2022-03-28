@@ -46,14 +46,18 @@ while getopts ":dvch" OPTION; do
             ;;
         *)
             usage
+            echo
+            echo -e "${RED}Unknown flag: -${OPTARG}${RESET}"
             exit 1
             ;;
     esac
 done
 shift "$(( OPTIND - 1 ))"
 
-if [[ $# -lt 2 ]]; then
+if [[ $# != 2 ]]; then
     usage
+    echo
+    echo -e "${RED}Expected 2 positional arguments, found ${#}${RESET}"
     exit 1
 fi
 
@@ -61,9 +65,13 @@ bin="$1"
 tests="$2"
 
 if [ ! -d "$tests" ]; then
+    usage
+    echo
     echo -e "${RED}Test dir \"$tests\" is not a directory${RESET}"
     exit 1
 elif ! ls "$tests/"*.in &> /dev/null; then
+    usage
+    echo
     echo -e "${RED}Test dir \"$tests\" does not contain any tests${RESET}"
     exit 1
 fi
@@ -75,9 +83,13 @@ if [[ "$MODE" == "clean" ]]; then
 fi
 
 if [ ! -f "$bin" ]; then
+    usage
+    echo
     echo -e "${RED}\"$bin\" is not a file${RESET}"
     exit 1
 elif [ ! -x "$bin" ]; then
+    usage
+    echo
     echo -e "${RED}\"$bin\" is not executable${RESET}"
     exit 1
 fi
