@@ -2,7 +2,7 @@
 # Author: Francisco Salgueiro
 
 usage() {
-    echo "usage: $0 [flags] <relative_path_to_executable> <relative_path_to_tests_dir>"
+    echo "usage: $0 [flags] <path to executable> <path to tests dir>"
     echo "-v display diff in the terminal"
     echo "-c clean generated result files instead of testing"
     echo "-h help - shows this message"
