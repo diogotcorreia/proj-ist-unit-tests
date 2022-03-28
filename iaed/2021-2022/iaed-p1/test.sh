@@ -1,20 +1,45 @@
 #!/usr/bin/env bash
 # Author: Francisco Salgueiro
 
+usage() {
+    echo "usage: $0 [flags] <relative_path_to_executable> <relative_path_to_tests_dir>"
+    echo "-v display diff in the terminal"
+    echo "-c clean generated result files instead of testing"
+    echo "-h help - shows this message"
+}
+
+DIFF=true # no-op successful command
+
+while getopts ":vch" OPTION; do
+    case "$OPTION" in
+        v)
+            DIFF=diff
+            if command -v colordiff &>/dev/null; then
+                DIFF=colordiff
+            fi
+            ;;
+        c)
+            MODE=clean
+            ;;
+        h)
+            usage
+            exit 0
+            ;;
+    esac
+done
+shift "$(( OPTIND - 1 ))"
 
 if [[ $# -lt 2 ]]; then
-    echo "usage: $0 <relative_path_to_executable> <relative_path_to_tests_dir> <flags>"
-    echo "-v flag to display diff in the terminal"
-    echo "-c flag to remove generated result files"
-    exit
+    usage
+    exit 1
 fi
 
 bin="${1}"
 tests="${2}"
 
-if [ "$3" == "-c" ]; then
-    rm $PWD/$tests/*result
-    exit
+if [[ "$MODE" == "clean" ]]; then
+    rm "$PWD/$tests/"*result
+    exit 0
 fi
 
 for infile in $PWD/$tests/*.in; do
@@ -30,11 +55,7 @@ for infile in $PWD/$tests/*.in; do
     fi
 done
 
-if [ "$3" == "-v" ]; then
-    if ! command -v colordiff &> /dev/null
-    then
-        echo ""
-        echo "NOTA: Instala colordiff para ver as diferenças a cores"
-        exit
-    fi
+if [[ "$DIFF" != "colordiff" ]]; then
+    echo ""
+    echo "NOTA: Instala colordiff para ver as diferenças a cores"
 fi
