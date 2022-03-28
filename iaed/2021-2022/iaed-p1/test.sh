@@ -20,22 +20,22 @@ silent_diff() {
 }
 
 noop_wrapper() {
-    $@
+    "$@"
 }
 
-DIFF=silent_diff
-WRAPPER=noop_wrapper
+DIFF="silent_diff"
+WRAPPER="noop_wrapper"
 
 while getopts ":dvch" OPTION; do
     case "$OPTION" in
         d)
-            DIFF=diff
+            DIFF="diff"
             if command -v colordiff &>/dev/null; then
-                DIFF=colordiff
+                DIFF="colordiff"
             fi
             ;;
         c)
-            MODE=clean
+            MODE="clean"
             ;;
         v)
             WRAPPER="valgrind --error-exitcode=1 --track-origins=yes"
@@ -43,6 +43,10 @@ while getopts ":dvch" OPTION; do
         h)
             usage
             exit 0
+            ;;
+        *)
+            usage
+            exit 1
             ;;
     esac
 done
@@ -57,10 +61,10 @@ bin="$1"
 tests="$2"
 
 if [ ! -d "$tests" ]; then
-    echo -e "${RED}"Test dir '"'$tests'"' is not a directory"${RESET}"
+    echo -e "${RED}Test dir \"$tests\" is not a directory${RESET}"
     exit 1
-elif ! ls $tests/*.in &> /dev/null; then
-    echo -e "${RED}"Test dir '"'$tests'"' does not contain any tests"${RESET}"
+elif ! ls "$tests/"*.in &> /dev/null; then
+    echo -e "${RED}Test dir \"$tests\" does not contain any tests${RESET}"
     exit 1
 fi
 
@@ -71,17 +75,17 @@ if [[ "$MODE" == "clean" ]]; then
 fi
 
 if [ ! -f "$bin" ]; then
-    echo -e "${RED}" '"'$bin'"' is not a file"${RESET}"
+    echo -e "${RED}\"$bin\" is not a file${RESET}"
     exit 1
 elif [ ! -x "$bin" ]; then
-    echo -e "${RED}" '"'$bin'"' is not executable"${RESET}"
+    echo -e "${RED}\"$bin\" is not executable${RESET}"
     exit 1
 fi
 
 for infile in "$tests/"*.in; do
     test_name="$(basename -s .in "$infile")"
-    actual_output_file="$(dirname $infile)/${test_name}.result"
-    expected_output_file="$(dirname $infile)/${test_name}.out"
+    actual_output_file="$(dirname "$infile")/${test_name}.result"
+    expected_output_file="$(dirname "$infile")/${test_name}.out"
 
     echo
     echo -e "${BOLD}Running test: ${test_name}${RESET}"
