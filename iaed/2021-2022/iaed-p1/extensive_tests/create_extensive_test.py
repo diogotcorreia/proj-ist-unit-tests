@@ -32,7 +32,7 @@ def main(nr_airports, nr_flights, last_command):
         for i in range(len(x)):
             n = 1
             while n <= nr_flights / (nr_airports - 1):
-                print(f"v {flights[i]}{n} {x[i][0]} {x[i][1]} {r(1, 30):02}-{r(1, 12):02}-2022 {r(0,23):02}:{r(0, 59):02} {r(0, 11):02}:{r(0, 59):02} 50", file=f)
+                print(f"v {flights[i]}{n} {x[i][0]} {x[i][1]} {r(1, 28):02}-{r(1, 12):02}-2022 {r(0,23):02}:{r(0, 59):02} {r(0, 11):02}:{r(0, 59):02} 50", file=f)
                 n += 1
         print(f"{last_command}\nq", file=f)
 
