@@ -12,5 +12,5 @@ Automatically test with the script:
 - `-h` flag (as usual) shows this information
 
 Alternatively, if your executable file `proj2` is located in the root of this directory, you can run `make` in each tests' directory. `make clean` will clear generated files.
-This is a more efficient alternative, however, not too significant for the amount available tests.
+This is a more efficient alternative, however, not too significant for the amount of available tests.
 
