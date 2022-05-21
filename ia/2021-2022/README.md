@@ -9,7 +9,6 @@ Automatically test with the script:
 ```
 
 - `-d` flag shows in the terminal the diff of expect output with actual output
-  (if `colordiff` is installed, this diff will be colorized)
 - `-c` flag removes generated `.result` files (instead of testing)
 - `-h` flag (as usual) shows this information
 
