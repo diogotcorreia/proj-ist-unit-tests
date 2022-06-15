@@ -15,5 +15,5 @@ Automatically test with the script:
 ## Example
 
 ```bash
-./tests.sh -d ~/documents/takuzu-ia/takuzu.py public-tests
+./test.sh -d ~/documents/takuzu-ia/takuzu.py public-tests
 ```
