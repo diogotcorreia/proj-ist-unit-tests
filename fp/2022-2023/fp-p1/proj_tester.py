@@ -122,6 +122,53 @@ class TestPublicMetodoHondt:
         
         assert ref == target.obtem_resultado_eleicoes(info)
 
+    def test_obtem_resultado_eleicoes2(self):
+        with pytest.raises(ValueError, match='obtem resultado eleicoes: argumento invalido'):
+            info = {}
+            target.obtem_resultado_eleicoes(info)
+
+    def test_obtem_resultado_eleicoes3(self):
+        with pytest.raises(ValueError, match='obtem resultado eleicoes: argumento invalido'):
+            info = {
+            'Endor':   {'deputados': 7, 
+                        'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
+            'Hoth':    {'deputados': 0, 
+                        'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},}
+            target.obtem_resultado_eleicoes(info)
+
+    def test_obtem_resultado_eleicoes4(self):
+        with pytest.raises(ValueError, match='obtem resultado eleicoes: argumento invalido'):
+            info = 13
+            target.obtem_resultado_eleicoes(info)
+
+    def test_obtem_resultado_eleicoes5(self):
+        with pytest.raises(ValueError, match='obtem resultado eleicoes: argumento invalido'):
+            info = {
+            'Endor':   {'deputados': 7, 
+                        'votos': {'A':0, 'B':0, 'C':0, 'D':0}},
+            'Hoth':    {'deputados': 3, 
+                        'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},}
+            target.obtem_resultado_eleicoes(info)
+
+    def test_obtem_resultado_eleicoes6(self):
+        with pytest.raises(ValueError, match='obtem resultado eleicoes: argumento invalido'):
+            info = {
+            'Endor':   {'deputados': 7, 
+                        'votos': {}},
+            'Hoth':    {'deputados': 3, 
+                        'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},}
+            target.obtem_resultado_eleicoes(info)
+
+    # os dicionarios de entrada das funções não devem ser alterados
+    def test_alteracoes_dicionarios_calcula_quocientes(self):
+        dicionario = {'A': 12000, 'B': 7500, 'C': 5250, 'D': 3000}
+        copia_dicionario = dicionario.copy()
+
+        target.calcula_quocientes({'A': 12000, 'B': 7500, 'C': 5250, 'D': 3000}, 7)
+        assert dicionario == copia_dicionario
+
+
+
 
 class TestPublicSistemasLineares:
 
