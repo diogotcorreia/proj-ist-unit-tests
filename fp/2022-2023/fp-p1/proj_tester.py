@@ -49,17 +49,28 @@ class TestPublicJustificarTextos:
             'Together they are powerful beyond imagination.              ')
         assert ref == target.justifica_texto(cad, 60)
 
+    # levantar erro se primeiro argumento não é uma lista não vazia, ou o segundo não é um número inteiro positivo
+    # ou existe uma palavra maior que o tamanho pretendido
     def test_justifica_texto2(self):
         with pytest.raises(ValueError, match='justifica texto: argumentos invalidos'):
             target.justifica_texto('', 60)
 
-    def test_justifica_texto2(self):
+    def test_justifica_texto3(self):
         with pytest.raises(ValueError, match='justifica texto: argumentos invalidos'):
             target.justifica_texto('Fundamentos', "Banana")
     
-    def test_justifica_texto2(self):
+    def test_justifica_texto4(self):
         with pytest.raises(ValueError, match='justifica texto: argumentos invalidos'):
             target.justifica_texto(89, 60)
+
+    def test_justifica_texto5(self):
+        with pytest.raises(ValueError, match='justifica texto: argumentos invalidos'):
+            target.justifica_texto('Texto', -10)
+    
+    def test_justifica_texto6(self):
+        with pytest.raises(ValueError, match='justifica texto: argumentos invalidos'):
+            target.justifica_texto('Otorrinolaringologista', 10)
+    
 
 
 class TestPublicMetodoHondt:
@@ -75,13 +86,15 @@ class TestPublicMetodoHondt:
         
         assert ref == hyp
 
+
     def test_atribui_mandatos1(self):
         ref = ['A', 'B', 'A', 'C', 'A', 'B', 'D']
         assert ref == target.atribui_mandatos({'A': 12000, 'B': 7500, 'C': 5250, 'D': 3000}, 7)
 
-    def test_atribui_mandatos1(self):
+    def test_atribui_mandatos2(self):
         ref = ['A', 'B', 'A', 'C', 'A', 'B', 'D']
         assert ref == target.atribui_mandatos({'D': 3000, 'B': 7500, 'C': 5250, 'A': 12000}, 7)
+
 
     def test_obtem_partidos1(self):
         info = {
@@ -95,6 +108,7 @@ class TestPublicMetodoHondt:
         ref = ['A', 'B', 'C', 'D', 'E']
         
         assert ref == target.obtem_partidos(info)
+
 
     def test_obtem_resultado_eleicoes1(self):
         info = {
@@ -205,5 +219,5 @@ def update_files(new_hash):
 
 
 if __name__ == "__main__":
-#   check_for_updates()
+    check_for_updates()
     pytest.main(sys.argv[:1] + sys.argv[2:])
