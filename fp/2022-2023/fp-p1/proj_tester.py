@@ -194,11 +194,44 @@ class TestPublicMetodoHondt:
             target.obtem_resultado_eleicoes(info)
 
     # os dicionarios de entrada das funções não devem ser alterados
-    def test_alteracoes_dicionarios_calcula_quocientes(self):
+    def test_calcula_quocientes_alteracao_diconarios(self):
         dicionario = {'A': 12000, 'B': 7500, 'C': 5250, 'D': 3000}
         copia_dicionario = dicionario.copy()
 
         target.calcula_quocientes({'A': 12000, 'B': 7500, 'C': 5250, 'D': 3000}, 7)
+        assert dicionario == copia_dicionario
+
+    def test_atribui_mandatos_alteracao_dicionarios(self):
+        dicionario = {'A': 12000, 'B': 7500, 'C': 5250, 'D': 3000}
+        copia_dicionario = dicionario.copy()
+
+        target.atribui_mandatos(dicionario, 7)
+        assert dicionario == copia_dicionario
+
+    def test_obtem_partidos_alteracao_dicionarios(self):
+        dicionario = {
+            'Endor':   {'deputados': 7, 
+                        'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
+            'Hoth':    {'deputados': 6, 
+                        'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},
+            'Tatooine': {'deputados': 3, 
+                        'votos': {'A':3000, 'B':1900}}}
+        copia_dicionario = dicionario.copy()
+
+        target.obtem_partidos(dicionario)
+        assert dicionario == copia_dicionario
+
+    def test_obtem_resultado_eleicoes_dicionarios(self):
+        dicionario = {
+            'Endor':   {'deputados': 7, 
+                        'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
+            'Hoth':    {'deputados': 6, 
+                        'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},
+            'Tatooine': {'deputados': 3, 
+                        'votos': {'A':3000, 'B':1900}}}
+        copia_dicionario = dicionario.copy()
+
+        target.obtem_resultado_eleicoes(dicionario)
         assert dicionario == copia_dicionario
 
 
