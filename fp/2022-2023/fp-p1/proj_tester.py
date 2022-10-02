@@ -85,23 +85,23 @@ class TestPublicJustificarTextos:
 
     # levantar erro se primeiro argumento não é uma lista não vazia, ou o segundo não é um número inteiro positivo
     # ou existe uma palavra maior que o tamanho pretendido
-    def test_justifica_texto_raise_errors_1(self):
+    def test_justifica_texto_raise_errors1(self):
         with pytest.raises(ValueError, match='justifica texto: argumentos invalidos'):
             target.justifica_texto('', 60)
 
-    def test_justifica_texto_raise_errors_2(self):
+    def test_justifica_texto_raise_errors2(self):
         with pytest.raises(ValueError, match='justifica texto: argumentos invalidos'):
             target.justifica_texto('Fundamentos', "Banana")
 
-    def test_justifica_texto_raise_errors_3(self):
+    def test_justifica_texto_raise_errors3(self):
         with pytest.raises(ValueError, match='justifica texto: argumentos invalidos'):
             target.justifica_texto(89, 60)
 
-    def test_justifica_texto_raise_errors_4(self):
+    def test_justifica_texto_raise_errors4(self):
         with pytest.raises(ValueError, match='justifica texto: argumentos invalidos'):
             target.justifica_texto('Texto', -10)
 
-    def test_justifica_texto_raise_errors_5(self):
+    def test_justifica_texto_raise_errors5(self):
         with pytest.raises(ValueError, match='justifica texto: argumentos invalidos'):
             target.justifica_texto('Otorrinolaringologista', 10)
 
@@ -117,7 +117,7 @@ class TestPublicMetodoHondt:
                     'D': [3000.0, 1500.0, 1000.0, 750.0, 600.0, 500.0, 3000/7]}
 
         hyp = target.calcula_quocientes({'A': 12000, 'B': 7500, 'C': 5250, 'D': 3000}, 7)
-
+        
         assert ref == hyp
 
 
@@ -146,15 +146,60 @@ class TestPublicMetodoHondt:
 
     def test_obtem_resultado_eleicoes1(self):
         info = {
-            'Endor':   {'deputados': 7,
+            'Endor':   {'deputados': 7, 
                         'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
-            'Hoth':    {'deputados': 6,
+            'Hoth':    {'deputados': 6, 
                         'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},
-            'Tatooine': {'deputados': 3,
+            'Tatooine': {'deputados': 3, 
                         'votos': {'A':3000, 'B':1900}}}
         ref = [('A', 7, 24000), ('B', 6, 20900), ('C', 1, 5250), ('E', 1, 5000), ('D', 1, 4500)]
-
+        
         assert ref == target.obtem_resultado_eleicoes(info)
+
+    def test_obtem_resultado_eleicoes_raise_errors1(self):
+        with pytest.raises(ValueError, match='obtem resultado eleicoes: argumento invalido'):
+            info = {}
+            target.obtem_resultado_eleicoes(info)
+
+    def test_obtem_resultado_eleicoes_raise_errors2(self):
+        with pytest.raises(ValueError, match='obtem resultado eleicoes: argumento invalido'):
+            info = {
+            'Endor':   {'deputados': 7, 
+                        'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
+            'Hoth':    {'deputados': 0, 
+                        'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},}
+            target.obtem_resultado_eleicoes(info)
+
+    def test_obtem_resultado_eleicoes_raise_errors3(self):
+        with pytest.raises(ValueError, match='obtem resultado eleicoes: argumento invalido'):
+            info = 13
+            target.obtem_resultado_eleicoes(info)
+
+    def test_obtem_resultado_eleicoes_raise_errors4(self):
+        with pytest.raises(ValueError, match='obtem resultado eleicoes: argumento invalido'):
+            info = {
+            'Endor':   {'deputados': 7, 
+                        'votos': {'A':0, 'B':0, 'C':0, 'D':0}},
+            'Hoth':    {'deputados': 3, 
+                        'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},}
+            target.obtem_resultado_eleicoes(info)
+
+    def test_obtem_resultado_eleicoes_raise_errors5(self):
+        with pytest.raises(ValueError, match='obtem resultado eleicoes: argumento invalido'):
+            info = {
+            'Endor':   {'deputados': 7, 
+                        'votos': {}},
+            'Hoth':    {'deputados': 3, 
+                        'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},}
+            target.obtem_resultado_eleicoes(info)
+
+    # os dicionarios de entrada das funções não devem ser alterados
+    def test_alteracoes_dicionarios_calcula_quocientes(self):
+        dicionario = {'A': 12000, 'B': 7500, 'C': 5250, 'D': 3000}
+        copia_dicionario = dicionario.copy()
+
+        target.calcula_quocientes({'A': 12000, 'B': 7500, 'C': 5250, 'D': 3000}, 7)
+        assert dicionario == copia_dicionario
 
 
 class TestPublicSistemasLineares:
