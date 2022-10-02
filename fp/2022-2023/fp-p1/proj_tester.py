@@ -19,6 +19,7 @@ target = importlib.util.module_from_spec(target_spec)
 exec(open(file_name, encoding="utf-8").read(), target.__dict__)
 
 class TestPublicJustificarTextos:
+    
     # Limpa_texto
     # Forma geral
     def test_limpa_texto1(self):
@@ -77,7 +78,6 @@ class TestPublicJustificarTextos:
             'Together they are powerful beyond imagination.              ')
         assert ref == target.justifica_texto(cad, 60)
 
-
     def test_justifica_texto2(self):
         cad = ('Computers are incredibly  \n\tfast,     \n\t\taccurate')
         ref = ('Computers are incredibly fast, accurate           ',)
@@ -132,15 +132,15 @@ class TestPublicMetodoHondt:
 
     def test_obtem_partidos1(self):
         info = {
-            'Endor':   {'deputados': 7,
+            'Endor':   {'deputados': 7, 
                         'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
-            'Hoth':    {'deputados': 6,
+            'Hoth':    {'deputados': 6, 
                         'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},
-            'Tatooine': {'deputados': 3,
+            'Tatooine': {'deputados': 3, 
                         'votos': {'A':3000, 'B':1900}}}
 
         ref = ['A', 'B', 'C', 'D', 'E']
-
+        
         assert ref == target.obtem_partidos(info)
 
 
@@ -186,8 +186,6 @@ class TestPublicSistemasLineares:
        ref = (-4.0, -1.0, 1.0)
 
        assert equal(target.resolve_sistema(A4, c4, 1e-20), ref)
-
-
 
 
 #######################################################
