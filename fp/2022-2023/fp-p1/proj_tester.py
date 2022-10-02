@@ -19,29 +19,57 @@ target = importlib.util.module_from_spec(target_spec)
 exec(open(file_name, encoding="utf-8").read(), target.__dict__)
 
 class TestPublicJustificarTextos:
+    # Limpa_texto
+    # Forma geral
     def test_limpa_texto1(self):
         assert ('Fundamentos da Programacao' == target.limpa_texto('  Fundamentos\n\tda      Programacao\n'))
+    # Com espaços no final e \v, \f e \r
+    def test_limpa_texto1(self):
+        assert ('Fundamentos da Programacao' == target.limpa_texto('  Fundamentos\v\fda      Programacao\r         '))
 
-
+    # Corta Texto
+    # Forma geral
     def test_corta_texto1(self):
         assert ('Fundamentos da', 'Programacao') == target.corta_texto('Fundamentos da Programacao', 15)
 
+    # 'Fundamentos da' -> tem 14 letras
+    # Verifica se o utilizador conta com o espaço quando está a inserir
+    def test_corta_texto2(self):
+        assert ('Fundamentos', 'da Programacao') == target.corta_texto('Fundamentos da Programacao', 13)
 
+    # Verifica se o utilizador consegue inserir espaços de forma uniforme
     def test_insere_espacos1(self):
         assert 'Fundamentos  da Programacao!!!' == target.insere_espacos('Fundamentos da Programacao!!!', 30)
 
+    # Verifica se o utilizador insere mais do que 2 espaços seguidos se for preciso
     def test_insere_espacos2(self):
         assert 'Fundamentos       da      Programacao!!!' == target.insere_espacos('Fundamentos da Programacao!!!', 40)
 
+    # Verifica se o utilizador consegue fazer com textos maiores que 3 palavras
     def test_insere_espacos3(self):
+        assert 'Lorem  Ipsum  is  simply  dummy  text  of  the  printing and typesetting industry.' == target.insere_espacos('Lorem Ipsum is simply dummy text of the printing and typesetting industry.', 82)
+
+    # Verifica se o utilizador insere espaços quando só existem duas palavras
+    def test_insere_espacos4(self):
+        assert 'Lorem       Ipsum' == target.insere_espacos('Lorem Ipsum', 17)
+
+    # Verifica se o utilizador insere espaços uniformes, caso seja preciso
+    def test_insere_espacos4(self):
+        assert 'Lorem  Ipsum  is  simply  dummy' == target.insere_espacos('Lorem Ipsum is simply dummy', 31)
+
+    # Verifica se o utilizador insere espaços só para a frente da palavra, mesmo que só seja uma letra
+    def test_insere_espacos5(self):
+        assert '?    ' == target.insere_espacos('?', 5)
+
+    # Verifica se o utilizador insere espaços só para a frente da palavra
+    def test_insere_espacos6(self):
         assert 'Fundamentos    ' == target.insere_espacos('Fundamentos', 15)
 
-
+    # Verifica se o utilizador formata o texto pedido no pdf
     def test_justifica_texto1(self):
-
         cad = ('Computers are incredibly  \n\tfast,     \n\t\taccurate'
             ' \n\t\t\tand  stupid.   \n    Human beings are incredibly  slow  '
-            'inaccurate, and brilliant. \n     Together  they  are powerful   ' 
+            'inaccurate, and brilliant. \n     Together  they  are powerful   '
             'beyond imagination.')
 
         ref = ('Computers  are  incredibly  fast, accurate and stupid. Human',
@@ -49,28 +77,34 @@ class TestPublicJustificarTextos:
             'Together they are powerful beyond imagination.              ')
         assert ref == target.justifica_texto(cad, 60)
 
+
+    def test_justifica_texto2(self):
+        cad = ('Computers are incredibly  \n\tfast,     \n\t\taccurate')
+        ref = ('Computers are incredibly fast, accurate           ',)
+        assert ref == target.justifica_texto(cad, 50)
+
     # levantar erro se primeiro argumento não é uma lista não vazia, ou o segundo não é um número inteiro positivo
     # ou existe uma palavra maior que o tamanho pretendido
-    def test_justifica_texto2(self):
+    def test_justifica_texto_raise_errors_1(self):
         with pytest.raises(ValueError, match='justifica texto: argumentos invalidos'):
             target.justifica_texto('', 60)
 
-    def test_justifica_texto3(self):
+    def test_justifica_texto_raise_errors_2(self):
         with pytest.raises(ValueError, match='justifica texto: argumentos invalidos'):
             target.justifica_texto('Fundamentos', "Banana")
-    
-    def test_justifica_texto4(self):
+
+    def test_justifica_texto_raise_errors_3(self):
         with pytest.raises(ValueError, match='justifica texto: argumentos invalidos'):
             target.justifica_texto(89, 60)
 
-    def test_justifica_texto5(self):
+    def test_justifica_texto_raise_errors_4(self):
         with pytest.raises(ValueError, match='justifica texto: argumentos invalidos'):
             target.justifica_texto('Texto', -10)
-    
-    def test_justifica_texto6(self):
+
+    def test_justifica_texto_raise_errors_5(self):
         with pytest.raises(ValueError, match='justifica texto: argumentos invalidos'):
             target.justifica_texto('Otorrinolaringologista', 10)
-    
+
 
 
 class TestPublicMetodoHondt:
@@ -83,7 +117,7 @@ class TestPublicMetodoHondt:
                     'D': [3000.0, 1500.0, 1000.0, 750.0, 600.0, 500.0, 3000/7]}
 
         hyp = target.calcula_quocientes({'A': 12000, 'B': 7500, 'C': 5250, 'D': 3000}, 7)
-        
+
         assert ref == hyp
 
 
@@ -98,76 +132,29 @@ class TestPublicMetodoHondt:
 
     def test_obtem_partidos1(self):
         info = {
-            'Endor':   {'deputados': 7, 
+            'Endor':   {'deputados': 7,
                         'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
-            'Hoth':    {'deputados': 6, 
+            'Hoth':    {'deputados': 6,
                         'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},
-            'Tatooine': {'deputados': 3, 
+            'Tatooine': {'deputados': 3,
                         'votos': {'A':3000, 'B':1900}}}
 
         ref = ['A', 'B', 'C', 'D', 'E']
-        
+
         assert ref == target.obtem_partidos(info)
 
 
     def test_obtem_resultado_eleicoes1(self):
         info = {
-            'Endor':   {'deputados': 7, 
+            'Endor':   {'deputados': 7,
                         'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
-            'Hoth':    {'deputados': 6, 
+            'Hoth':    {'deputados': 6,
                         'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},
-            'Tatooine': {'deputados': 3, 
+            'Tatooine': {'deputados': 3,
                         'votos': {'A':3000, 'B':1900}}}
         ref = [('A', 7, 24000), ('B', 6, 20900), ('C', 1, 5250), ('E', 1, 5000), ('D', 1, 4500)]
-        
+
         assert ref == target.obtem_resultado_eleicoes(info)
-
-    def test_obtem_resultado_eleicoes2(self):
-        with pytest.raises(ValueError, match='obtem resultado eleicoes: argumento invalido'):
-            info = {}
-            target.obtem_resultado_eleicoes(info)
-
-    def test_obtem_resultado_eleicoes3(self):
-        with pytest.raises(ValueError, match='obtem resultado eleicoes: argumento invalido'):
-            info = {
-            'Endor':   {'deputados': 7, 
-                        'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
-            'Hoth':    {'deputados': 0, 
-                        'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},}
-            target.obtem_resultado_eleicoes(info)
-
-    def test_obtem_resultado_eleicoes4(self):
-        with pytest.raises(ValueError, match='obtem resultado eleicoes: argumento invalido'):
-            info = 13
-            target.obtem_resultado_eleicoes(info)
-
-    def test_obtem_resultado_eleicoes5(self):
-        with pytest.raises(ValueError, match='obtem resultado eleicoes: argumento invalido'):
-            info = {
-            'Endor':   {'deputados': 7, 
-                        'votos': {'A':0, 'B':0, 'C':0, 'D':0}},
-            'Hoth':    {'deputados': 3, 
-                        'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},}
-            target.obtem_resultado_eleicoes(info)
-
-    def test_obtem_resultado_eleicoes6(self):
-        with pytest.raises(ValueError, match='obtem resultado eleicoes: argumento invalido'):
-            info = {
-            'Endor':   {'deputados': 7, 
-                        'votos': {}},
-            'Hoth':    {'deputados': 3, 
-                        'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},}
-            target.obtem_resultado_eleicoes(info)
-
-    # os dicionarios de entrada das funções não devem ser alterados
-    def test_alteracoes_dicionarios_calcula_quocientes(self):
-        dicionario = {'A': 12000, 'B': 7500, 'C': 5250, 'D': 3000}
-        copia_dicionario = dicionario.copy()
-
-        target.calcula_quocientes({'A': 12000, 'B': 7500, 'C': 5250, 'D': 3000}, 7)
-        assert dicionario == copia_dicionario
-
-
 
 
 class TestPublicSistemasLineares:
@@ -190,17 +177,17 @@ class TestPublicSistemasLineares:
    def test_eh_diagonal_dominante2(self):
        assert target.eh_diagonal_dominante(((1, 0, 0), (0, 1, 0), (0, 1, 1))) == True
 
-   def test_resolve_sistema1(self):    
+   def test_resolve_sistema1(self):
        def equal(x,y):
            delta = 1e-10
            return all(abs(x[i]-y[i])<delta for i in range(len(x)))
 
        A4, c4 = ((2, -1, -1), (2, -9, 7), (-2, 5, -9)), (-8, 8, -6)
        ref = (-4.0, -1.0, 1.0)
-           
+
        assert equal(target.resolve_sistema(A4, c4, 1e-20), ref)
 
-       
+
 
 
 #######################################################
