@@ -25,8 +25,11 @@ class TestPublicJustificarTextos:
     def test_limpa_texto1(self):
         assert ('Fundamentos da Programacao' == target.limpa_texto('  Fundamentos\n\tda      Programacao\n'))
     # Com espaços no final e \v, \f e \r
-    def test_limpa_texto1(self):
+    def test_limpa_texto2(self):
         assert ('Fundamentos da Programacao' == target.limpa_texto('  Fundamentos\v\fda      Programacao\r         '))
+    
+    def test_limpa_texto3(self):
+        assert ('A B C D E F G' == target.limpa_texto('\t\n\v\f\r A\t B\nC\vD \fE\rF G\r \f\n \v'))
 
     # Corta Texto
     # Forma geral
@@ -55,15 +58,15 @@ class TestPublicJustificarTextos:
         assert 'Lorem       Ipsum' == target.insere_espacos('Lorem Ipsum', 17)
 
     # Verifica se o utilizador insere espaços uniformes, caso seja preciso
-    def test_insere_espacos4(self):
+    def test_insere_espacos5(self):
         assert 'Lorem  Ipsum  is  simply  dummy' == target.insere_espacos('Lorem Ipsum is simply dummy', 31)
 
     # Verifica se o utilizador insere espaços só para a frente da palavra, mesmo que só seja uma letra
-    def test_insere_espacos5(self):
+    def test_insere_espacos6(self):
         assert '?    ' == target.insere_espacos('?', 5)
 
     # Verifica se o utilizador insere espaços só para a frente da palavra
-    def test_insere_espacos6(self):
+    def test_insere_espacos7(self):
         assert 'Fundamentos    ' == target.insere_espacos('Fundamentos', 15)
 
     # Verifica se o utilizador formata o texto pedido no pdf
