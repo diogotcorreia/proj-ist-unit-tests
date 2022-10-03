@@ -136,12 +136,13 @@ class TestPublicMetodoHondt:
     # LISTA DE TESTES:
     #       -> Verificar se o argumento é do tipo DICT                                     (3)
     #       -> Verificar se o argumento está vazio                                         (4)
-    #       -> Verificar os nomes das keys (VOTOS, DEPUTADOS)                              (5, 6)
-    #       -> Verificar se o valor de (DEPUTADOS, VOTOS) são do tipo correto (INT, DICT)  (7, 8)
-    #       -> Verificar se o valor de votos de cada partido é do tipo correto INT         (9)
+    #       -> Verificar se o dicionario dos votos está vazio                              (5)
+    #       -> Verificar os nomes das keys (VOTOS, DEPUTADOS)                              (6, 7)
+    #       -> Verificar se o valor de (DEPUTADOS, VOTOS) são do tipo correto (INT, DICT)  (8, 9)
+    #       -> Verificar se o valor de votos de cada partido é do tipo correto INT         (10)
     #       -> Verificar se o valor de votos for negativo e valor de deputados for 0       
-    #          ou inferior                                                                 (10, 11)
-    #       -> Verificar se existir um circulo eleitoral com 0 votos totais                (12)
+    #          ou inferior                                                                 (11, 12)
+    #       -> Verificar se existir um circulo eleitoral com 0 votos totais                (13)
     #       
         
     def test_obtem_resultado_eleicoes3(self):
@@ -156,11 +157,21 @@ class TestPublicMetodoHondt:
             'Endor':   {'deputados': 7, 
                         'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
             'Hoth':    {'deputados': 6, 
+                        'votos': {}},
+            'Tatooine': {'deputados': 3, 
+                        'votos': {'A':3000, 'B':1900}}}
+            target.obtem_resultado_eleicoes(info)
+    def test_obtem_resultado_eleicoes6(self):
+        with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
+            info = {
+            'Endor':   {'deputados': 7, 
+                        'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
+            'Hoth':    {'deputados': 6, 
                         'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},
             'Tatooine': {'deputados': 3, 
                         'xxx': {'A':3000, 'B':1900}}}
             target.obtem_resultado_eleicoes(info)
-    def test_obtem_resultado_eleicoes6(self):
+    def test_obtem_resultado_eleicoes7(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
             'Endor':   {'deputados': 7, 
@@ -170,7 +181,7 @@ class TestPublicMetodoHondt:
             'Tatooine': {'xxx': 3, 
                         'votos': {'A':3000, 'B':1900}}}
             target.obtem_resultado_eleicoes(info)
-    def test_obtem_resultado_eleicoes7(self):
+    def test_obtem_resultado_eleicoes8(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
             'Endor':   {'deputados': 7, 
@@ -180,7 +191,7 @@ class TestPublicMetodoHondt:
             'Tatooine': {'deputados': 3, 
                         'votos': {'A':3000, 'B':1900}}}
             target.obtem_resultado_eleicoes(info)
-    def test_obtem_resultado_eleicoes8(self):
+    def test_obtem_resultado_eleicoes9(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
             'Endor':   {'deputados': 7, 
@@ -190,7 +201,7 @@ class TestPublicMetodoHondt:
             'Tatooine': {'deputados': 3, 
                         'votos': {'A':3000, 'B':1900}}}
             target.obtem_resultado_eleicoes(info)
-    def test_obtem_resultado_eleicoes9(self):
+    def test_obtem_resultado_eleicoes10(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
             'Endor':   {'deputados': 7, 
@@ -200,7 +211,7 @@ class TestPublicMetodoHondt:
             'Tatooine': {'deputados': 3, 
                         'votos': {'A':3000, 'B':1900}}}
             target.obtem_resultado_eleicoes(info)
-    def test_obtem_resultado_eleicoes10(self):
+    def test_obtem_resultado_eleicoes11(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
             'Endor':   {'deputados': 7, 
@@ -210,7 +221,7 @@ class TestPublicMetodoHondt:
             'Tatooine': {'deputados': 3, 
                         'votos': {'A':-69, 'B':1900}}}
             target.obtem_resultado_eleicoes(info)
-    def test_obtem_resultado_eleicoes11(self):
+    def test_obtem_resultado_eleicoes12(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
             'Endor':   {'deputados': 0, 
@@ -220,7 +231,7 @@ class TestPublicMetodoHondt:
             'Tatooine': {'deputados': 3, 
                         'votos': {'A':3000, 'B':1900}}}
             target.obtem_resultado_eleicoes(info)
-    def test_obtem_resultado_eleicoes12(self):
+    def test_obtem_resultado_eleicoes13(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
             'Endor':   {'deputados': 7, 
@@ -230,6 +241,16 @@ class TestPublicMetodoHondt:
             'Tatooine': {'deputados': 3, 
                         'votos': {'A':3000, 'B':1900}}}
             target.obtem_resultado_eleicoes(info)
+    def test_obtem_resultado_eleicoes14(self):
+        with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
+            info = {
+            'Endor':   {'deputados': 7}, 
+            'Hoth':    {'deputados': 6, 
+                        'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},
+            'Tatooine': {'deputados': 3, 
+                        'votos': {'A':3000, 'B':1900}}}
+            target.obtem_resultado_eleicoes(info)
+            
 
 class TestPublicSistemasLineares:
 
