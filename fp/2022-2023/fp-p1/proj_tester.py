@@ -193,6 +193,36 @@ class TestPublicMetodoHondt:
                         'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},}
             target.obtem_resultado_eleicoes(info)
 
+    def test_obtem_resultado_eleicoes_raise_errors6(self):
+        with pytest.raises(ValueError, match='obtem resultado eleicoes: argumento invalido'):
+            info = {'Endor': 15}
+            target.obtem_resultado_eleicoes(info)
+
+    def test_obtem_resultado_eleicoes_raise_errors7(self):
+        with pytest.raises(ValueError, match='obtem resultado eleicoes: argumento invalido'):
+            info = {
+            'Endor':   {'deputados': "não é número inteiro", 
+                        'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
+            'Hoth':    {'deputados': 3, 
+                        'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},}
+            target.obtem_resultado_eleicoes(info)
+
+    def test_obtem_resultado_eleicoes_raise_errors8(self):
+        with pytest.raises(ValueError, match='obtem resultado eleicoes: argumento invalido'):
+            info = {
+            'Endor':   {'deputados': 7},
+            'Hoth':    {'deputados': 3, 
+                        'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},}
+            target.obtem_resultado_eleicoes(info)
+
+    def test_obtem_resultado_eleicoes_raise_errors9(self):
+        with pytest.raises(ValueError, match='obtem resultado eleicoes: argumento invalido'):
+            info = {
+            'Endor':   {'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
+            'Hoth':    {'deputados': 3, 
+                        'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},}
+            target.obtem_resultado_eleicoes(info)
+
     # os dicionarios de entrada das funções não devem ser alterados
     def test_calcula_quocientes_alteracao_diconarios(self):
         dicionario = {'A': 12000, 'B': 7500, 'C': 5250, 'D': 3000}
