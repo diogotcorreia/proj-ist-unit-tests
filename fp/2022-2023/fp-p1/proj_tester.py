@@ -145,7 +145,7 @@ class TestPublicMetodoHondt:
     #       -> Verificar se existir um circulo eleitoral com 0 votos totais                (13)
     #       -> Verificar se falta a key VOTOS ou a key DEPUTADOS                           (14, 15)
     #       -> Verificar se a key correspondente aos numeros de votos é do tipo
-    #           correto                                                                    (16)
+    #           correto STR                                                                   (16)
         
     def test_obtem_resultado_eleicoes3(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
