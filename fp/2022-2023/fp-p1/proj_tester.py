@@ -143,7 +143,9 @@ class TestPublicMetodoHondt:
     #       -> Verificar se o valor de votos for negativo e valor de deputados for 0       
     #          ou inferior                                                                 (11, 12)
     #       -> Verificar se existir um circulo eleitoral com 0 votos totais                (13)
-    #       
+    #       -> Verificar se falta a key VOTOS ou a key DEPUTADOS                           (14, 15)
+    #       -> Verificar se a key correspondente aos numeros de votos é do tipo
+    #           correto                                                                    (16)
         
     def test_obtem_resultado_eleicoes3(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
@@ -250,6 +252,26 @@ class TestPublicMetodoHondt:
             'Tatooine': {'deputados': 3, 
                         'votos': {'A':3000, 'B':1900}}}
             target.obtem_resultado_eleicoes(info)
+    def test_obtem_resultado_eleicoes15(self):
+        with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
+            info = {
+            'Endor':   {'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
+            'Hoth':    {'deputados': 6, 
+                        'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},
+            'Tatooine': {'deputados': 3, 
+                        'votos': {'A':3000, 'B':1900}}}
+            target.obtem_resultado_eleicoes(info)
+    def test_obtem_resultado_eleicoes16(self):
+        with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
+            info = {
+            'Endor':   {'deputados': 7, 
+                        'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
+            'Hoth':    {'deputados': 6, 
+                        'votos': {69:9000, 'B':11500, 'D':1500, 'E':5000}},
+            'Tatooine': {'deputados': 3, 
+                        'votos': {'A':3000, 'B':1900}}}
+            target.obtem_resultado_eleicoes(info)
+    
             
 
 class TestPublicSistemasLineares:
