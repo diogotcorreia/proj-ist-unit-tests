@@ -2,6 +2,7 @@ import pytest
 import importlib.util
 import sys
 import requests
+import copy
 
 if len(sys.argv) < 2:
     print(
@@ -229,14 +230,14 @@ class TestPublicMetodoHondt:
     # os dicionarios de entrada das funções não devem ser alterados
     def test_calcula_quocientes_alteracao_diconarios(self):
         dicionario = {'A': 12000, 'B': 7500, 'C': 5250, 'D': 3000}
-        copia_dicionario = dicionario.copy()
+        copia_dicionario = copy.deepcopy(dicionario)
 
         target.calcula_quocientes({'A': 12000, 'B': 7500, 'C': 5250, 'D': 3000}, 7)
         assert dicionario == copia_dicionario
 
     def test_atribui_mandatos_alteracao_dicionarios(self):
         dicionario = {'A': 12000, 'B': 7500, 'C': 5250, 'D': 3000}
-        copia_dicionario = dicionario.copy()
+        copia_dicionario = copy.deepcopy(dicionario)
 
         target.atribui_mandatos(dicionario, 7)
         assert dicionario == copia_dicionario
@@ -249,7 +250,7 @@ class TestPublicMetodoHondt:
                         'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},
             'Tatooine': {'deputados': 3, 
                         'votos': {'A':3000, 'B':1900}}}
-        copia_dicionario = dicionario.copy()
+        copia_dicionario = copy.deepcopy(dicionario)
 
         target.obtem_partidos(dicionario)
         assert dicionario == copia_dicionario
@@ -262,7 +263,7 @@ class TestPublicMetodoHondt:
                         'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},
             'Tatooine': {'deputados': 3, 
                         'votos': {'A':3000, 'B':1900}}}
-        copia_dicionario = dicionario.copy()
+        copia_dicionario = copy.deepcopy(dicionario)
 
         target.obtem_resultado_eleicoes(dicionario)
         assert dicionario == copia_dicionario
@@ -307,7 +308,7 @@ class TestPublicSistemasLineares:
 def get_lastest_commit_hash():
     try:
         result = requests.get(
-            "https://api.github.com/repos/diogotcorreia/proj-ist-unit-tests/commits?path=fp%2F2022-2023%2Ffp-p1%2Fproj_tester.py&page=1&per_page=1"
+            "https://api.github.com/repos/SrGesus/proj-ist-unit-tests/commits?path=fp%2F2022-2023%2Ffp-p1%2Fproj_tester.py&page=1&per_page=1"
         )
         return result.json()[0]["sha"]
     except:
@@ -353,7 +354,7 @@ def update_files(new_hash):
     open(".update_lock", "w+").write(new_hash)
 
     new_file = requests.get(
-        "https://raw.githubusercontent.com/diogotcorreia/proj-ist-unit-tests/master/fp/2022-2023/fp-p1/proj_tester.py"
+        "https://raw.githubusercontent.com/SrGesus/proj-ist-unit-tests/master/fp/2022-2023/fp-p1/proj_tester.py"
     )
     open("proj_tester.py", "w+", encoding="utf-8").write(new_file.text)
 
