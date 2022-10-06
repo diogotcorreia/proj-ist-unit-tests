@@ -52,23 +52,23 @@ class TestPublicJustificarTextos:
     # levantar erro se primeiro argumento não é uma lista não vazia, ou o segundo não é um número inteiro positivo
     # ou existe uma palavra maior que o tamanho pretendido
     def test_justifica_texto2(self):
-        with pytest.raises(ValueError, match='justifica texto: argumentos invalidos'):
+        with pytest.raises(ValueError, match='justifica_texto: argumentos invalidos'):
             target.justifica_texto('', 60)
 
     def test_justifica_texto3(self):
-        with pytest.raises(ValueError, match='justifica texto: argumentos invalidos'):
+        with pytest.raises(ValueError, match='justifica_texto: argumentos invalidos'):
             target.justifica_texto('Fundamentos', "Banana")
     
     def test_justifica_texto4(self):
-        with pytest.raises(ValueError, match='justifica texto: argumentos invalidos'):
+        with pytest.raises(ValueError, match='justifica_texto: argumentos invalidos'):
             target.justifica_texto(89, 60)
 
     def test_justifica_texto5(self):
-        with pytest.raises(ValueError, match='justifica texto: argumentos invalidos'):
+        with pytest.raises(ValueError, match='justifica_texto: argumentos invalidos'):
             target.justifica_texto('Texto', -10)
     
     def test_justifica_texto6(self):
-        with pytest.raises(ValueError, match='justifica texto: argumentos invalidos'):
+        with pytest.raises(ValueError, match='justifica_texto: argumentos invalidos'):
             target.justifica_texto('Otorrinolaringologista', 10)
     
 
