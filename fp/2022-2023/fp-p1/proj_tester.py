@@ -459,7 +459,7 @@ class TestPublicSistemasLineares:
 def get_lastest_commit_hash():
     try:
         result = requests.get(
-            "https://api.github.com/repos/SrGesus/proj-ist-unit-tests/commits?path=fp%2F2022-2023%2Ffp-p1%2Fproj_tester.py&page=1&per_page=1"
+            "https://api.github.com/repos/diogotcorreia/proj-ist-unit-tests/commits?path=fp%2F2022-2023%2Ffp-p1%2Fproj_tester.py&page=1&per_page=1"
         )
         return result.json()[0]["sha"]
     except:
@@ -505,7 +505,7 @@ def update_files(new_hash):
     open(".update_lock", "w+").write(new_hash)
 
     new_file = requests.get(
-        "https://raw.githubusercontent.com/SrGesus/proj-ist-unit-tests/master/fp/2022-2023/fp-p1/proj_tester.py"
+        "https://raw.githubusercontent.com/diogotcorreia/proj-ist-unit-tests/master/fp/2022-2023/fp-p1/proj_tester.py"
     )
     open("proj_tester.py", "w+", encoding="utf-8").write(new_file.text)
 
