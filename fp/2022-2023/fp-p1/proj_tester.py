@@ -20,7 +20,7 @@ target = importlib.util.module_from_spec(target_spec)
 exec(open(file_name, encoding="utf-8").read(), target.__dict__)
 
 class TestPublicJustificarTextos:
-    
+
     # Limpa_texto
     # Forma geral
     def test_limpa_texto1(self):
@@ -28,9 +28,13 @@ class TestPublicJustificarTextos:
     # Com espaços no final e \v, \f e \r
     def test_limpa_texto2(self):
         assert ('Fundamentos da Programacao' == target.limpa_texto('  Fundamentos\v\fda      Programacao\r         '))
-    
+
     def test_limpa_texto3(self):
         assert ('A B C D E F G' == target.limpa_texto('\t\n\v\f\r A\t B\nC\vD \fE\rF G\r \f\n \v'))
+
+    # Testar com caracteres brancos no meio da frase
+    def test_limpa_texto4(self):
+        assert ('Fundamentos da Program acao' == target.limpa_texto('  Fundamentos\v\fda      Program\nacao\r         '))
 
     # Corta Texto
     # Forma geral
@@ -90,23 +94,23 @@ class TestPublicJustificarTextos:
     # levantar erro se primeiro argumento não é uma lista não vazia, ou o segundo não é um número inteiro positivo
     # ou existe uma palavra maior que o tamanho pretendido
     def test_justifica_texto_raise_errors1(self):
-        with pytest.raises(ValueError, match='justifica texto: argumentos invalidos'):
+        with pytest.raises(ValueError, match='justifica_texto: argumentos invalidos'):
             target.justifica_texto('', 60)
 
     def test_justifica_texto_raise_errors2(self):
-        with pytest.raises(ValueError, match='justifica texto: argumentos invalidos'):
+        with pytest.raises(ValueError, match='justifica_texto: argumentos invalidos'):
             target.justifica_texto('Fundamentos', "Banana")
 
     def test_justifica_texto_raise_errors3(self):
-        with pytest.raises(ValueError, match='justifica texto: argumentos invalidos'):
+        with pytest.raises(ValueError, match='justifica_texto: argumentos invalidos'):
             target.justifica_texto(89, 60)
 
     def test_justifica_texto_raise_errors4(self):
-        with pytest.raises(ValueError, match='justifica texto: argumentos invalidos'):
+        with pytest.raises(ValueError, match='justifica_texto: argumentos invalidos'):
             target.justifica_texto('Texto', -10)
 
     def test_justifica_texto_raise_errors5(self):
-        with pytest.raises(ValueError, match='justifica texto: argumentos invalidos'):
+        with pytest.raises(ValueError, match='justifica_texto: argumentos invalidos'):
             target.justifica_texto('Otorrinolaringologista', 10)
 
 
@@ -121,7 +125,7 @@ class TestPublicMetodoHondt:
                     'D': [3000.0, 1500.0, 1000.0, 750.0, 600.0, 500.0, 3000/7]}
 
         hyp = target.calcula_quocientes({'A': 12000, 'B': 7500, 'C': 5250, 'D': 3000}, 7)
-        
+
         assert ref == hyp
 
 
@@ -136,28 +140,28 @@ class TestPublicMetodoHondt:
 
     def test_obtem_partidos1(self):
         info = {
-            'Endor':   {'deputados': 7, 
+            'Endor':   {'deputados': 7,
                         'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
-            'Hoth':    {'deputados': 6, 
+            'Hoth':    {'deputados': 6,
                         'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},
-            'Tatooine': {'deputados': 3, 
+            'Tatooine': {'deputados': 3,
                         'votos': {'A':3000, 'B':1900}}}
 
         ref = ['A', 'B', 'C', 'D', 'E']
-        
+
         assert ref == target.obtem_partidos(info)
 
 
     def test_obtem_resultado_eleicoes1(self):
         info = {
-            'Endor':   {'deputados': 7, 
+            'Endor':   {'deputados': 7,
                         'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
-            'Hoth':    {'deputados': 6, 
+            'Hoth':    {'deputados': 6,
                         'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},
-            'Tatooine': {'deputados': 3, 
+            'Tatooine': {'deputados': 3,
                         'votos': {'A':3000, 'B':1900}}}
         ref = [('A', 7, 24000), ('B', 6, 20900), ('C', 1, 5250), ('E', 1, 5000), ('D', 1, 4500)]
-        
+
         assert ref == target.obtem_resultado_eleicoes(info)
 
     def test_obtem_resultado_eleicoes_raise_errors1(self):
@@ -168,9 +172,9 @@ class TestPublicMetodoHondt:
     def test_obtem_resultado_eleicoes_raise_errors2(self):
         with pytest.raises(ValueError, match='obtem resultado eleicoes: argumento invalido'):
             info = {
-            'Endor':   {'deputados': 7, 
+            'Endor':   {'deputados': 7,
                         'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
-            'Hoth':    {'deputados': 0, 
+            'Hoth':    {'deputados': 0,
                         'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},}
             target.obtem_resultado_eleicoes(info)
 
@@ -182,18 +186,18 @@ class TestPublicMetodoHondt:
     def test_obtem_resultado_eleicoes_raise_errors4(self):
         with pytest.raises(ValueError, match='obtem resultado eleicoes: argumento invalido'):
             info = {
-            'Endor':   {'deputados': 7, 
+            'Endor':   {'deputados': 7,
                         'votos': {'A':0, 'B':0, 'C':0, 'D':0}},
-            'Hoth':    {'deputados': 3, 
+            'Hoth':    {'deputados': 3,
                         'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},}
             target.obtem_resultado_eleicoes(info)
 
     def test_obtem_resultado_eleicoes_raise_errors5(self):
         with pytest.raises(ValueError, match='obtem resultado eleicoes: argumento invalido'):
             info = {
-            'Endor':   {'deputados': 7, 
+            'Endor':   {'deputados': 7,
                         'votos': {}},
-            'Hoth':    {'deputados': 3, 
+            'Hoth':    {'deputados': 3,
                         'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},}
             target.obtem_resultado_eleicoes(info)
 
@@ -205,9 +209,9 @@ class TestPublicMetodoHondt:
     def test_obtem_resultado_eleicoes_raise_errors7(self):
         with pytest.raises(ValueError, match='obtem resultado eleicoes: argumento invalido'):
             info = {
-            'Endor':   {'deputados': "não é número inteiro", 
+            'Endor':   {'deputados': "não é número inteiro",
                         'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
-            'Hoth':    {'deputados': 3, 
+            'Hoth':    {'deputados': 3,
                         'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},}
             target.obtem_resultado_eleicoes(info)
 
@@ -215,7 +219,7 @@ class TestPublicMetodoHondt:
         with pytest.raises(ValueError, match='obtem resultado eleicoes: argumento invalido'):
             info = {
             'Endor':   {'deputados': 7},
-            'Hoth':    {'deputados': 3, 
+            'Hoth':    {'deputados': 3,
                         'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},}
             target.obtem_resultado_eleicoes(info)
 
@@ -223,7 +227,7 @@ class TestPublicMetodoHondt:
         with pytest.raises(ValueError, match='obtem resultado eleicoes: argumento invalido'):
             info = {
             'Endor':   {'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
-            'Hoth':    {'deputados': 3, 
+            'Hoth':    {'deputados': 3,
                         'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},}
             target.obtem_resultado_eleicoes(info)
 
@@ -244,11 +248,11 @@ class TestPublicMetodoHondt:
 
     def test_obtem_partidos_alteracao_dicionarios(self):
         dicionario = {
-            'Endor':   {'deputados': 7, 
+            'Endor':   {'deputados': 7,
                         'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
-            'Hoth':    {'deputados': 6, 
+            'Hoth':    {'deputados': 6,
                         'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},
-            'Tatooine': {'deputados': 3, 
+            'Tatooine': {'deputados': 3,
                         'votos': {'A':3000, 'B':1900}}}
         copia_dicionario = copy.deepcopy(dicionario)
 
@@ -257,18 +261,18 @@ class TestPublicMetodoHondt:
 
     def test_obtem_resultado_eleicoes_dicionarios(self):
         dicionario = {
-            'Endor':   {'deputados': 7, 
+            'Endor':   {'deputados': 7,
                         'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
-            'Hoth':    {'deputados': 6, 
+            'Hoth':    {'deputados': 6,
                         'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},
-            'Tatooine': {'deputados': 3, 
+            'Tatooine': {'deputados': 3,
                         'votos': {'A':3000, 'B':1900}}}
         copia_dicionario = copy.deepcopy(dicionario)
 
         target.obtem_resultado_eleicoes(dicionario)
         assert dicionario == copia_dicionario
 
-        
+
     def test_obtem_resultado_eleicoes2(self):
         info = {
             'Endor':   {'deputados': 12,
@@ -276,7 +280,7 @@ class TestPublicMetodoHondt:
             'Hoth':    {'deputados': 4,
                         'votos': {'B':47800, 'A':56000, 'E':12877, 'D':28000}}}
         ref = [('A', 7, 173542), ('B', 5, 126923), ('D', 2, 56991), ('C', 2, 47887), ('E', 0, 12877)]
-        
+
         assert ref == target.obtem_resultado_eleicoes(info)
 
     # Verificar que o programa gera Value Error no caso de argumentos não válidos
@@ -287,7 +291,7 @@ class TestPublicMetodoHondt:
     #       -> Verificar os nomes das keys (VOTOS, DEPUTADOS)                              (6, 7)
     #       -> Verificar se o valor de (DEPUTADOS, VOTOS) são do tipo correto (INT, DICT)  (8, 9)
     #       -> Verificar se o valor de votos de cada partido é do tipo correto INT         (10)
-    #       -> Verificar se o valor de votos for negativo e valor de deputados for 0       
+    #       -> Verificar se o valor de votos for negativo e valor de deputados for 0
     #          ou inferior                                                                 (11, 12)
     #       -> Verificar se existir um circulo eleitoral com 0 votos totais                (13)
     #       -> Verificar se falta a key VOTOS ou a key DEPUTADOS                           (14, 15)
@@ -303,119 +307,119 @@ class TestPublicMetodoHondt:
     def test_obtem_resultado_eleicoes5(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
-            'Endor':   {'deputados': 7, 
+            'Endor':   {'deputados': 7,
                         'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
-            'Hoth':    {'deputados': 6, 
+            'Hoth':    {'deputados': 6,
                         'votos': {}},
-            'Tatooine': {'deputados': 3, 
+            'Tatooine': {'deputados': 3,
                         'votos': {'A':3000, 'B':1900}}}
             target.obtem_resultado_eleicoes(info)
     def test_obtem_resultado_eleicoes6(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
-            'Endor':   {'deputados': 7, 
+            'Endor':   {'deputados': 7,
                         'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
-            'Hoth':    {'deputados': 6, 
+            'Hoth':    {'deputados': 6,
                         'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},
-            'Tatooine': {'deputados': 3, 
+            'Tatooine': {'deputados': 3,
                         'xxx': {'A':3000, 'B':1900}}}
             target.obtem_resultado_eleicoes(info)
     def test_obtem_resultado_eleicoes7(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
-            'Endor':   {'deputados': 7, 
+            'Endor':   {'deputados': 7,
                         'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
-            'Hoth':    {'deputados': 6, 
+            'Hoth':    {'deputados': 6,
                         'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},
-            'Tatooine': {'xxx': 3, 
+            'Tatooine': {'xxx': 3,
                         'votos': {'A':3000, 'B':1900}}}
             target.obtem_resultado_eleicoes(info)
     def test_obtem_resultado_eleicoes8(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
-            'Endor':   {'deputados': 7, 
+            'Endor':   {'deputados': 7,
                         'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
-            'Hoth':    {'deputados': 'zero', 
+            'Hoth':    {'deputados': 'zero',
                         'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},
-            'Tatooine': {'deputados': 3, 
+            'Tatooine': {'deputados': 3,
                         'votos': {'A':3000, 'B':1900}}}
             target.obtem_resultado_eleicoes(info)
     def test_obtem_resultado_eleicoes9(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
-            'Endor':   {'deputados': 7, 
+            'Endor':   {'deputados': 7,
                         'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
-            'Hoth':    {'deputados': 6, 
+            'Hoth':    {'deputados': 6,
                         'votos': 'zero'},
-            'Tatooine': {'deputados': 3, 
+            'Tatooine': {'deputados': 3,
                         'votos': {'A':3000, 'B':1900}}}
             target.obtem_resultado_eleicoes(info)
     def test_obtem_resultado_eleicoes10(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
-            'Endor':   {'deputados': 7, 
+            'Endor':   {'deputados': 7,
                         'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
-            'Hoth':    {'deputados': 6, 
+            'Hoth':    {'deputados': 6,
                         'votos': {'A':9000, 'B':'zero', 'D':1500, 'E':5000}},
-            'Tatooine': {'deputados': 3, 
+            'Tatooine': {'deputados': 3,
                         'votos': {'A':3000, 'B':1900}}}
             target.obtem_resultado_eleicoes(info)
     def test_obtem_resultado_eleicoes11(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
-            'Endor':   {'deputados': 7, 
+            'Endor':   {'deputados': 7,
                         'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
-            'Hoth':    {'deputados': 6, 
+            'Hoth':    {'deputados': 6,
                         'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},
-            'Tatooine': {'deputados': 3, 
+            'Tatooine': {'deputados': 3,
                         'votos': {'A':-69, 'B':1900}}}
             target.obtem_resultado_eleicoes(info)
     def test_obtem_resultado_eleicoes12(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
-            'Endor':   {'deputados': 0, 
+            'Endor':   {'deputados': 0,
                         'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
-            'Hoth':    {'deputados': 6, 
+            'Hoth':    {'deputados': 6,
                         'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},
-            'Tatooine': {'deputados': 3, 
+            'Tatooine': {'deputados': 3,
                         'votos': {'A':3000, 'B':1900}}}
             target.obtem_resultado_eleicoes(info)
     def test_obtem_resultado_eleicoes13(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
-            'Endor':   {'deputados': 7, 
+            'Endor':   {'deputados': 7,
                         'votos': {'A':0, 'B':0, 'C':0, 'D':0}},
-            'Hoth':    {'deputados': 6, 
+            'Hoth':    {'deputados': 6,
                         'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},
-            'Tatooine': {'deputados': 3, 
+            'Tatooine': {'deputados': 3,
                         'votos': {'A':3000, 'B':1900}}}
             target.obtem_resultado_eleicoes(info)
     def test_obtem_resultado_eleicoes14(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
-            'Endor':   {'deputados': 7}, 
-            'Hoth':    {'deputados': 6, 
+            'Endor':   {'deputados': 7},
+            'Hoth':    {'deputados': 6,
                         'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},
-            'Tatooine': {'deputados': 3, 
+            'Tatooine': {'deputados': 3,
                         'votos': {'A':3000, 'B':1900}}}
             target.obtem_resultado_eleicoes(info)
     def test_obtem_resultado_eleicoes15(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
             'Endor':   {'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
-            'Hoth':    {'deputados': 6, 
+            'Hoth':    {'deputados': 6,
                         'votos': {'A':9000, 'B':11500, 'D':1500, 'E':5000}},
-            'Tatooine': {'deputados': 3, 
+            'Tatooine': {'deputados': 3,
                         'votos': {'A':3000, 'B':1900}}}
             target.obtem_resultado_eleicoes(info)
     def test_obtem_resultado_eleicoes16(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
-            'Endor':   {'deputados': 7, 
+            'Endor':   {'deputados': 7,
                         'votos': {'A':12000, 'B':7500, 'C':5250, 'D':3000}},
-            'Hoth':    {'deputados': 6, 
+            'Hoth':    {'deputados': 6,
                         'votos': {69:9000, 'B':11500, 'D':1500, 'E':5000}},
-            'Tatooine': {'deputados': 3, 
+            'Tatooine': {'deputados': 3,
                         'votos': {'A':3000, 'B':1900}}}
             target.obtem_resultado_eleicoes(info)
 
