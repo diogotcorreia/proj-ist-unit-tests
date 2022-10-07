@@ -3,6 +3,8 @@ import importlib.util
 import sys
 import requests
 import copy
+import os
+import subprocess
 
 if len(sys.argv) < 2:
     print(
@@ -475,7 +477,29 @@ def get_saved_commit_hash():
         return False
 
 
+def is_under_git_control():
+    try:
+        repo_dir = os.path.dirname(__file__)
+
+        command = ['git', 'rev-parse', '--is-inside-work-tree']
+        process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                   cwd=repo_dir, universal_newlines=True)
+        process_output = process.communicate()[0]
+
+        is_git_repo = str(process_output.strip())
+
+        if is_git_repo == "true":
+            print("This file is under Git version control, skipping auto update.")
+            print("Use `git pull` to manually update!")
+            return True
+    except:
+        return False
+    return False
+
 def check_for_updates():
+    if is_under_git_control():
+        return
+
     saved_hash = get_saved_commit_hash()
     latest_hash = get_lastest_commit_hash()
 
