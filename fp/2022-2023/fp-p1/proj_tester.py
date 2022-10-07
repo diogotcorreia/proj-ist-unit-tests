@@ -88,6 +88,12 @@ class TestPublicJustificarTextos:
         cad = ('Computers are incredibly  \n\tfast,     \n\t\taccurate')
         ref = ('Computers are incredibly fast, accurate           ',)
         assert ref == target.justifica_texto(cad, 50)
+    
+    # Verifica se o utilizador formata cadeias com segmentos internos de comprimento igual à largura de coluna
+    def test_justifica_texto3(self):
+        cad = ('123456 123')
+        ref = ('123456', '123   ')
+        assert ref == target.justifica_texto(cad, 6)
 
     # levantar erro se primeiro argumento não é uma lista não vazia, ou o segundo não é um número inteiro positivo
     # ou existe uma palavra maior que o tamanho pretendido
@@ -110,6 +116,10 @@ class TestPublicJustificarTextos:
     def test_justifica_texto_raise_errors5(self):
         with pytest.raises(ValueError, match='justifica_texto: argumentos invalidos'):
             target.justifica_texto('Otorrinolaringologista', 10)
+            
+    def test_justifica_texto_raise_error6(self):
+        with pytest.raises(ValueError, match='justifica_texto: argumentos invalidos'):
+            target.justifica_texto('123456 123', 4)
 
 
 
