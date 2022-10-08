@@ -272,18 +272,18 @@ class TestPublicMetodoHondt:
 
     # Verificar que o programa gera Value Error no caso de argumentos não válidos
     # LISTA DE TESTES:
-    #       -> Verificar se o argumento é do tipo DICT                                     (3)
-    #       -> Verificar se o argumento está vazio                                         (4)
-    #       -> Verificar se o dicionario dos votos está vazio                              (5)
-    #       -> Verificar os nomes das keys (VOTOS, DEPUTADOS)                              (6, 7)
-    #       -> Verificar se o valor de (DEPUTADOS, VOTOS) são do tipo correto (INT, DICT)  (8, 9)
-    #       -> Verificar se o valor de votos de cada partido é do tipo correto INT         (10)
+    #       -> Verificar se o argumento é do tipo DICT                                     (10)
+    #       -> Verificar se o argumento está vazio                                         (11)
+    #       -> Verificar se o dicionario dos votos está vazio                              (12)
+    #       -> Verificar os nomes das keys (VOTOS, DEPUTADOS)                              (13, 14)
+    #       -> Verificar se o valor de (DEPUTADOS, VOTOS) são do tipo correto (INT, DICT)  (15, 16)
+    #       -> Verificar se o valor de votos de cada partido é do tipo correto INT         (17)
     #       -> Verificar se o valor de votos for negativo e valor de deputados for 0
-    #          ou inferior                                                                 (11, 12)
-    #       -> Verificar se existir um circulo eleitoral com 0 votos totais                (13)
-    #       -> Verificar se falta a key VOTOS ou a key DEPUTADOS                           (14, 15)
+    #          ou inferior                                                                 (18, 19)
+    #       -> Verificar se existir um circulo eleitoral com 0 votos totais                (20)
+    #       -> Verificar se falta a key VOTOS ou a key DEPUTADOS                           (21, 22)
     #       -> Verificar se a key correspondente aos numeros de votos é do tipo
-    #           correto STR                                                                   (16)
+    #           correto STR                                                                (23)
 
     def test_obtem_resultado_eleicoes_raise_errors10(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
@@ -427,7 +427,7 @@ class TestPublicMetodoHondt:
     # os dicionarios de entrada das funções não devem ser alterados #
     #################################################################
 
-    def test_calcula_quocientes_alteracao_diconarios(self):
+    def test_calcula_quocientes_alteracao_dicionarios(self):
         dicionario = {'A': 12000, 'B': 7500, 'C': 5250, 'D': 3000}
         copia_dicionario = copy.deepcopy(dicionario)
 
