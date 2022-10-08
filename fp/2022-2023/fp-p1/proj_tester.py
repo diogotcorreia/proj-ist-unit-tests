@@ -22,7 +22,7 @@ target = importlib.util.module_from_spec(target_spec)
 exec(open(file_name, encoding="utf-8").read(), target.__dict__)
 
 
-class TestPublicJustificarTextos:
+class TestJustificarTextos:
 
     # Limpa_texto
     # Forma geral
@@ -117,32 +117,32 @@ class TestPublicJustificarTextos:
 
     # levantar erro se primeiro argumento não é uma lista não vazia, ou o segundo não é um número inteiro positivo
     # ou existe uma palavra maior que o tamanho pretendido
-    def test_justifica_texto_raise_errors1(self):
+    def test_justifica_texto_error1(self):
         with pytest.raises(ValueError, match='justifica_texto: argumentos invalidos'):
             target.justifica_texto('', 60)
 
-    def test_justifica_texto_raise_errors2(self):
+    def test_justifica_texto_error2(self):
         with pytest.raises(ValueError, match='justifica_texto: argumentos invalidos'):
             target.justifica_texto('Fundamentos', "Banana")
 
-    def test_justifica_texto_raise_errors3(self):
+    def test_justifica_texto_error3(self):
         with pytest.raises(ValueError, match='justifica_texto: argumentos invalidos'):
             target.justifica_texto(89, 60)
 
-    def test_justifica_texto_raise_errors4(self):
+    def test_justifica_texto_error4(self):
         with pytest.raises(ValueError, match='justifica_texto: argumentos invalidos'):
             target.justifica_texto('Texto', -10)
 
-    def test_justifica_texto_raise_errors5(self):
+    def test_justifica_texto_error5(self):
         with pytest.raises(ValueError, match='justifica_texto: argumentos invalidos'):
             target.justifica_texto('Otorrinolaringologista', 10)
 
-    def test_justifica_texto_raise_error6(self):
+    def test_justifica_texto_error6(self):
         with pytest.raises(ValueError, match='justifica_texto: argumentos invalidos'):
             target.justifica_texto('123456 123', 4)
 
 
-class TestPublicMetodoHondt:
+class TestMetodoHondt:
 
     def test_calcula_quocientes1(self):
 
@@ -203,12 +203,12 @@ class TestPublicMetodoHondt:
 
         assert ref == target.obtem_resultado_eleicoes(info)
 
-    def test_obtem_resultado_eleicoes_raise_errors1(self):
+    def test_obtem_resultado_eleicoes_error1(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {}
             target.obtem_resultado_eleicoes(info)
 
-    def test_obtem_resultado_eleicoes_raise_errors2(self):
+    def test_obtem_resultado_eleicoes_error2(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
                 'Endor':   {'deputados': 7,
@@ -217,12 +217,12 @@ class TestPublicMetodoHondt:
                             'votos': {'A': 9000, 'B': 11500, 'D': 1500, 'E': 5000}}, }
             target.obtem_resultado_eleicoes(info)
 
-    def test_obtem_resultado_eleicoes_raise_errors3(self):
+    def test_obtem_resultado_eleicoes_error3(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = 13
             target.obtem_resultado_eleicoes(info)
 
-    def test_obtem_resultado_eleicoes_raise_errors4(self):
+    def test_obtem_resultado_eleicoes_error4(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
                 'Endor':   {'deputados': 7,
@@ -231,7 +231,7 @@ class TestPublicMetodoHondt:
                             'votos': {'A': 9000, 'B': 11500, 'D': 1500, 'E': 5000}}, }
             target.obtem_resultado_eleicoes(info)
 
-    def test_obtem_resultado_eleicoes_raise_errors5(self):
+    def test_obtem_resultado_eleicoes_error5(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
                 'Endor':   {'deputados': 7,
@@ -240,12 +240,12 @@ class TestPublicMetodoHondt:
                             'votos': {'A': 9000, 'B': 11500, 'D': 1500, 'E': 5000}}, }
             target.obtem_resultado_eleicoes(info)
 
-    def test_obtem_resultado_eleicoes_raise_errors6(self):
+    def test_obtem_resultado_eleicoes_error6(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {'Endor': 15}
             target.obtem_resultado_eleicoes(info)
 
-    def test_obtem_resultado_eleicoes_raise_errors7(self):
+    def test_obtem_resultado_eleicoes_error7(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
                 'Endor':   {'deputados': "não é número inteiro",
@@ -254,7 +254,7 @@ class TestPublicMetodoHondt:
                             'votos': {'A': 9000, 'B': 11500, 'D': 1500, 'E': 5000}}, }
             target.obtem_resultado_eleicoes(info)
 
-    def test_obtem_resultado_eleicoes_raise_errors8(self):
+    def test_obtem_resultado_eleicoes_error8(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
                 'Endor':   {'deputados': 7},
@@ -262,7 +262,7 @@ class TestPublicMetodoHondt:
                             'votos': {'A': 9000, 'B': 11500, 'D': 1500, 'E': 5000}}, }
             target.obtem_resultado_eleicoes(info)
 
-    def test_obtem_resultado_eleicoes_raise_errors9(self):
+    def test_obtem_resultado_eleicoes_error9(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
                 'Endor':   {'votos': {'A': 12000, 'B': 7500, 'C': 5250, 'D': 3000}},
@@ -285,15 +285,15 @@ class TestPublicMetodoHondt:
     #       -> Verificar se a key correspondente aos numeros de votos é do tipo
     #           correto STR                                                                (23)
 
-    def test_obtem_resultado_eleicoes_raise_errors10(self):
+    def test_obtem_resultado_eleicoes_error10(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             target.obtem_resultado_eleicoes('deez nuts')
 
-    def test_obtem_resultado_eleicoes_raise_errors11(self):
+    def test_obtem_resultado_eleicoes_error11(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             target.obtem_resultado_eleicoes({})
 
-    def test_obtem_resultado_eleicoes_raise_errors12(self):
+    def test_obtem_resultado_eleicoes_error12(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
                 'Endor':   {'deputados': 7,
@@ -304,7 +304,7 @@ class TestPublicMetodoHondt:
                              'votos': {'A': 3000, 'B': 1900}}}
             target.obtem_resultado_eleicoes(info)
 
-    def test_obtem_resultado_eleicoes_raise_errors13(self):
+    def test_obtem_resultado_eleicoes_error13(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
                 'Endor':   {'deputados': 7,
@@ -315,7 +315,7 @@ class TestPublicMetodoHondt:
                              'xxx': {'A': 3000, 'B': 1900}}}
             target.obtem_resultado_eleicoes(info)
 
-    def test_obtem_resultado_eleicoes_raise_errors14(self):
+    def test_obtem_resultado_eleicoes_error14(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
                 'Endor':   {'deputados': 7,
@@ -326,7 +326,7 @@ class TestPublicMetodoHondt:
                              'votos': {'A': 3000, 'B': 1900}}}
             target.obtem_resultado_eleicoes(info)
 
-    def test_obtem_resultado_eleicoes_raise_errors15(self):
+    def test_obtem_resultado_eleicoes_error15(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
                 'Endor':   {'deputados': 7,
@@ -337,7 +337,7 @@ class TestPublicMetodoHondt:
                              'votos': {'A': 3000, 'B': 1900}}}
             target.obtem_resultado_eleicoes(info)
 
-    def test_obtem_resultado_eleicoes_raise_errors16(self):
+    def test_obtem_resultado_eleicoes_error16(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
                 'Endor':   {'deputados': 7,
@@ -348,7 +348,7 @@ class TestPublicMetodoHondt:
                              'votos': {'A': 3000, 'B': 1900}}}
             target.obtem_resultado_eleicoes(info)
 
-    def test_obtem_resultado_eleicoes_raise_errors17(self):
+    def test_obtem_resultado_eleicoes_error17(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
                 'Endor':   {'deputados': 7,
@@ -359,7 +359,7 @@ class TestPublicMetodoHondt:
                              'votos': {'A': 3000, 'B': 1900}}}
             target.obtem_resultado_eleicoes(info)
 
-    def test_obtem_resultado_eleicoes_raise_errors18(self):
+    def test_obtem_resultado_eleicoes_error18(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
                 'Endor':   {'deputados': 7,
@@ -370,7 +370,7 @@ class TestPublicMetodoHondt:
                              'votos': {'A': -69, 'B': 1900}}}
             target.obtem_resultado_eleicoes(info)
 
-    def test_obtem_resultado_eleicoes_raise_errors19(self):
+    def test_obtem_resultado_eleicoes_error19(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
                 'Endor':   {'deputados': 0,
@@ -381,7 +381,7 @@ class TestPublicMetodoHondt:
                              'votos': {'A': 3000, 'B': 1900}}}
             target.obtem_resultado_eleicoes(info)
 
-    def test_obtem_resultado_eleicoes_raise_errors20(self):
+    def test_obtem_resultado_eleicoes_error20(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
                 'Endor':   {'deputados': 7,
@@ -392,7 +392,7 @@ class TestPublicMetodoHondt:
                              'votos': {'A': 3000, 'B': 1900}}}
             target.obtem_resultado_eleicoes(info)
 
-    def test_obtem_resultado_eleicoes_raise_errors21(self):
+    def test_obtem_resultado_eleicoes_error21(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
                 'Endor':   {'deputados': 7},
@@ -402,7 +402,7 @@ class TestPublicMetodoHondt:
                              'votos': {'A': 3000, 'B': 1900}}}
             target.obtem_resultado_eleicoes(info)
 
-    def test_obtem_resultado_eleicoes_raise_errors22(self):
+    def test_obtem_resultado_eleicoes_error22(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
                 'Endor':   {'votos': {'A': 12000, 'B': 7500, 'C': 5250, 'D': 3000}},
@@ -412,7 +412,7 @@ class TestPublicMetodoHondt:
                              'votos': {'A': 3000, 'B': 1900}}}
             target.obtem_resultado_eleicoes(info)
 
-    def test_obtem_resultado_eleicoes_raise_errors23(self):
+    def test_obtem_resultado_eleicoes_error23(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {
                 'Endor':   {'deputados': 7,
@@ -470,7 +470,7 @@ class TestPublicMetodoHondt:
 
 
 
-class TestPublicSistemasLineares:
+class TestSistemasLineares:
 
     def test_produto_interno1(self):
         assert target.produto_interno(
