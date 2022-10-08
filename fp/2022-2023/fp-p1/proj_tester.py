@@ -270,7 +270,7 @@ class TestMetodoHondt:
                             'votos': {'A': 9000, 'B': 11500, 'D': 1500, 'E': 5000}}, }
             target.obtem_resultado_eleicoes(info)
 
-    # Verificar que o programa gera Value Error no caso de argumentos não válidos
+    # Verificar que o programa gera Value Error no caso de argumentos não válidos com a mensagem correta
     # LISTA DE TESTES:
     #       -> Verificar se o argumento é do tipo DICT                                     (10)
     #       -> Verificar se o argumento está vazio                                         (11)
@@ -506,6 +506,47 @@ class TestSistemasLineares:
 
         assert equal(target.resolve_sistema(A4, c4, 1e-20), ref)
 
+
+    # Verificar que o programa gera Value Error no caso de argumentos não válidos com a mensagem correta
+    # LISTA DE TESTES:
+    #       -> Verificar se os argumentos são respetivamente:
+    #               1 -> Matriz
+    #                   a) -> é do tipo tuplo                                           (1, 2)
+    #                   b) -> todos os elementos são tuplos                             (3, 4)
+    #                   c) -> todos os elementos dos elementos são ints ou floats       (5)
+    #                   d) -> todos os elementos têm o mesmo tamanho
+    #                   e) -> é quadrada
+    #                   f) -> é não vazia
+    #               2 -> Constante
+    #                   a) -> é do tipo tuplo
+    #                   b) -> todos os elementos são ints ou floats
+    #                   c) -> tem o mesmo número de linhas que a matriz
+    #                   d) -> é não vazia
+    #               3 -> Precisão
+    #                   a) -> é do tipo int ou float
+    #                   b) -> é maior que 0
+    #
+    #       -> A diagonal é dominante
+
+    def test_resolve_sistema_error1(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(18, (-8, 8, -6), 1e-20)
+
+    def test_resolve_sistema_error2(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema("O panda é fixe!", (-8, 8, -6), 1e-20)
+    
+    def test_resolve_sistema_error3(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1), (2, -9, 7), 456), (-8, 8, -6), 1e-20)
+
+    def test_resolve_sistema_error4(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1), (2, -9, 7), "456"), (-8, 8, -6), 1e-20)
+
+    def test_resolve_sistema_error5(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1), (2, -9, 7), ("15", 5, -9)), (-8, 8, -6), 1e-20)
 
 #######################################################
 # Logic to handle updates automatically. DO NOT TOUCH #
