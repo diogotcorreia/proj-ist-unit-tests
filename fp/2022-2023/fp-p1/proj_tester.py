@@ -506,7 +506,7 @@ class TestSistemasLineares:
 
         assert equal(target.resolve_sistema(A4, c4, 1e-20), ref)
 
-    def test_resolve_sistema1(self):
+    def test_resolve_sistema2(self):
         def equal(x, y):
             delta = 1e-10
             return all(abs(x[i]-y[i]) < delta for i in range(len(x)))
