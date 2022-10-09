@@ -270,7 +270,7 @@ class TestMetodoHondt:
                             'votos': {'A': 9000, 'B': 11500, 'D': 1500, 'E': 5000}}, }
             target.obtem_resultado_eleicoes(info)
 
-    # Verificar que o programa gera Value Error no caso de argumentos não válidos
+    # Verificar que o programa gera Value Error no caso de argumentos não válidos com a mensagem correta
     # LISTA DE TESTES:
     #       -> Verificar se o argumento é do tipo DICT                                     (10)
     #       -> Verificar se o argumento está vazio                                         (11)
@@ -506,6 +506,117 @@ class TestSistemasLineares:
 
         assert equal(target.resolve_sistema(A4, c4, 1e-20), ref)
 
+    def test_resolve_sistema2(self):
+        def equal(x, y):
+            delta = 1e-10
+            return all(abs(x[i]-y[i]) < delta for i in range(len(x)))
+
+        A4, c4 = ((2.0, -1.0, -1.0), (2.0, -9.0, 7.0), (-2.0, 5.0, -9.0)), (-8.0, 8.0, -6.0)
+        ref = (-4.0, -1.0, 1.0)
+
+        assert equal(target.resolve_sistema(A4, c4, 1e-20), ref)
+
+
+    # Verificar que o programa gera Value Error no caso de argumentos não válidos com a mensagem correta
+    # LISTA DE TESTES:
+    #       -> Verificar se os argumentos são respetivamente:
+    #               1 -> Matriz
+    #                   a) -> é do tipo tuplo                                           (1, 2)
+    #                   b) -> todos os elementos são tuplos                             (3, 4)
+    #                   c) -> todos os elementos dos elementos são ints ou floats       (5)
+    #                   d) -> todos os elementos têm o mesmo tamanho                    (6)
+    #                   e) -> é quadrada                                                (7, 8)
+    #                   f) -> é não vazia                                               (9)
+    #               2 -> Constante
+    #                   a) -> é do tipo tuplo                                           (10, 11)
+    #                   b) -> todos os elementos são ints ou floats                     (12)
+    #                   c) -> tem o mesmo número de linhas que a matriz                 (13, 14)
+    #                   d) -> é não vazia                                               (15)
+    #               3 -> Precisão
+    #                   a) -> é do tipo int ou float                                    (16, 17)
+    #                   b) -> é maior que 0                                             (18, 19)
+    #
+    #       -> A diagonal é dominante                                                   (20)
+
+    def test_resolve_sistema_error1(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(18, (-8, 8, -6), 1e-20)
+
+    def test_resolve_sistema_error2(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema("O panda é fixe!", (-8, 8, -6), 1e-20)
+    
+    def test_resolve_sistema_error3(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1), (2, -9, 7), 456), (-8, 8, -6), 1e-20)
+
+    def test_resolve_sistema_error4(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1), (2, -9, 7), "456"), (-8, 8, -6), 1e-20)
+
+    def test_resolve_sistema_error5(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1), (2, -9, 7), ("15", 5, -9)), (-8, 8, -6), 1e-20)
+
+    def test_resolve_sistema_error6(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1), (2, -9), (2, 5, -9)), (-8, 8, -6), 1e-20)
+
+    def test_resolve_sistema_error7(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1, 0), (2, -9, 7, 0), (2, 5, -9, 0)), (-8, 8, -6), 1e-20)
+
+    def test_resolve_sistema_error8(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1, 0), (2, -9, 7, 0), (2, 5, -9, 0)), (-8, 8, -6, 2), 1e-20)
+
+    def test_resolve_sistema_error9(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema((), (-8, 8, -6), 1e-20)
+
+    def test_resolve_sistema_error10(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1), (2, -9, 7), (2, 5, -9)), 15, 1e-20)
+
+    def test_resolve_sistema_error11(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1), (2, -9, 7), (2, 5, -9)), "Str", 1e-20)
+
+    def test_resolve_sistema_error12(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1), (2, -9, 7), (2, 5, -9)), (-8, "8", -6), 1e-20)
+
+    def test_resolve_sistema_error13(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1), (2, -9, 7), (2, 5, -9)), (-8, 8), 1e-20)
+
+    def test_resolve_sistema_error14(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1), (2, -9, 7), (2, 5, -9)), (-8, 8, -6, 9), 1e-20)
+
+    def test_resolve_sistema_error15(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1), (2, -9, 7), (2, 5, -9)), (), 1e-20)
+
+    def test_resolve_sistema_error16(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1), (2, -9, 7), (2, 5, -9)), (-8, 8, -6), "2")
+
+    def test_resolve_sistema_error17(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1), (2, -9, 7), (2, 5, -9)), (-8, 8, -6), None)
+
+    def test_resolve_sistema_error18(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1), (2, -9, 7), (2, 5, -9)), (-8, 8, -6), 0)
+
+    def test_resolve_sistema_error19(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1), (2, -9, 7), (2, 5, -9)), (-8, 8, -6), -1e-20)
+
+    def test_resolve_sistema_error20(self):
+        with pytest.raises(ValueError, match='resolve_sistema: matriz nao diagonal dominante'):
+            target.resolve_sistema(((0, 0, 0), (0, 0, 0), (0, -1, 0)), (-8, 8, -6), 1e-20)
 
 #######################################################
 # Logic to handle updates automatically. DO NOT TOUCH #
