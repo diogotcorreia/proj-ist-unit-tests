@@ -423,6 +423,30 @@ class TestMetodoHondt:
                              'votos': {'A': 3000, 'B': 1900}}}
             target.obtem_resultado_eleicoes(info)
 
+    # Ver se existe algum numero de deputados que não seja inteiro
+    def test_obtem_resultado_eleicoes_error24(self):
+        with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
+            info = {
+                'Endor':   {'deputados': 7,
+                            'votos': {'A': 12000, 'B': 7500, 'C': 5250, 'D': 3000}},
+                'Hoth':    {'deputados': 4.5,
+                            'votos': {"A": 9000, 'B': 11500, 'D': 1500, 'E': 5000}},
+                'Tatooine': {'deputados': 3,
+                             'votos': {'A': 3000, 'B': 1900}}}
+            target.obtem_resultado_eleicoes(info)
+
+    # Ver se existe algum numero de votos que não seja inteiro
+    def test_obtem_resultado_eleicoes_error25(self):
+        with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
+            info = {
+                'Endor':   {'deputados': 7,
+                            'votos': {'A': 12000, 'B': 7500, 'C': 5250, 'D': 3000}},
+                'Hoth':    {'deputados': 6,
+                            'votos': {"A": 9000.4, 'B': 11500, 'D': 1500, 'E': 5000}},
+                'Tatooine': {'deputados': 3,
+                             'votos': {'A': 3000, 'B': 1900}}}
+            target.obtem_resultado_eleicoes(info)
+
     #################################################################
     # os dicionarios de entrada das funções não devem ser alterados #
     #################################################################
@@ -545,7 +569,7 @@ class TestSistemasLineares:
     def test_resolve_sistema_error2(self):
         with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
             target.resolve_sistema("O panda é fixe!", (-8, 8, -6), 1e-20)
-    
+
     def test_resolve_sistema_error3(self):
         with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
             target.resolve_sistema(((2, -1, -1), (2, -9, 7), 456), (-8, 8, -6), 1e-20)
