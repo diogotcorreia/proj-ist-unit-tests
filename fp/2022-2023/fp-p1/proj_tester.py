@@ -203,6 +203,31 @@ class TestMetodoHondt:
 
         assert ref == target.obtem_resultado_eleicoes(info)
 
+    def test_obtem_resultado_eleicoes3(self):
+        ref = [('bb', 2, 175000), ('BB', 2, 120000), ('D', 1, 93000), ('C', 0, 45000)] 
+        info = {'Tatooine': {'deputados': 5, 'votos': {'BB': 120000, 'bb': 175000, 'C': 45000, 'D': 93000}}}
+        assert ref == target.obtem_resultado_eleicoes(info)
+
+    def test_obtem_resultados_eleicoes4(self):
+        ref = [('PS', 21, 482606), ('PSD', 13, 285522), ('IL', 4, 93341), ('CH', 4, 91889), ('PCP', 2, 59995), ('BE', 2, 55786), ('L', 1, 28834), ('PAN', 1, 23577), ('CDS', 0, 19524)] 
+        info = {'Lisboa': {'deputados': 48, 'votos': {'PS': 482606, 'PSD': 285522, 'IL': 93341, 'CH': 91889, 'PCP': 59995, 'BE': 55786, 'L': 28834, 'PAN': 23577, 'CDS': 19524}}} 
+        assert ref == target.obtem_resultado_eleicoes(info)
+
+    def test_obtem_resultados_eleicoes5(self):
+        ref = [('PS', 19, 418869), ('PSD', 14, 318343), ('IL', 2, 50359), ('BE', 2, 47118), ('CH', 2, 42998), ('PCP', 1, 32277), ('PAN', 0, 16707), ('CDS', 0, 14347), ('L', 0, 11433)] 
+        info = {'Porto': {'deputados': 40, 'votos': {'PS': 418869, 'PSD': 318343, 'IL': 50359, 'BE': 47118, 'CH': 42998, 'PCP': 32277, 'PAN': 16707, 'CDS': 14347, 'L': 11433}}} 
+        assert ref == target.obtem_resultado_eleicoes(info)
+
+    def test_obtem_resultados_eleicoes6(self):
+        ref = [('PS', 5, 89870), ('PSD', 3, 58630), ('CH', 1, 23813), ('PCP', 0, 11854), ('BE', 0, 10012)] 
+        info = {'Santarem': {'deputados': 9, 'votos': {'PS': 89870, 'PSD': 58630, 'CH': 23813, 'PCP': 11854, 'BE': 10012}}} 
+        assert ref == target.obtem_resultado_eleicoes(info)
+
+    def test_obtem_resultados_eleicoes7(self):
+        ref = [('PS', 45, 991345), ('PSD', 30, 662495), ('CH', 7, 158700), ('IL', 6, 143700), ('BE', 4, 112916), ('PCP', 3, 104126), ('PAN', 1, 40284), ('L', 1, 40267), ('CDS', 0, 33871)] 
+        info = {'Lisboa': {'deputados': 48, 'votos': {'PS': 482606, 'PSD': 285522, 'IL': 93341, 'CH': 91889, 'PCP': 59995, 'BE': 55786, 'L': 28834, 'PAN': 23577, 'CDS': 19524}}, 'Santarem': {'deputados': 9, 'votos': {'PS': 89870, 'PSD': 58630, 'CH': 23813, 'PCP': 11854, 'BE': 10012}}, 'Porto': {'deputados': 40, 'votos': {'PS': 418869, 'PSD': 318343, 'IL': 50359, 'BE': 47118, 'CH': 42998, 'PCP': 32277, 'PAN': 16707, 'CDS': 14347, 'L': 11433}}} 
+        assert ref == target.obtem_resultado_eleicoes(info)
+
     def test_obtem_resultado_eleicoes_error1(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {}
