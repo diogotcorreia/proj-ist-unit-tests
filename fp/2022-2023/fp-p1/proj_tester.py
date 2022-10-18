@@ -59,6 +59,10 @@ class TestJustificarTextos:
     def test_corta_texto2(self):
         assert ('Fundamentos', 'da Programacao') == target.corta_texto(
             'Fundamentos da Programacao', 13)
+        
+    # Verifica o texto no caso de ter uma palavra da segunda cadeia que ainda cabe na primeira
+    def test_corta_texto3(self):
+        assert ('Computers are incredibly fast, accurate and stupid. Human beings are incredibly slow', 'inaccurate, and brilliant. Together they are powerful beyond imagination.') == target.corta_texto("Computers are incredibly fast, accurate and stupid. Human beings are incredibly slow inaccurate, and brilliant. Together they are powerful beyond imagination.", 95)
 
     # Verifica se o utilizador consegue inserir espaços de forma uniforme
     def test_insere_espacos1(self):
