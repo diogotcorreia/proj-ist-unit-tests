@@ -529,6 +529,10 @@ class TestSistemasLineares:
         assert target.produto_interno(
             (1, 2, 3, 4, 5), (-4, 5, -6, 7, -8)) == -24.0
 
+    def test_produto_interno_type(self):
+        assert isinstance(target.produto_interno(
+            (1, 2, 3, 4, 5), (-4, 5, -6, 7, -8)), float)
+            
     def test_verifica_convergencia1(self):
         assert target.verifica_convergencia(
             ((1, -0.5), (-1, 2)), (-0.4, 1.9), (0.1001, 1), 0.00001) == False
