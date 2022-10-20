@@ -59,6 +59,10 @@ class TestJustificarTextos:
     def test_corta_texto2(self):
         assert ('Fundamentos', 'da Programacao') == target.corta_texto(
             'Fundamentos da Programacao', 13)
+        
+    # Verifica o texto no caso de ter uma palavra da segunda cadeia que ainda cabe na primeira
+    def test_corta_texto3(self):
+        assert ('Computers are incredibly fast, accurate and stupid. Human beings are incredibly slow', 'inaccurate, and brilliant. Together they are powerful beyond imagination.') == target.corta_texto("Computers are incredibly fast, accurate and stupid. Human beings are incredibly slow inaccurate, and brilliant. Together they are powerful beyond imagination.", 95)
 
     # Verifica se o utilizador consegue inserir espaços de forma uniforme
     def test_insere_espacos1(self):
@@ -203,6 +207,31 @@ class TestMetodoHondt:
 
         assert ref == target.obtem_resultado_eleicoes(info)
 
+    def test_obtem_resultado_eleicoes3(self):
+        ref = [('bb', 2, 175000), ('BB', 2, 120000), ('D', 1, 93000), ('C', 0, 45000)] 
+        info = {'Tatooine': {'deputados': 5, 'votos': {'BB': 120000, 'bb': 175000, 'C': 45000, 'D': 93000}}}
+        assert ref == target.obtem_resultado_eleicoes(info)
+
+    def test_obtem_resultados_eleicoes4(self):
+        ref = [('PS', 21, 482606), ('PSD', 13, 285522), ('IL', 4, 93341), ('CH', 4, 91889), ('PCP', 2, 59995), ('BE', 2, 55786), ('L', 1, 28834), ('PAN', 1, 23577), ('CDS', 0, 19524)] 
+        info = {'Lisboa': {'deputados': 48, 'votos': {'PS': 482606, 'PSD': 285522, 'IL': 93341, 'CH': 91889, 'PCP': 59995, 'BE': 55786, 'L': 28834, 'PAN': 23577, 'CDS': 19524}}} 
+        assert ref == target.obtem_resultado_eleicoes(info)
+
+    def test_obtem_resultados_eleicoes5(self):
+        ref = [('PS', 19, 418869), ('PSD', 14, 318343), ('IL', 2, 50359), ('BE', 2, 47118), ('CH', 2, 42998), ('PCP', 1, 32277), ('PAN', 0, 16707), ('CDS', 0, 14347), ('L', 0, 11433)] 
+        info = {'Porto': {'deputados': 40, 'votos': {'PS': 418869, 'PSD': 318343, 'IL': 50359, 'BE': 47118, 'CH': 42998, 'PCP': 32277, 'PAN': 16707, 'CDS': 14347, 'L': 11433}}} 
+        assert ref == target.obtem_resultado_eleicoes(info)
+
+    def test_obtem_resultados_eleicoes6(self):
+        ref = [('PS', 5, 89870), ('PSD', 3, 58630), ('CH', 1, 23813), ('PCP', 0, 11854), ('BE', 0, 10012)] 
+        info = {'Santarem': {'deputados': 9, 'votos': {'PS': 89870, 'PSD': 58630, 'CH': 23813, 'PCP': 11854, 'BE': 10012}}} 
+        assert ref == target.obtem_resultado_eleicoes(info)
+
+    def test_obtem_resultados_eleicoes7(self):
+        ref = [('PS', 45, 991345), ('PSD', 30, 662495), ('CH', 7, 158700), ('IL', 6, 143700), ('BE', 4, 112916), ('PCP', 3, 104126), ('PAN', 1, 40284), ('L', 1, 40267), ('CDS', 0, 33871)] 
+        info = {'Lisboa': {'deputados': 48, 'votos': {'PS': 482606, 'PSD': 285522, 'IL': 93341, 'CH': 91889, 'PCP': 59995, 'BE': 55786, 'L': 28834, 'PAN': 23577, 'CDS': 19524}}, 'Santarem': {'deputados': 9, 'votos': {'PS': 89870, 'PSD': 58630, 'CH': 23813, 'PCP': 11854, 'BE': 10012}}, 'Porto': {'deputados': 40, 'votos': {'PS': 418869, 'PSD': 318343, 'IL': 50359, 'BE': 47118, 'CH': 42998, 'PCP': 32277, 'PAN': 16707, 'CDS': 14347, 'L': 11433}}} 
+        assert ref == target.obtem_resultado_eleicoes(info)
+
     def test_obtem_resultado_eleicoes_error1(self):
         with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
             info = {}
@@ -270,7 +299,7 @@ class TestMetodoHondt:
                             'votos': {'A': 9000, 'B': 11500, 'D': 1500, 'E': 5000}}, }
             target.obtem_resultado_eleicoes(info)
 
-    # Verificar que o programa gera Value Error no caso de argumentos não válidos
+    # Verificar que o programa gera Value Error no caso de argumentos não válidos com a mensagem correta
     # LISTA DE TESTES:
     #       -> Verificar se o argumento é do tipo DICT                                     (10)
     #       -> Verificar se o argumento está vazio                                         (11)
@@ -423,6 +452,30 @@ class TestMetodoHondt:
                              'votos': {'A': 3000, 'B': 1900}}}
             target.obtem_resultado_eleicoes(info)
 
+    # Ver se existe algum numero de deputados que não seja inteiro
+    def test_obtem_resultado_eleicoes_error24(self):
+        with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
+            info = {
+                'Endor':   {'deputados': 7,
+                            'votos': {'A': 12000, 'B': 7500, 'C': 5250, 'D': 3000}},
+                'Hoth':    {'deputados': 4.5,
+                            'votos': {"A": 9000, 'B': 11500, 'D': 1500, 'E': 5000}},
+                'Tatooine': {'deputados': 3,
+                             'votos': {'A': 3000, 'B': 1900}}}
+            target.obtem_resultado_eleicoes(info)
+
+    # Ver se existe algum numero de votos que não seja inteiro
+    def test_obtem_resultado_eleicoes_error25(self):
+        with pytest.raises(ValueError, match='obtem_resultado_eleicoes: argumento invalido'):
+            info = {
+                'Endor':   {'deputados': 7,
+                            'votos': {'A': 12000, 'B': 7500, 'C': 5250, 'D': 3000}},
+                'Hoth':    {'deputados': 6,
+                            'votos': {"A": 9000.4, 'B': 11500, 'D': 1500, 'E': 5000}},
+                'Tatooine': {'deputados': 3,
+                             'votos': {'A': 3000, 'B': 1900}}}
+            target.obtem_resultado_eleicoes(info)
+
     #################################################################
     # os dicionarios de entrada das funções não devem ser alterados #
     #################################################################
@@ -510,6 +563,117 @@ class TestSistemasLineares:
 
         assert equal(target.resolve_sistema(A4, c4, 1e-20), ref)
 
+    def test_resolve_sistema2(self):
+        def equal(x, y):
+            delta = 1e-10
+            return all(abs(x[i]-y[i]) < delta for i in range(len(x)))
+
+        A4, c4 = ((2.0, -1.0, -1.0), (2.0, -9.0, 7.0), (-2.0, 5.0, -9.0)), (-8.0, 8.0, -6.0)
+        ref = (-4.0, -1.0, 1.0)
+
+        assert equal(target.resolve_sistema(A4, c4, 1e-20), ref)
+
+
+    # Verificar que o programa gera Value Error no caso de argumentos não válidos com a mensagem correta
+    # LISTA DE TESTES:
+    #       -> Verificar se os argumentos são respetivamente:
+    #               1 -> Matriz
+    #                   a) -> é do tipo tuplo                                           (1, 2)
+    #                   b) -> todos os elementos são tuplos                             (3, 4)
+    #                   c) -> todos os elementos dos elementos são ints ou floats       (5)
+    #                   d) -> todos os elementos têm o mesmo tamanho                    (6)
+    #                   e) -> é quadrada                                                (7, 8)
+    #                   f) -> é não vazia                                               (9)
+    #               2 -> Constante
+    #                   a) -> é do tipo tuplo                                           (10, 11)
+    #                   b) -> todos os elementos são ints ou floats                     (12)
+    #                   c) -> tem o mesmo número de linhas que a matriz                 (13, 14)
+    #                   d) -> é não vazia                                               (15)
+    #               3 -> Precisão
+    #                   a) -> é do tipo int ou float                                    (16, 17)
+    #                   b) -> é maior que 0                                             (18, 19)
+    #
+    #       -> A diagonal é dominante                                                   (20)
+
+    def test_resolve_sistema_error1(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(18, (-8, 8, -6), 1e-20)
+
+    def test_resolve_sistema_error2(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema("O panda é fixe!", (-8, 8, -6), 1e-20)
+
+    def test_resolve_sistema_error3(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1), (2, -9, 7), 456), (-8, 8, -6), 1e-20)
+
+    def test_resolve_sistema_error4(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1), (2, -9, 7), "456"), (-8, 8, -6), 1e-20)
+
+    def test_resolve_sistema_error5(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1), (2, -9, 7), ("15", 5, -9)), (-8, 8, -6), 1e-20)
+
+    def test_resolve_sistema_error6(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1), (2, -9), (2, 5, -9)), (-8, 8, -6), 1e-20)
+
+    def test_resolve_sistema_error7(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1, 0), (2, -9, 7, 0), (2, 5, -9, 0)), (-8, 8, -6), 1e-20)
+
+    def test_resolve_sistema_error8(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1, 0), (2, -9, 7, 0), (2, 5, -9, 0)), (-8, 8, -6, 2), 1e-20)
+
+    def test_resolve_sistema_error9(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema((), (-8, 8, -6), 1e-20)
+
+    def test_resolve_sistema_error10(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1), (2, -9, 7), (2, 5, -9)), 15, 1e-20)
+
+    def test_resolve_sistema_error11(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1), (2, -9, 7), (2, 5, -9)), "Str", 1e-20)
+
+    def test_resolve_sistema_error12(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1), (2, -9, 7), (2, 5, -9)), (-8, "8", -6), 1e-20)
+
+    def test_resolve_sistema_error13(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1), (2, -9, 7), (2, 5, -9)), (-8, 8), 1e-20)
+
+    def test_resolve_sistema_error14(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1), (2, -9, 7), (2, 5, -9)), (-8, 8, -6, 9), 1e-20)
+
+    def test_resolve_sistema_error15(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1), (2, -9, 7), (2, 5, -9)), (), 1e-20)
+
+    def test_resolve_sistema_error16(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1), (2, -9, 7), (2, 5, -9)), (-8, 8, -6), "2")
+
+    def test_resolve_sistema_error17(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1), (2, -9, 7), (2, 5, -9)), (-8, 8, -6), None)
+
+    def test_resolve_sistema_error18(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1), (2, -9, 7), (2, 5, -9)), (-8, 8, -6), 0)
+
+    def test_resolve_sistema_error19(self):
+        with pytest.raises(ValueError, match='resolve_sistema: argumentos invalidos'):
+            target.resolve_sistema(((2, -1, -1), (2, -9, 7), (2, 5, -9)), (-8, 8, -6), -1e-20)
+
+    def test_resolve_sistema_error20(self):
+        with pytest.raises(ValueError, match='resolve_sistema: matriz nao diagonal dominante'):
+            target.resolve_sistema(((0, 0, 0), (0, 0, 0), (0, -1, 0)), (-8, 8, -6), 1e-20)
 
 #######################################################
 # Logic to handle updates automatically. DO NOT TOUCH #
