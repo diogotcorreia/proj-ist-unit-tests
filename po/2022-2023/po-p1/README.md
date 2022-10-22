@@ -7,7 +7,7 @@ This folder contains tests for the 1st (and only) project (Terminals Network) fo
 To use this to test your own project, here are the requisites you must meet:
 
 - Be running a Unix system (Linux or MacOS). This should also work on a VM and WSL.
-- Have built the `gcc-app.jar`, `ggc-core.jar` and `po-uilib.jar` jars.
+- Have built the `prr-app.jar`, `prr-core.jar` and `po-uilib.jar` jars.
 - Have `git`, `java` (>= 14.0.0) and `make` installed on your system (probably already installed).
 
 ### Clone this repository
@@ -36,7 +36,7 @@ nano config # edit the file as you'd like. You can use another editor, like 'vim
 The `CLASSPATH` must be set to your JARs. For example:
 
 ```
-PROJECT_CLASSPATH=/home/diogo/Documents/ist/po/project/po-uilib/po-uilib.jar:/home/diogo/Documents/ist/po/project/ggc-app/ggc-app.jar:/home/diogo/Documents/ist/po/project/ggc-core/ggc-core.jar
+PROJECT_CLASSPATH=/home/diogo/Documents/ist/po/project/po-uilib/po-uilib.jar:/home/diogo/Documents/ist/po/project/prr-app/prr-app.jar:/home/diogo/Documents/ist/po/project/prr-core/prr-core.jar
 ```
 
 #### Run the tests
@@ -100,7 +100,7 @@ jobs:
           path: 'tests'
       - name: Configure tests
         working-directory: tests/po/2022-2023/po-p1
-        run: echo "PROJECT_CLASSPATH=$(cd $GITHUB_WORKSPACE/project && echo "$(pwd)/po-uilib/po-uilib.jar:$(pwd)/ggc-app/ggc-app.jar:$(pwd)/ggc-core/ggc-core.jar")" > config
+        run: echo "PROJECT_CLASSPATH=$(cd $GITHUB_WORKSPACE/project && echo "$(pwd)/po-uilib/po-uilib.jar:$(pwd)/prr-app/prr-app.jar:$(pwd)/prr-core/prr-core.jar")" > config
       - name: Run tests
         working-directory: tests/po/2022-2023/po-p1
         run: make
@@ -114,16 +114,16 @@ You can also change the CLASSPATH if appropriate.
 An example `Makefile` for the whole repository would be:
 
 ```make
-GGC_CORE_PATH=./ggc-core
-GGC_APP_PATH=./ggc-app
-CLASSPATH=$(shell pwd)/po-uilib/po-uilib.jar:$(shell pwd)/ggc-app/ggc-app.jar:$(shell pwd)/ggc-core/ggc-core.jar
+PRR_CORE_PATH=./prr-core
+PRR_APP_PATH=./prr-app
+CLASSPATH=$(shell pwd)/po-uilib/po-uilib.jar:$(shell pwd)/prr-app/prr-app.jar:$(shell pwd)/prr-core/prr-core.jar
 
 all: compile
-	CLASSPATH=$(CLASSPATH) java ggc.app.App
+	CLASSPATH=$(CLASSPATH) java prr.app.App
 compile::
-	$(MAKE) $(MFLAGS) -C $(GGC_CORE_PATH)
-	$(MAKE) $(MFLAGS) -C $(GGC_APP_PATH)
+	$(MAKE) $(MFLAGS) -C $(PRR_CORE_PATH)
+	$(MAKE) $(MFLAGS) -C $(PRR_APP_PATH)
 clean:
-	$(MAKE) $(MFLAGS) -C $(GGC_CORE_PATH) clean
-	$(MAKE) $(MFLAGS) -C $(GGC_APP_PATH) clean
+	$(MAKE) $(MFLAGS) -C $(PRR_CORE_PATH) clean
+	$(MAKE) $(MFLAGS) -C $(PRR_APP_PATH) clean
 ```
