@@ -119,6 +119,25 @@ class TestJustificarTextos:
         ref = ('123456', '123   ')
         assert ref == target.justifica_texto(cad, 6)
 
+    # Verifica se o utilizador formata o texto garantindo a manutenção da integridade das palavras
+    # mesmo que estas terminem adjacentes ao limite da coluna
+    def test_justifica_texto4(self):
+        cad = ('Ipsum dolore consectetur sed dolorem. Dolor sed eius consectetur consectetur dolore modi consectetur. Voluptatem sit velit amet dolor neque est. Quiquia porro tempora sed dolore adipisci dolore. Velit dolore numquam dolore dolor labore.')
+        ref = ('Ipsum         dolore', 'consectetur      sed', 'dolorem.  Dolor  sed', 'eius     consectetur',
+               'consectetur   dolore', 'modi    consectetur.', 'Voluptatem sit velit', 'amet   dolor   neque',
+               'est.  Quiquia  porro', 'tempora  sed  dolore', 'adipisci     dolore.', 'Velit dolore numquam', 
+               'dolore dolor labore.')
+        assert ref == target.justifica_texto(cad, 20)
+
+    def test_justifica_texto5(self):
+        cad = ('Ipsum dolore consectetur sed dolorem. Dolor sed eius consectetur consectetur dolore modi consectetur. Voluptatem sit velit amet dolor neque est. Quiquia porro tempora sed dolore adipisci dolore. Velit dolore numquam dolore dolor labore.')
+        ref = ('Ipsum    dolore', 'consectetur sed', 'dolorem.  Dolor', 'sed        eius', 'consectetur    ',
+               'consectetur    ', 'dolore     modi', 'consectetur.   ', 'Voluptatem  sit', 'velit      amet',
+               'dolor     neque', 'est.    Quiquia', 'porro   tempora', 'sed      dolore', 'adipisci       ',
+               'dolore.   Velit', 'dolore  numquam', 'dolore    dolor', 'labore.        ')
+        assert ref == target.justifica_texto(cad, 15)
+
+
     # levantar erro se primeiro argumento não é uma lista não vazia, ou o segundo não é um número inteiro positivo
     # ou existe uma palavra maior que o tamanho pretendido
     def test_justifica_texto_error1(self):
