@@ -6,14 +6,4 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-colored = "2.0"
 pretty_assertions = "1.3"
-structopt = "0.3"
-
-#[[bin]]
-#name = "server"
-#path = "src/server/server.rs"
-
-#[[bin]]
-#name = "client"
-#path = "src/client.rs"
