@@ -37,20 +37,12 @@ impl PlayerWrapper {
         Ok(())
     }
 
-    pub fn assert_exited_cleanly(&mut self) {
+    pub fn assert_exited_cleanly(&mut self) -> Result<(), Error> {
         match self.0.try_wait() {
-            Ok(Some(ref code)) if !code.success() => {
-                panic!(
-                    "Player process has exited with non-zero code: {}",
-                    code.code().unwrap_or(-1)
-                );
-            }
-            Ok(Some(_)) => {}
-            Ok(None) => panic!("Player process has not exited like intended"),
-            Err(e) => panic!(
-                "Error while checking if player process exited cleanly: {}",
-                e
-            ),
+            Ok(Some(ref code)) if !code.success() => Err(Error::Exited(code.clone())),
+            Ok(Some(_)) => Ok(()),
+            Ok(None) => Err(Error::ProcessStillRunning),
+            Err(e) => Err(e.into()),
         }
     }
 }
@@ -91,17 +83,18 @@ impl ToString for PlayerCommand {
 }
 
 pub fn setup_client_test() -> (PlayerWrapper, GameServer) {
-    (open_client(), GameServer::new())
+    let server = GameServer::new();
+    (open_client(server.port), server)
 }
 
-fn open_client() -> PlayerWrapper {
+fn open_client(port: u16) -> PlayerWrapper {
     let client_executable = env::var("CLIENT_EXECUTABLE")
         .expect("You should pass a 'CLIENT_EXECUTABLE' environment variable");
     let client_executable =
         PathBuf::from_str(&client_executable).expect("CLIENT_EXECUTABLE is not a valid path");
 
     let client = Command::new(client_executable)
-        .args(["-n", "localhost", "-p", "58000"])
+        .args(["-n", "localhost", "-p", &port.to_string()])
         .stdout(Stdio::null())
         .stdin(Stdio::piped())
         .spawn()

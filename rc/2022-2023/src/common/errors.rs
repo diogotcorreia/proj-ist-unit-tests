@@ -6,6 +6,7 @@ pub enum Error {
     LengthMismatch { expected: usize, actual: usize },
     MessageMismatch { expected: Vec<u8>, actual: Vec<u8> },
     Exited(ExitStatus),
+    ProcessStillRunning,
     Other(&'static str),
 }
 
@@ -33,6 +34,7 @@ impl Debug for Error {
             Self::Exited(status) => {
                 write!(f, "Process exited with code: {:?}", status)
             }
+            Self::ProcessStillRunning => write!(f, "Process has not exited like intended"),
             Self::Other(message) => write!(f, "{message}"),
         }
     }

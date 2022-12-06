@@ -2,10 +2,12 @@ use std::fmt::Display;
 
 pub enum ServerboundMsg {
     Start { player_id: [u8; 6] },
+    Custom(String),
 }
 
 pub enum ClientboundMsg {
     Start(StartStatus),
+    Custom(String),
 }
 
 pub enum StartStatus {
@@ -17,6 +19,7 @@ impl ToString for ServerboundMsg {
     fn to_string(&self) -> String {
         match self {
             Self::Start { player_id } => format!("SNG {}\n", String::from_utf8_lossy(player_id)),
+            Self::Custom(content) => content.clone(),
         }
     }
 }
@@ -25,6 +28,7 @@ impl ToString for ClientboundMsg {
     fn to_string(&self) -> String {
         match self {
             Self::Start(status) => format!("RSG {}\n", status),
+            Self::Custom(content) => content.clone(),
         }
     }
 }

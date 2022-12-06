@@ -1,4 +1,4 @@
-use std::net::{SocketAddr, UdpSocket};
+use std::net::{Ipv4Addr, SocketAddr, SocketAddrV4, UdpSocket};
 
 use crate::common::{
     errors::Error,
@@ -7,15 +7,18 @@ use crate::common::{
 
 /// Rogue server implementation to test a well-behaving client
 pub struct GameServer {
+    pub port: u16,
     udp_socket: UdpSocket,
 }
 
 impl GameServer {
     pub fn new() -> GameServer {
-        let udp_socket = UdpSocket::bind("127.0.0.1:58000")
-            .expect("Failed to bind to port 58000 (is it already in use?).");
+        let addr = SocketAddrV4::new(Ipv4Addr::LOCALHOST, 0);
+        let udp_socket = UdpSocket::bind(addr).expect("Failed to bind to port.");
 
-        GameServer { udp_socket }
+        let port = udp_socket.local_addr().unwrap().port();
+
+        GameServer { port, udp_socket }
     }
 
     pub fn wait_for_message(&self, message: ServerboundMsg) -> Result<SocketAddr, Error> {
