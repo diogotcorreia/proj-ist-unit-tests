@@ -6,6 +6,8 @@ use std::{
     str::FromStr,
 };
 
+use rc2223_tests::{common::errors::Error, server::server::GameServer};
+
 pub struct PlayerWrapper(Child);
 
 impl PlayerWrapper {
@@ -22,16 +24,28 @@ impl PlayerWrapper {
         self.write_stdin(command.to_string().as_bytes());
     }
 
+    pub fn assert_alive(&mut self) -> Result<(), Error> {
+        match self.0.try_wait() {
+            Ok(Some(code)) => Err(Error::Exited(code.clone())),
+            Ok(None) => Ok(()),
+            Err(e) => Err(e.into()),
+        }
+    }
+
+    pub fn kill(&mut self) -> Result<(), Error> {
+        self.0.kill()?;
+        Ok(())
+    }
+
     pub fn assert_exited_cleanly(&mut self) {
         match self.0.try_wait() {
-            Ok(Some(code)) => {
-                if !code.success() {
-                    panic!(
-                        "Player process has exited with non-zero code: {}",
-                        code.code().unwrap_or(-1)
-                    );
-                }
+            Ok(Some(ref code)) if !code.success() => {
+                panic!(
+                    "Player process has exited with non-zero code: {}",
+                    code.code().unwrap_or(-1)
+                );
             }
+            Ok(Some(_)) => {}
             Ok(None) => panic!("Player process has not exited like intended"),
             Err(e) => panic!(
                 "Error while checking if player process exited cleanly: {}",
@@ -76,7 +90,11 @@ impl ToString for PlayerCommand {
     }
 }
 
-pub fn open_client() -> PlayerWrapper {
+pub fn setup_client_test() -> (PlayerWrapper, GameServer) {
+    (open_client(), GameServer::new())
+}
+
+fn open_client() -> PlayerWrapper {
     let client_executable = env::var("CLIENT_EXECUTABLE")
         .expect("You should pass a 'CLIENT_EXECUTABLE' environment variable");
     let client_executable =

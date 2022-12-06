@@ -1,3 +1,2 @@
-#[macro_use]
-mod common;
-mod server;
+pub mod common;
+pub mod server;
