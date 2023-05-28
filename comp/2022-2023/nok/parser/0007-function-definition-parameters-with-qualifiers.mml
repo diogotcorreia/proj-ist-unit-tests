@@ -1,0 +1,4 @@
+auto f = (public int i) -> void { i!! };
+begin
+  return 0;
+end

@@ -1,0 +1,7 @@
+auto f = (int i) -> int {
+  public int j = i;
+  j!!
+};
+begin
+  return 0;
+end

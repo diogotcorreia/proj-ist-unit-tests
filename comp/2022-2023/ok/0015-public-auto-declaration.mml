@@ -1,0 +1,6 @@
+public auto d1 = 7.1;
+public d2 = 5.1;
+begin
+  d1, " ", d2!!
+  return 0;
+end
