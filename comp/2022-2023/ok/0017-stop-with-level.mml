@@ -1,0 +1,10 @@
+begin
+  int i = 0;
+  while (i < 5) {
+    i = i + 1;
+    while (1) {
+      i!!
+      stop 2;
+    }
+  }
+end
