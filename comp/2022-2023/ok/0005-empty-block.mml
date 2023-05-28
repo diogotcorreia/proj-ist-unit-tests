@@ -1,0 +1,6 @@
+begin
+  if (0) {
+  } else {
+    "hello world"!!
+  }
+end
