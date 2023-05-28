@@ -1,0 +1,4 @@
+int 0i = 5;
+begin
+  return 0;
+end
