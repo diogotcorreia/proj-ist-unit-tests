@@ -1,0 +1,3 @@
+begin
+  "ab\377cd"!!
+end

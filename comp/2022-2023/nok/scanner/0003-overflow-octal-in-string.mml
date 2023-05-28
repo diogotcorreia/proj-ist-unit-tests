@@ -1,0 +1,3 @@
+begin
+  "ab\400cd"!!
+end
