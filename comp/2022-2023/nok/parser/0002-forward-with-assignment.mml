@@ -1,0 +1,5 @@
+forward int a = 5;
+
+begin
+  return 0;
+end

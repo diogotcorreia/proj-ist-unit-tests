@@ -1,0 +1,13 @@
+auto f = (int i) -> void {
+  if (i == 0) {
+    return;
+  }
+  i!!
+};
+
+begin
+  f(1);
+  f(0);
+  f(2);
+  return 0;
+end

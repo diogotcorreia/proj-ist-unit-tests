@@ -1,0 +1,5 @@
+foreign int<> f = () -> int { return 1; };
+
+begin
+  return 0;
+end
