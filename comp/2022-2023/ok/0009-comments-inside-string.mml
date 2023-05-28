@@ -1,0 +1,4 @@
+begin
+  "ab /* stuff */ cd"!!
+  "ef // more stuff hi"!!
+end

@@ -1,0 +1,3 @@
+begin
+  "ab\0ignored" "cd"!!
+end

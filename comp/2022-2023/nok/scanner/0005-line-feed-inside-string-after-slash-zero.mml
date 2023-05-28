@@ -1,0 +1,4 @@
+begin
+  "ab\0
+cd"!!
+end
