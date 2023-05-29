@@ -1,0 +1,4 @@
+void a;
+begin
+  return 0;
+end
