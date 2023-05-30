@@ -1,0 +1,5 @@
+// https://stackoverflow.com/questions/1848700/biggest-integer-that-can-be-stored-in-a-double/1848762
+double d = 1.8e308;
+begin
+  return 0;
+end

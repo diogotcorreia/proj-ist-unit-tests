@@ -1,0 +1,8 @@
+// even though the number below can be represented
+// in 4 bytes, MML only considers positive literals
+// and then applies the unary neg operation,
+// so overflow still occurs.
+int i = -2147483648; // -2^31
+begin
+  return 0;
+end

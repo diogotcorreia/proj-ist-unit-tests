@@ -1,0 +1,4 @@
+int i = 2147483648; // 2^31
+begin
+  return 0;
+end
