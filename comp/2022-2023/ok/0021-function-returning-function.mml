@@ -1,0 +1,14 @@
+int<double><string> f = (string str) -> int<double> {
+  str!!
+  return (double d) -> int {
+    if (d > 5) {
+      return 1;
+    }
+    return 0;
+  };
+};
+
+begin
+  f("should print 1:")(7.4)!!
+  f("should print 0:")(.5)!!
+end
