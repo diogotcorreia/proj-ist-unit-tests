@@ -21,9 +21,17 @@ git clone https://github.com/diogotcorreia/proj-ist-unit-tests.git
 
 ## Run the tests
 
-// TODO
+You can use the attached script, `test.sh` to run all the tests.
 
-This will be added later.
+Usage:
+
+```
+usage: ./test.sh [flags] <path to executable>
+-d display diff in the terminal
+-c clean generated result files instead of testing
+-x output xml instead of generating asm
+-h help - shows this message
+```
 
 ## Update the tests
 
