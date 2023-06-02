@@ -133,12 +133,17 @@ for infile in "$ok_tests/"/*.mml; do
 
     (( TEST_COUNT++ ))
 
+    ld_options=(-melf_i386 -o "$exec_output_file" "$o_output_file" -lrts)
+    if [[ -n $LD_EXTRA_FLAGS ]]; then
+        ld_options+=("$LD_EXTRA_FLAGS")
+    fi
+
     echo
     echo -e "${BOLD}Running test: ${test_name}${RESET}"
     if [[ $TARGET = "asm" ]]; then
         "$bin" --target ${TARGET} "$infile" > "$log_output_file" 2> "$log_output_file" && \
             yasm -felf32 -o "$o_output_file" "$asm_output_file" && \
-            ld -melf_i386 -o "$exec_output_file" "$o_output_file" "$LD_EXTRA_FLAGS" -lrts && \
+            ld "${ld_options[@]}" && \
             "$(realpath "$exec_output_file")" > "$actual_output_file" && \
             "$DIFF" "$expected_output_file" "$actual_output_file" && \
             echo -e "${GREEN}TEST PASS: $test_name${RESET}" && \
