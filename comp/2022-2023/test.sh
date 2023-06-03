@@ -112,7 +112,7 @@ for infile in "$nok_tests/"**/*.mml; do
 
     echo
     echo -e "${BOLD}Running test: ${test_name}${RESET}"
-    "$bin" --target ${TARGET} "$infile" > $log_output_file 2> $log_output_file && \
+    "$bin" -g --target ${TARGET} "$infile" > $log_output_file 2> $log_output_file && \
         echo -e "${RED}TEST FAIL: $test_name (exited correctly when it should have failed)${RESET}" || \
         echo -e "${GREEN}TEST PASS: $test_name (exited with error as expected)${RESET}" && \
         (( TEST_PASS_COUNT++ ))
@@ -141,7 +141,7 @@ for infile in "$ok_tests/"/*.mml; do
     echo
     echo -e "${BOLD}Running test: ${test_name}${RESET}"
     if [[ $TARGET = "asm" ]]; then
-        "$bin" --target ${TARGET} "$infile" > "$log_output_file" 2> "$log_output_file" && \
+        "$bin" -g --target ${TARGET} "$infile" > "$log_output_file" 2> "$log_output_file" && \
             yasm -felf32 -o "$o_output_file" "$asm_output_file" && \
             ld "${ld_options[@]}" && \
             "$(realpath "$exec_output_file")" > "$actual_output_file" && \
@@ -150,7 +150,7 @@ for infile in "$ok_tests/"/*.mml; do
             (( TEST_PASS_COUNT++ )) || \
             echo -e "${RED}TEST FAIL: $test_name${RESET}"
     else
-        "$bin" --target ${TARGET} "$infile" > "$log_output_file" 2> "$log_output_file" && \
+        "$bin" -g --target ${TARGET} "$infile" > "$log_output_file" 2> "$log_output_file" && \
             echo -e "${BLUE}TEST PASS: $test_name (output was generated)${RESET}" && \
             (( TEST_PASS_COUNT++ )) || \
             echo -e "${RED}TEST FAIL: $test_name${RESET}"
