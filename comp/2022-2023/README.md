@@ -42,6 +42,18 @@ To make sure you're running an up-to-date copy, just pull from the repository us
 git pull
 ```
 
+## Running the official tests
+
+The `test.sh` script can be used to run the official tests as well.
+
+To do that, simply create a `official-tests` symlink to the `auto-tests`
+directory of the official testing repository.  
+For example:
+
+```sh
+ln -s ~/path/to/CO23/auto-tests ./official-tests
+```
+
 ## Contribute
 
 Community tests are _extremely_ welcome!

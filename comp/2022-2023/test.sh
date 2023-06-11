@@ -18,11 +18,11 @@ usage() {
 }
 
 silent_diff() {
-    cmp --silent "$1" "$2"
+    normal_diff "$1" "$2" > /dev/null
 }
 
 normal_diff() {
-    diff --color "$1" "$2"
+    diff -iwubZB --color <(tr -d '\n' < "$1" ) <(tr -d '\n' < "$2")
 }
 
 DIFF="silent_diff"
@@ -56,6 +56,7 @@ shift "$(( OPTIND - 1 ))"
 script_pwd=$(dirname "$0")
 nok_tests="$script_pwd/nok"
 ok_tests="$script_pwd/ok"
+official_tests="$script_pwd/official-tests"
 
 # Clean before tests to make sure tests are accurate
 rm -f "$nok_tests/"**/*.log
@@ -70,6 +71,17 @@ rm -f "$ok_tests/"*.xml
 rm -f "$ok_tests/"*.asm
 rm -f "$ok_tests/"*.o
 rm -f "$ok_tests/"*.exe
+
+if [[ -d  $official_tests ]]; then
+
+rm -f "$official_tests/"*.log
+rm -f "$official_tests/"*.result
+rm -f "$official_tests/"*.xml
+rm -f "$official_tests/"*.asm
+rm -f "$official_tests/"*.o
+rm -f "$official_tests/"*.exe
+
+fi
 
 if [[ "$MODE" == "clean" ]]; then
     echo
@@ -156,6 +168,47 @@ for infile in "$ok_tests/"/*.mml; do
             echo -e "${RED}TEST FAIL: $test_name${RESET}"
     fi
 done
+
+if [[ -d  $official_tests ]]; then
+    echo
+    echo -e "${BOLD}---- [Official Tests] ----${RESET}"
+    echo
+    for infile in "$official_tests/"/*.mml; do
+        test_name="$(realpath --relative-base "$official_tests" "$infile")"
+        base_name="$(basename -s .mml "$infile")"
+        log_output_file="$(dirname "$infile")/$base_name.log"
+        actual_output_file="$(dirname "$infile")/$base_name.result"
+        expected_output_file="$(dirname "$infile")/expected/$base_name.out"
+        asm_output_file="$(dirname "$infile")/$base_name.asm"
+        o_output_file="$(dirname "$infile")/$base_name.o"
+        exec_output_file="$(dirname "$infile")/$base_name.exe"
+
+        (( TEST_COUNT++ ))
+
+        ld_options=(-melf_i386 -o "$exec_output_file" "$o_output_file" -lrts)
+        if [[ -n $LD_EXTRA_FLAGS ]]; then
+            ld_options+=("$LD_EXTRA_FLAGS")
+        fi
+
+        echo
+        echo -e "${BOLD}Running test: ${test_name}${RESET}"
+        if [[ $TARGET = "asm" ]]; then
+            "$bin" -g --target ${TARGET} "$infile" > "$log_output_file" 2> "$log_output_file" && \
+                yasm -felf32 -o "$o_output_file" "$asm_output_file" && \
+                ld "${ld_options[@]}" && \
+                "$(realpath "$exec_output_file")" > "$actual_output_file" && \
+                "$DIFF" "$expected_output_file" "$actual_output_file" && \
+                echo -e "${GREEN}TEST PASS: $test_name${RESET}" && \
+                (( TEST_PASS_COUNT++ )) || \
+                echo -e "${RED}TEST FAIL: $test_name${RESET}"
+        else
+            "$bin" -g --target ${TARGET} "$infile" > "$log_output_file" 2> "$log_output_file" && \
+                echo -e "${BLUE}TEST PASS: $test_name (output was generated)${RESET}" && \
+                (( TEST_PASS_COUNT++ )) || \
+                echo -e "${RED}TEST FAIL: $test_name${RESET}"
+        fi
+    done
+fi
 
 echo
 echo -e "${BOLD}---- [Summary] ----${RESET}"

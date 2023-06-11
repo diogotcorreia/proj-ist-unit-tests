@@ -3,3 +3,5 @@
 *.result
 *.exe
 *.asm
+*.o
+official-tests
