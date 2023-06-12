@@ -1,0 +1,6 @@
+// this should fail because the value is not a literal
+int i = -123;
+begin
+  i!!
+  return 0;
+end
