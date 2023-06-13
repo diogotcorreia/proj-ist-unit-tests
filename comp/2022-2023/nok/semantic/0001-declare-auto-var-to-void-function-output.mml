@@ -1,0 +1,5 @@
+auto f = () -> void {};
+begin
+  auto a = f(); // should fail here; void is not a valid data type
+  return 0;
+end
