@@ -124,7 +124,8 @@ for infile in "$nok_tests/"**/*.mml; do
 
     echo
     echo -e "${BOLD}Running test: ${test_name}${RESET}"
-    "$bin" -g --target ${TARGET} "$infile" > $log_output_file 2> $log_output_file && \
+    # grep is necessary because semantic compile errors don't make the compiler exit with error 1
+    "$bin" -g --target ${TARGET} "$infile" > $log_output_file 2> $log_output_file | grep -vzP "(^|\n)\d:" > /dev/null && \
         echo -e "${RED}TEST FAIL: $test_name (exited correctly when it should have failed)${RESET}" || \
         echo -e "${GREEN}TEST PASS: $test_name (exited with error as expected)${RESET}" && \
         (( TEST_PASS_COUNT++ ))
