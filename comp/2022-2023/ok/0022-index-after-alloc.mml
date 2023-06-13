@@ -1,0 +1,6 @@
+begin
+  // This should be casted to int by the type checker
+  auto a = [10][9];
+  a - a!!
+  return 0;
+end

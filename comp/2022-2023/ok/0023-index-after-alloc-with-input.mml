@@ -1,0 +1,5 @@
+begin
+  // We are just testing the type checker here
+  [int] p = input + [1][0];
+  return 0;
+end
