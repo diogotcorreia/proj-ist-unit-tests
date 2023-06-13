@@ -54,6 +54,31 @@ For example:
 ln -s ~/path/to/CO23/auto-tests ./official-tests
 ```
 
+## Troubleshooting
+
+### Cannot find -lrts
+
+If you're getting the following error while running the tests,
+
+```
+ld: cannot find -lrts: No such file or directory
+```
+
+it is because you do not have RTS installed system-wide.
+
+Newer versions of the script also try to automatically find RTS in the
+`$HOME/compiladores/root` folder.
+
+To get around this, you need to tell `ld` where RTS is.
+To achieve this, set the `LD_EXTRA_FLAGS` env var to the folder containing the RTS.
+
+Therefore, run the following command before executing the test script
+(replace `<ROOT>` with the same `ROOT` in your Makefile).
+
+```bash
+export LD_EXTRA_FLAGS="-L<ROOT>/usr/lib"
+```
+
 ## Contribute
 
 Community tests are _extremely_ welcome!

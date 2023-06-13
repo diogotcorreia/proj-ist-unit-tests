@@ -146,6 +146,10 @@ for infile in "$ok_tests/"/*.mml; do
     (( TEST_COUNT++ ))
 
     ld_options=(-melf_i386 -o "$exec_output_file" "$o_output_file" -lrts)
+    # RTS is often installed in $HOME/compiladores/root, so add that to ld's path if it exists
+    if [[ -d "$HOME/compiladores/root" ]]; then
+        ld_options+=("-L$HOME/compiladores/root/usr/lib")
+    fi
     if [[ -n $LD_EXTRA_FLAGS ]]; then
         ld_options+=("$LD_EXTRA_FLAGS")
     fi
@@ -186,6 +190,10 @@ if [[ -d  $official_tests ]]; then
         (( TEST_COUNT++ ))
 
         ld_options=(-melf_i386 -o "$exec_output_file" "$o_output_file" -lrts)
+        # RTS is often installed in $HOME/compiladores/root, so add that to ld's path if it exists
+        if [[ -d "$HOME/compiladores/root" ]]; then
+            ld_options+=("-L$HOME/compiladores/root/usr/lib")
+        fi
         if [[ -n $LD_EXTRA_FLAGS ]]; then
             ld_options+=("$LD_EXTRA_FLAGS")
         fi
