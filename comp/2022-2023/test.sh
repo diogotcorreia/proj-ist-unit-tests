@@ -126,7 +126,7 @@ for infile in "$nok_tests/"**/*.mml; do
     echo -e "${BOLD}Running test: ${test_name}${RESET}"
     # grep is necessary because semantic compile errors don't make the compiler exit with error 1
     "$bin" -g --target ${TARGET} "$infile" > $log_output_file 2> $log_output_file && \
-        cat "$log_output_file" | grep -vzP "(^|\n)\d:" > /dev/null && \
+        cat "$log_output_file" | grep -vzP "(^|\n)\d+:" > /dev/null && \
         echo -e "${RED}TEST FAIL: $test_name (exited correctly when it should have failed)${RESET}" || \
         {
             echo -e "${GREEN}TEST PASS: $test_name (exited with error as expected)${RESET}" && \
@@ -168,7 +168,7 @@ for infile in "$ok_tests/"/*.mml; do
     if [[ $TARGET = "asm" ]]; then
         # grep is necessary because semantic compile errors don't make the compiler exit with error 1
         "$bin" -g --target ${TARGET} "$infile" > "$log_output_file" 2> "$log_output_file" && \
-            cat "$log_output_file" | grep -vzP "(^|\n)\d:" > /dev/null && \
+            cat "$log_output_file" | grep -vzP "(^|\n)\d+:" > /dev/null && \
             yasm -felf32 -o "$o_output_file" "$asm_output_file" && \
             ld "${ld_options[@]}" && \
             "$(realpath "$exec_output_file")" > "$actual_output_file" < "$input_file" && \
@@ -179,7 +179,7 @@ for infile in "$ok_tests/"/*.mml; do
     else
         # grep is necessary because semantic compile errors don't make the compiler exit with error 1
         "$bin" -g --target ${TARGET} "$infile" > "$log_output_file" 2> "$log_output_file" && \
-            cat "$log_output_file" | grep -vzP "(^|\n)\d:" > /dev/null && \
+            cat "$log_output_file" | grep -vzP "(^|\n)\d+:" > /dev/null && \
             echo -e "${BLUE}TEST PASS: $test_name (output was generated)${RESET}" && \
             (( TEST_PASS_COUNT++ )) || \
             echo -e "${RED}TEST FAIL: $test_name${RESET}"
@@ -225,7 +225,7 @@ if [[ -d  $official_tests ]]; then
         else
             # grep is necessary because semantic compile errors don't make the compiler exit with error 1
             "$bin" -g --target ${TARGET} "$infile" > "$log_output_file" 2> "$log_output_file" && \
-                cat "$log_output_file" | grep -vzP "(^|\n)\d:" > /dev/null && \
+                cat "$log_output_file" | grep -vzP "(^|\n)\d+:" > /dev/null && \
                 echo -e "${BLUE}TEST PASS: $test_name (output was generated)${RESET}" && \
                 (( TEST_PASS_COUNT++ )) || \
                 echo -e "${RED}TEST FAIL: $test_name${RESET}"
