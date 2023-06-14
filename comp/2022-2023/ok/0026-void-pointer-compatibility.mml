@@ -1,0 +1,10 @@
+begin
+  // a void pointer is compatible with all types of pointers
+  [void] vp = null;
+  [double] dp = vp;
+  [int] ip = vp;
+  [string] sp = vp;
+  [int<double>] fp = vp;
+  [[int]] ipp = vp;
+  return 0;
+end
