@@ -1,0 +1,32 @@
+void<[void]> fvp = ([void] vp) -> void { "fvp"!! };
+begin
+  // a void pointer is compatible with all types of pointers
+
+  // declarations
+  [double] dp = null;
+  [int] ip = null;
+  [string] sp = null;
+  [int<double>] fp = null;
+  [[int]] ipp = null;
+
+  [void] vpdp = dp;
+  [void] vpip = ip;
+  [void] vpsp = sp;
+  [void] vpfp = fp;
+  [void] vpipp = ipp;
+
+  // assignments
+  vpdp = dp;
+  vpip = ip;
+  vpsp = sp;
+  vpfp = fp;
+  vpipp = ipp;
+
+  // function calls
+  fvp(dp);
+  fvp(ip);
+  fvp(sp);
+  fvp(fp);
+  fvp(ipp);
+  return 0;
+end
