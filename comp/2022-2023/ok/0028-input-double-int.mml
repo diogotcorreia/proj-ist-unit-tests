@@ -1,6 +1,7 @@
 begin
   int i = 1;
   [double] dp = [10];
+  dp[0] = 23 / 69; // assign 0 (integer division)
 
   // read 9 doubles (index 1 to 9)
   while (i < 10) {
