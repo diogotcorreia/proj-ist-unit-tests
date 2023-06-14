@@ -1,0 +1,19 @@
+begin
+  int i = 1;
+  [double] dp = [10];
+
+  // read 9 doubles (index 1 to 9)
+  while (i < 10) {
+    dp[i] = input;
+    i = i + 1;
+  }
+
+  i = input;
+  // subtract all of them until the given index i
+  // and store in index 0
+  while (i > 0) {
+    dp[0] = dp[0] - dp[i];
+    i = i - 1;
+  }
+  dp[0]!!
+end

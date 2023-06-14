@@ -141,11 +141,16 @@ for infile in "$ok_tests/"/*.mml; do
     test_name="$(realpath --relative-base "$ok_tests" "$infile")"
     base_name="$(basename -s .mml "$infile")"
     log_output_file="$(dirname "$infile")/$base_name.log"
+    input_file="$(dirname "$infile")/$base_name.in"
     actual_output_file="$(dirname "$infile")/$base_name.result"
     expected_output_file="$(dirname "$infile")/$base_name.out"
     asm_output_file="$(dirname "$infile")/$base_name.asm"
     o_output_file="$(dirname "$infile")/$base_name.o"
     exec_output_file="$(dirname "$infile")/$base_name.exe"
+
+    if [[ ! -f "$input_file" ]]; then
+        input_file=/dev/null
+    fi
 
     (( TEST_COUNT++ ))
 
@@ -166,7 +171,7 @@ for infile in "$ok_tests/"/*.mml; do
             cat "$log_output_file" | grep -vzP "(^|\n)\d:" > /dev/null && \
             yasm -felf32 -o "$o_output_file" "$asm_output_file" && \
             ld "${ld_options[@]}" && \
-            "$(realpath "$exec_output_file")" > "$actual_output_file" && \
+            "$(realpath "$exec_output_file")" > "$actual_output_file" < "$input_file" && \
             "$DIFF" "$expected_output_file" "$actual_output_file" && \
             echo -e "${GREEN}TEST PASS: $test_name${RESET}" && \
             (( TEST_PASS_COUNT++ )) || \
