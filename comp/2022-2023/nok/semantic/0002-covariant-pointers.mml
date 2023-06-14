@@ -1,0 +1,6 @@
+begin
+  // While int<double> can be coersed into double<int>,
+  // [int<double>] cannot be coersed into [double<int>].
+  int<double> f = (double d) -> int { return i + 1.1; }
+  [double<int>] fp = f?;
+end
