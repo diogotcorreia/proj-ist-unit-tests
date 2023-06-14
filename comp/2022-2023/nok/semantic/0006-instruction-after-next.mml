@@ -1,0 +1,8 @@
+begin
+	int i = 2;
+	while (i) {
+		i = i - 1;
+		next;
+		"this is an error"!!
+	}
+end

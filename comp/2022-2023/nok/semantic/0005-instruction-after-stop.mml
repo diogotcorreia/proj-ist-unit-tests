@@ -1,0 +1,6 @@
+begin
+	while (1) {
+		stop;
+		"this is an error"!!
+	}
+end

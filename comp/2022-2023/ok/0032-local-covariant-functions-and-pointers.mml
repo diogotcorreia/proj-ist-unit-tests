@@ -1,0 +1,13 @@
+begin
+	auto f = (double i) -> int { i! return 5; };
+	[int<double>] a = [10];
+	double<int> g;
+	a[7] = f;
+	{
+		double<int> h = f;
+		g = a[7];
+		g(1)!!
+		h(2)!!
+		return 0;
+	}
+end
