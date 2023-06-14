@@ -1,5 +1,6 @@
 begin
   // We are just testing the type checker here
-  [int] p = input + [1][0];
+  // unspec + unspec will be cast to int (and both of them will also be ints)
+  int p = input + [1][0];
   return 0;
 end
