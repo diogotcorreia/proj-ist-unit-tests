@@ -1,0 +1,10 @@
+begin
+  [double] x = [2];
+  x[0] = 3;
+  {
+    [void] a = x;
+    [double] b = a;
+    sizeof(a[0])!!
+    b[0], "; ", sizeof(b[0])!!
+  }
+end
