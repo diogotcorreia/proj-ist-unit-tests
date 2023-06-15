@@ -1,0 +1,9 @@
+begin
+  double<int> f;
+  if (input) {
+    f = (double x) -> int { return 3; };
+  } else {
+    f = (int x) -> double { return 1.5; };
+  }
+  f(3)!!
+end

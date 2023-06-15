@@ -1,0 +1,7 @@
+auto cast = (int<double> f) -> double<int> {
+  return f;
+};
+
+begin
+  cast((double x) -> int { x!! return 1; })(9)!!
+end
