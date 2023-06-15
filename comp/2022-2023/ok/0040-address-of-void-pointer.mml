@@ -1,0 +1,16 @@
+begin
+  [void] a;
+  auto b = a?; // b is [[void]], which is not allowed - should be [void]
+  sizeof(b[0]) != 4!! // void does not have size 4 (it can be 1 or 0, depending on the group's implementation)
+  {
+    [int] d = b; // just testing type checker
+    [[int]] e = b;
+    e[0] = [4]; // alloc 4 bytes to `a` (i.e. a single int)
+    {
+      [int] c = a; // this is the same as `a`, it's just a cast
+      c[0] = 5;
+      c[0]!!
+    }
+  }
+  return 0;
+end
