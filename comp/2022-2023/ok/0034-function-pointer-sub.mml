@@ -1,5 +1,5 @@
 void<int> f = (int i) -> void {
-  return 1;
+  return;
 };
 
 begin

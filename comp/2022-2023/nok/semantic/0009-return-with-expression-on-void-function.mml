@@ -1,0 +1,8 @@
+auto f = () -> void {
+  1!!
+  return 1;
+};
+
+begin
+  f();
+end
