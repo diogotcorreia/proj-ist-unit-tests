@@ -1,0 +1,8 @@
+begin
+  if (input) {
+    "true"!!
+  } else {
+    "false"!!
+  }
+  return 0;
+end
