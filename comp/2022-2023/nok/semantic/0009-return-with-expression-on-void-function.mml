@@ -5,4 +5,5 @@ auto f = () -> void {
 
 begin
   f();
+  return 0;
 end

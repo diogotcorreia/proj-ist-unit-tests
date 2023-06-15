@@ -3,4 +3,5 @@ begin
   // [int<double>] cannot be coersed into [double<int>].
   int<double> f = (double d) -> int { return i + 1.1; }
   [double<int>] fp = f?;
+  return 0;
 end

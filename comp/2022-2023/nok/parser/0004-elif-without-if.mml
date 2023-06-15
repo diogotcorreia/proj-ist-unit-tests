@@ -3,4 +3,5 @@ begin
     "elif"!!
   else
     "else"!!
+  return 0;
 end

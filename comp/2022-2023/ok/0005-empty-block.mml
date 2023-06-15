@@ -3,4 +3,5 @@ begin
   } else {
     "hello world"!!
   }
+  return 0;
 end

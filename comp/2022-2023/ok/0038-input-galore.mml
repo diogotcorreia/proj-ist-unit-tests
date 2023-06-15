@@ -1,10 +1,11 @@
 begin
-	while (input) { "."!! }
-	if (input) input! else "#"!
-	if (input) input! else if (input) "="! else "%"!
-	{
-		auto f = (double i) -> void { "[", sizeof(i), "]"!! };
-		f(input);
-	}
-	sizeof(input)!!
+  while (input) { "."!! }
+  if (input) input! else "#"!
+  if (input) input! else if (input) "="! else "%"!
+  {
+    auto f = (double i) -> void { "[", sizeof(i), "]"!! };
+    f(input);
+  }
+  sizeof(input)!!
+  return 0;
 end

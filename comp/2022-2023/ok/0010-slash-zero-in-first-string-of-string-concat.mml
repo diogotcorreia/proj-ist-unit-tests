@@ -1,3 +1,4 @@
 begin
   "ab\0ignored" "cd"!!
+  return 0;
 end

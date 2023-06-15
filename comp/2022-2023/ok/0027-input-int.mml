@@ -3,4 +3,5 @@ double d = 4.5;
 begin
   d = i + input + d; // 4 + 26 + 4.5 = 34.5
   d!!
+  return 0;
 end

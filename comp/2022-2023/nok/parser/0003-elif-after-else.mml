@@ -5,4 +5,5 @@ begin
     "else"!!
   elif (1)
     "elif"!!
+  return 0;
 end

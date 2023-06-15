@@ -1,3 +1,4 @@
 begin
   "ab\rcd"!!
+  return 0;
 end

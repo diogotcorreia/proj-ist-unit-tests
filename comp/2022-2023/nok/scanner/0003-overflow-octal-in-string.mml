@@ -1,3 +1,4 @@
 begin
   "ab\400cd"!!
+  return 0;
 end

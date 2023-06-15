@@ -9,4 +9,5 @@ begin
     a[0]!!
     c[0]!!
   }
+  return 0;
 end

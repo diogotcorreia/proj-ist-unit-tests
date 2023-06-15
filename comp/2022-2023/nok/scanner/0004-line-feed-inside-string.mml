@@ -1,4 +1,5 @@
 begin
   "ab
 cd"!!
+  return 0;
 end

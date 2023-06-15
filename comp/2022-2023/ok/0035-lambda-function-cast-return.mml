@@ -4,4 +4,5 @@ auto cast = (int<double> f) -> double<int> {
 
 begin
   cast((double x) -> int { x!! return 1; })(9)!!
+  return 0;
 end

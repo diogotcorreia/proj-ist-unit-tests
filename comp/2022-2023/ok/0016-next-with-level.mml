@@ -7,4 +7,5 @@ begin
       next 2;
     }
   }
+  return 0;
 end

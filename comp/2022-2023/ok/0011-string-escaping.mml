@@ -2,4 +2,5 @@ begin
   "ab\"cd"!!
   "ef\\"!!
   "hi\\\"jk"!!
+  return 0;
 end

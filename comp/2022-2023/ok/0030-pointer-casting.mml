@@ -7,4 +7,5 @@ begin
     sizeof(a[0])!!
     b[0], "; ", sizeof(b[0])!!
   }
+  return 0;
 end

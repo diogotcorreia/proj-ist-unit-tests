@@ -6,4 +6,5 @@ begin
     f = (int x) -> double { return 1.5; };
   }
   f(3)!!
+  return 0;
 end

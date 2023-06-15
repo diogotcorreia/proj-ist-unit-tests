@@ -5,4 +5,5 @@ begin
 		next;
 		"this is an error"!!
 	}
+	return 0;
 end

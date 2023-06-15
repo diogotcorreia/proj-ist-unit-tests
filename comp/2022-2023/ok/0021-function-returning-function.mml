@@ -11,4 +11,5 @@ int<double><string> f = (string str) -> int<double> {
 begin
   f("should print 1:")(7.4)!!
   f("should print 0:")(.5)!!
+  return 0;
 end

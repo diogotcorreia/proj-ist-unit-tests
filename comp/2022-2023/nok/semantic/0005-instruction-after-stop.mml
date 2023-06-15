@@ -3,4 +3,5 @@ begin
 		stop;
 		"this is an error"!!
 	}
+	return 0;
 end

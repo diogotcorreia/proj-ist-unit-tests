@@ -8,4 +8,5 @@ begin
   i[3] = 4;
   a = i[3]? - i[0]?;
   a!!
+  return 0;
 end

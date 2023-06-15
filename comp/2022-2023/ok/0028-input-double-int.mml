@@ -17,4 +17,5 @@ begin
     i = i - 1;
   }
   dp[0]!!
+  return 0;
 end
